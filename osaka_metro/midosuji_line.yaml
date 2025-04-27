@@ -1,0 +1,79 @@
+line:
+  id: midosuji_line
+  name: 御堂筋線
+  name_display: Midosuji Line
+  icon: "icons/midosuji.png"
+  color: "#e60012"
+  direction: 天王寺 ➜ 江坂
+  operator: Osaka Metro
+  displays:
+    - name: headup left screen
+      size: 1920 * 1080
+      type: oled
+      style: tv
+
+  stations:
+    - id: tennoji
+      name: 天王寺
+      name_display: Tennoji
+      next_duration_sec: 120
+      next_distance_km: 2.1
+      platform_number: 1
+      features: [transfer, terminal]
+      announcement_audio: "audio/tennoji.mp3"
+      display_image: "images/tennoji.jpg"
+      remarks: "Transfer to JR Loop Line and Kintetsu Abenobashi"
+
+    - id: dobutsuenmae
+      name: 動物園前
+      name_display: Dobutsuen-mae
+      next_duration_sec: 90
+      next_distance_km: 1.3
+      platform_number: 2
+      features: [transfer]
+      announcement_audio: "audio/dobutsuenmae.mp3"
+      display_image: "images/dobutsuenmae.jpg"
+      remarks: "Transfer to Sakaisuji Line"
+
+    - id: namba
+      name: 難波
+      name_display: Namba
+      next_duration_sec: 100
+      next_distance_km: 1.8
+      platform_number: 3
+      features: [transfer, shopping_area]
+      announcement_audio: "audio/namba.mp3"
+      display_image: "images/namba.jpg"
+      remarks: "Transfer to Nankai, Kintetsu and JR lines"
+
+    - id: shinsaibashi
+      name: 心斎橋
+      name_display: Shinsaibashi
+      next_duration_sec: 90
+      next_distance_km: 1.1
+      platform_number: 1
+      features: [shopping_area]
+      announcement_audio: "audio/shinsaibashi.mp3"
+      display_image: "images/shinsaibashi.jpg"
+
+    - id: honmachi
+      name: 本町
+      name_display: Honmachi
+      next_duration_sec: 110
+      next_distance_km: 1.7
+      platform_number: 2
+      features: [transfer, business_district]
+      announcement_audio: "audio/honmachi.mp3"
+      display_image: "images/honmachi.jpg"
+      remarks: "Transfer to Chuo Line and Yotsubashi Line"
+
+    - id: umeda
+      name: 梅田
+      name_display: Umeda
+      next_duration_sec: 0
+      next_distance_km: 0.0
+      platform_number: 4
+      features: [transfer, terminal]
+      announcement_audio: "audio/umeda.mp3"
+      display_image: "images/umeda.jpg"
+      remarks: "Transfer to JR, Hankyu and Hanshin lines"
