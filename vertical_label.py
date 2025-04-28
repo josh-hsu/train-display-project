@@ -11,7 +11,7 @@ class VerticalText(QWidget):
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
         self.user_font = font
-
+        self.labels = []
         self.setText(text)  # 呼叫下面的 setText
 
     def setText(self, text):
@@ -22,12 +22,20 @@ class VerticalText(QWidget):
                 child.widget().deleteLater()
 
         # 逐字產生新的 label
+        self.labels = []
         for char in text:
             label = QLabel(char)
             label.setFont(self.user_font)
             label.setAlignment(Qt.AlignCenter)
             label.setStyleSheet("font-size: 24px;")  # 這裡可以改字體大小
+            self.labels.append(label)
             self.layout.addWidget(label)
+
+    def setStyleSheet(self, styleSheet):
+        super().setStyleSheet(styleSheet)
+        for label in self.labels:
+            label.setStyleSheet(styleSheet)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

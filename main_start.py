@@ -1,7 +1,7 @@
-import sys
+import sys, os
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout,
-    QGridLayout, QPushButton, QStackedWidget
+    QStackedWidget
 )
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
@@ -19,13 +19,23 @@ class TrainDisplay(QWidget):
         self.initUI()
 
     def initUI(self):
+        os_is_posix = False
+        if (os.name == "posix"):
+            os_is_posix = True
         # 字體預設
         family = "Noto Sans JP"
+        family_win = "Noto Sans JP SemiBold"
 
-        font_large = QFont(family, 32, QFont.Bold)
-        font_current_station = QFont(family, 90, QFont.Bold)
-        font_car = QFont(family, 48, QFont.Bold)
-        font_station_number = QFont(family, 48, QFont.Bold)
+        if (os_is_posix):
+            font_large = QFont(family, 32, QFont.Bold)
+            font_current_station = QFont(family, 90, QFont.Bold)
+            font_car = QFont(family, 48, QFont.Bold)
+            font_station_number = QFont(family, 48, QFont.Bold)
+        else:
+            font_large = QFont(family_win, 28)
+            font_current_station = QFont(family_win, 78)
+            font_car = QFont(family_win, 42)
+            font_station_number = QFont(family_win, 36)
 
         # 第一大列
         top_layout = QHBoxLayout()
