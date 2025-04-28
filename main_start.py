@@ -49,13 +49,13 @@ class TrainDisplay(QWidget):
 
         # 目的地（480x240）
         self.textview_destination = AnimatedTextView(220, 60, ["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
-        self.textview_destination.setStyleSheetAll("background-color: #FFFFFF; border: 1px solid gray; color: #888888;")
+        self.textview_destination.setStyleSheetAll("background-color: #FFFFFF; color: #888888;")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
         self.textview_destination.start()
 
         self.textview_now_current = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"])
-        self.textview_now_current.setStyleSheetAll("background-color: #FFFFFF; border: 1px solid gray; color: #000000;")
+        self.textview_now_current.setStyleSheetAll("background-color: #FFFFFF; color: #000000;")
         self.textview_now_current.setFont(font_large)
         self.textview_now_current.setAlignment(Qt.AlignRight)
         self.textview_now_current.start()
@@ -70,7 +70,7 @@ class TrainDisplay(QWidget):
 
         self.textview_station = AnimatedTextView(620, 120, ["心斎橋", "しんさいばし", "心齋橋", "Shinsaibashi"],
                                                  animation_type="fold", interval_ms=3000)
-        self.textview_station.setStyleSheetAll("background-color: #FFFFFF; border: 1px solid gray; color: #000000;")
+        self.textview_station.setStyleSheetAll("background-color: #FFFFFF; border: color: #000000;")
         self.textview_station.setFont(font_current_station)
         self.textview_station.setAlignment(Qt.AlignCenter)
         self.textview_station.start()
@@ -81,7 +81,7 @@ class TrainDisplay(QWidget):
         label_car_number = QLabel("5")
         label_car_number.setFont(font_car)
         label_car_number.setFixedSize(100, 120)
-        label_car_number.setStyleSheet("background-color: #FFFFFF; border: 1px solid gray; color: #888888;")
+        label_car_number.setStyleSheet("background-color: #FFFFFF; color: #888888;")
         label_car_number.setAlignment(Qt.AlignCenter)
 
         # Combine top layout
@@ -101,17 +101,17 @@ class TrainDisplay(QWidget):
         # 站號
         label_station_number_left = QLabel("")
         label_station_number_left.setFixedSize(220, 50)
-        label_station_number_left.setStyleSheet("background-color: #F61826; border: 2px solid gray; color: #FFFFFF;")
+        label_station_number_left.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
         
         label_station_number = QLabel("M19")
         label_station_number.setFont(font_station_number)
         label_station_number.setFixedSize(620, 50)
-        label_station_number.setStyleSheet("background-color: #F61826; border: 2px solid gray; color: #FFFFFF;")
+        label_station_number.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
         label_station_number.setAlignment(Qt.AlignCenter)
 
         label_station_number_right = QLabel("")
         label_station_number_right.setFixedSize(100, 50)
-        label_station_number_right.setStyleSheet("background-color: #F61826; border: 2px solid gray; color: #FFFFFF;")
+        label_station_number_right.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
         
         # 第二大列新增
         second_layout.addWidget(label_station_number_left)

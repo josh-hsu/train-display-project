@@ -22,7 +22,7 @@ class SideArrow(QWidget):
 
         # 紅色進度條參數
         arrow_w = 20
-        
+
         complete_path = QPainterPath()
         # Add left arrow
         complete_path.moveTo(leftside_arrow_offset, 0)
@@ -49,7 +49,7 @@ class MovingArrow(QWidget):
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.toggleBluePart)
         self.timer.start(1000)
-    
+
     def toggleBluePart(self):
         self.blue_is_red = not self.blue_is_red
         self.update()  # 重新觸發 paintEvent
@@ -117,7 +117,7 @@ class SceneStationList(QWidget):
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        self.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; 2px solid gray; ")
+        self.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR};")
         self.setFixedSize(960, 342)
         
         # station names layout
@@ -126,19 +126,19 @@ class SceneStationList(QWidget):
         self.top_layout.setSpacing(0)
         self.sta_leftmost = QLabel("")
         self.sta_leftmost.setFixedSize(90, 150)
-        self.sta_leftmost.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #FFFFFF;")
+        self.sta_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #FFFFFF;")
         self.top_layout.addWidget(self.sta_leftmost)
         self.sta = []
         for i in range(13):
             label = VerticalText(f"")
-            label.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #000000;")
+            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
             label.setFixedSize(60, 150)
             label.setFont(self.sta_font)
             self.top_layout.addWidget(label)
             self.sta.append(label)
         self.sta_rightmost = QLabel("")
         self.sta_rightmost.setFixedSize(90, 150)
-        self.sta_rightmost.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #FFFFFF;")
+        self.sta_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #FFFFFF;")
         self.top_layout.addWidget(self.sta_rightmost)
         self.main_layout.addLayout(self.top_layout)
 
@@ -167,7 +167,7 @@ class SceneStationList(QWidget):
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; border: 1px solid gray; color: #FFFFFF;")
+                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: #FFFFFF;")
             elif i == self.progress_index:
                 label = MovingArrow()
                 label.setFixedSize(60, 36)
@@ -177,13 +177,13 @@ class SceneStationList(QWidget):
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {GREY_COLOR}; border: 1px solid gray; color: #FFFFFF;")
+                label.setStyleSheet(f"background-color: {GREY_COLOR}; color: #FFFFFF;")
 
             self.progress.append(label)
             self.second_layout.addWidget(label)
         self.progress_rightmost = QLabel()
         self.progress_rightmost.setFixedSize(90, 36)
-        self.progress_rightmost.setStyleSheet(f"background-color: {GREY_COLOR}; border: 1px solid gray;")
+        self.progress_rightmost.setStyleSheet(f"background-color: {GREY_COLOR};")
         self.second_layout.addWidget(self.progress_rightmost)
         self.main_layout.addLayout(self.second_layout)
 
@@ -197,7 +197,6 @@ class SceneStationList(QWidget):
         self.progress[self.progress_index+1].setText("M20")
         #######
 
-
         # 3rd layout: minute time
         self.third_layout = QHBoxLayout()
         self.third_layout.setContentsMargins(0, 0, 0, 0)
@@ -206,6 +205,7 @@ class SceneStationList(QWidget):
         self.min_leftmost.setAlignment(Qt.AlignCenter)
         self.min_leftmost.setFont(self.min_font)
         self.min_leftmost.setFixedSize(90, 30)
+        self.min_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")  
         self.third_layout.addWidget(self.min_leftmost)
         self.min = []
         for i in range(12):
@@ -213,17 +213,17 @@ class SceneStationList(QWidget):
             label.setAlignment(Qt.AlignCenter)
             label.setFixedSize(60, 30)
             label.setFont(self.min_font)
-            label.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #000000;")   
+            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")   
             self.min.append(label)
             self.third_layout.addWidget(label)
         self.min_rightmost = QLabel("")
         self.min_rightmost.setAlignment(Qt.AlignRight)
         self.min_rightmost.setFixedSize(150, 30)
         self.min_rightmost.setFont(self.min_font)
-        self.min_rightmost.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #000000;")
+        self.min_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
         self.third_layout.addWidget(self.min_rightmost)
         self.main_layout.addLayout(self.third_layout)
-        
+
         ########
         self.min[0].setText("14")
         self.min[2].setText("11")
@@ -233,7 +233,7 @@ class SceneStationList(QWidget):
         self.min[10].setText("2")
         self.min[11].setText("分")
         ########
-        
+
         # 4th layout
         self.bottom_layout = QHBoxLayout()
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
@@ -242,20 +242,21 @@ class SceneStationList(QWidget):
         self.transfer_leftmost.setAlignment(Qt.AlignCenter)
         self.transfer_leftmost.setFont(self.sta_font)
         self.transfer_leftmost.setFixedSize(60, 124)
+        self.transfer_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
         self.bottom_layout.addWidget(self.transfer_leftmost)
         self.transfer = []
         for i in range(6):
             label = QLabel("轉乘")
             label.setAlignment(Qt.AlignCenter)
             label.setFixedSize(120, 124)
-            label.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #000000;")   
+            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
             self.transfer.append(label)
             self.bottom_layout.addWidget(label)
         self.transfer_rightmost = QLabel("")
         self.transfer_rightmost.setAlignment(Qt.AlignRight)
         self.transfer_rightmost.setFixedSize(180, 124)
-        self.transfer_rightmost.setStyleSheet(f"background-color: #FFFFFF; border: 1px solid gray; color: #000000;")
+        self.transfer_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
         self.bottom_layout.addWidget(self.transfer_rightmost)
         self.main_layout.addLayout(self.bottom_layout)
-        
+
         self.setLayout(self.main_layout)
