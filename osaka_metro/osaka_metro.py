@@ -12,3 +12,11 @@ ANIMATION_INTERVAL_MS = 1000
 # 大小設定
 ARROW_WIDGET_WIDTH = 65
 ARROW_WIDGET_HEIGHT = 40
+
+# icon map
+ICON_MAP = {
+    "Sennichimae": "line_sennichimae.png",
+    "Kintetsu": "line_other.png",
+    "Nankai": "line_other.png",
+    "Hanshin": "line_other.png"
+}

@@ -82,7 +82,7 @@ class TrainDisplay(QWidget):
         label_car_number = QLabel("5")
         label_car_number.setFont(font_car)
         label_car_number.setFixedSize(100, 120)
-        label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
+        label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         label_car_number.setAlignment(Qt.AlignCenter)
 
         # Combine top layout

@@ -1,7 +1,7 @@
 # scene_station_list.py
 from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt, QPoint, QTimer
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtGui import QPainter, QColor, QPainterPath
 from PyQt5.QtGui import QBrush, QPolygon
 from auto_stretch_label import AutoStretchLabel
@@ -100,7 +100,45 @@ class MovingArrow(QWidget):
         painter.drawPolygon(grey)
 
 class TransferInfo(QWidget):
-    pass
+    def __init__(self, icon_names, station_names, icon_dir="osaka_metro\\transfer_icons\\", parent=None):
+        super().__init__(parent)
+
+        self.icon_names = icon_names
+        self.station_names = station_names
+        self.icon_dir = icon_dir
+
+        layout = QVBoxLayout()
+        layout.setSpacing(0)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setAlignment(Qt.AlignTop)
+
+        family = "Noto Sans JP SemiBold"
+        self.line_font = QFont(family, 12)
+
+        for icon_name, station_name in zip(icon_names, station_names):
+            row = QHBoxLayout()
+            row.setSpacing(0)
+            row.setAlignment(Qt.AlignLeft)
+
+            icon_path = os.path.join(self.icon_dir, ICON_MAP.get(icon_name, ""))
+            print(f"Load path: {icon_path}")
+            icon_label = QLabel()
+            if os.path.exists(icon_path):
+                pixmap = QPixmap(icon_path)
+                icon_label.setPixmap(pixmap.scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+            icon_label.setFixedSize(24, 24)
+            icon_label.setScaledContents(True)
+
+            text_label = AutoStretchLabel(station_name)
+            text_label.setFont(self.line_font)
+            text_label.setFixedSize(96, 24)
+            text_label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: #000000;")
+
+            row.addWidget(icon_label)
+            row.addWidget(text_label)
+            layout.addLayout(row)
+
+        self.setLayout(layout)
 
 class SceneStationList(QWidget):
     def __init__(self):
@@ -173,7 +211,6 @@ class SceneStationList(QWidget):
             elif i == self.progress_index:
                 label = MovingArrow()
                 label.setFixedSize(60, 36)
-                label.setStyleSheet("border: 1px solid gray;")
             else:
                 label = QLabel("")
                 label.setFont(self.min_font)
@@ -248,12 +285,12 @@ class SceneStationList(QWidget):
         self.bottom_layout.addWidget(self.transfer_leftmost)
         self.transfer = []
         for i in range(6):
-            label = QLabel("轉乘")
-            label.setAlignment(Qt.AlignCenter)
-            label.setFixedSize(120, 124)
-            label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
-            self.transfer.append(label)
-            self.bottom_layout.addWidget(label)
+            icon_keys = ["Sennichimae", "Kintetsu", "Nankai"]
+            station_names = ["Sennichimae Line  ", "近鐵線", "南海線"]
+            transfer_info_widget = TransferInfo(icon_keys, station_names)
+            transfer_info_widget.setFixedSize(120, 124)
+            self.transfer.append(transfer_info_widget)
+            self.bottom_layout.addWidget(transfer_info_widget)
         self.transfer_rightmost = QLabel("")
         self.transfer_rightmost.setAlignment(Qt.AlignRight)
         self.transfer_rightmost.setFixedSize(180, 124)
