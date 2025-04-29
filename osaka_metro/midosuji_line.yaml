@@ -1,8 +1,9 @@
 line:
   id: midosuji_line
-  name: 御堂筋線
+  lang: [jp, en, zh-TW]
+  name: [御堂筋線, Midosuji Line, 御堂筋線]
   name_display: Midosuji Line
-  icon: "icons/midosuji.png"
+  icon: "line_midosuji.png"
   color: "#e60012"
   direction: 天王寺 ➜ 江坂
   operator: Osaka Metro

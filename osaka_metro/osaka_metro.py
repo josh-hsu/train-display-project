@@ -13,10 +13,22 @@ ANIMATION_INTERVAL_MS = 1000
 ARROW_WIDGET_WIDTH = 65
 ARROW_WIDGET_HEIGHT = 40
 
+ICON_PATH = "osaka_metro/transfer_icons/"
+ICON_PATH_WINDOWS = "osaka_metro\\transfer_icons\\"
+
 # icon map
 ICON_MAP = {
+    "Chou": "line_chuo",
+    "Imazatosuji": "line_imazatosuji.png",
+    "Midosuji": "line_midosuji.png",
+    "NHTRMRKC": "line_nagahoritsurumiryokuchi.png",
+    "New_Tram": "line_new_tram.png",
+    "Sakaisuji": "line_sakaisuji.png",
+    "Tanimachi": "line_tanimachi.png",
+    "Yotsubashi": "line_yotsubashi.png",
     "Sennichimae": "line_sennichimae.png",
     "Kintetsu": "line_other.png",
     "Nankai": "line_other.png",
-    "Hanshin": "line_other.png"
+    "Hanshin": "line_other.png",
+    "JR": "line_other.png",
 }
