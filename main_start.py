@@ -9,6 +9,7 @@ from PyQt5.QtCore import Qt, QTimer
 
 from scene_manager import SceneManager
 from animated_text_view import AnimatedTextView
+from osaka_metro.osaka_metro import *
 
 class TrainDisplay(QWidget):
     def __init__(self):
@@ -49,13 +50,13 @@ class TrainDisplay(QWidget):
 
         # 目的地（480x240）
         self.textview_destination = AnimatedTextView(220, 60, ["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
-        self.textview_destination.setStyleSheetAll("background-color: #FFFFFF; color: #888888;")
+        self.textview_destination.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
         self.textview_destination.start()
 
         self.textview_now_current = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"])
-        self.textview_now_current.setStyleSheetAll("background-color: #FFFFFF; color: #000000;")
+        self.textview_now_current.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.textview_now_current.setFont(font_large)
         self.textview_now_current.setAlignment(Qt.AlignRight)
         self.textview_now_current.start()
@@ -70,7 +71,7 @@ class TrainDisplay(QWidget):
 
         self.textview_station = AnimatedTextView(620, 120, ["心斎橋", "しんさいばし", "心齋橋", "Shinsaibashi"],
                                                  animation_type="fold", interval_ms=3000)
-        self.textview_station.setStyleSheetAll("background-color: #FFFFFF; border: color: #000000;")
+        self.textview_station.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.textview_station.setFont(font_current_station)
         self.textview_station.setAlignment(Qt.AlignCenter)
         self.textview_station.start()
@@ -81,7 +82,7 @@ class TrainDisplay(QWidget):
         label_car_number = QLabel("5")
         label_car_number.setFont(font_car)
         label_car_number.setFixedSize(100, 120)
-        label_car_number.setStyleSheet("background-color: #FFFFFF; color: #888888;")
+        label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         label_car_number.setAlignment(Qt.AlignCenter)
 
         # Combine top layout
@@ -101,17 +102,17 @@ class TrainDisplay(QWidget):
         # 站號
         label_station_number_left = QLabel("")
         label_station_number_left.setFixedSize(220, 50)
-        label_station_number_left.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
+        label_station_number_left.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         
         label_station_number = QLabel("M19")
         label_station_number.setFont(font_station_number)
         label_station_number.setFixedSize(620, 50)
-        label_station_number.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
+        label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         label_station_number.setAlignment(Qt.AlignCenter)
 
         label_station_number_right = QLabel("")
         label_station_number_right.setFixedSize(100, 50)
-        label_station_number_right.setStyleSheet("background-color: #F61826; color: #FFFFFF;")
+        label_station_number_right.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         
         # 第二大列新增
         second_layout.addWidget(label_station_number_left)
@@ -119,7 +120,7 @@ class TrainDisplay(QWidget):
         second_layout.addWidget(label_station_number_right)
         second_layout.setContentsMargins(0, 0, 0, 0)
         second_layout.setSpacing(0)
-        second_container_layout.setStyleSheet("background-color: #F61826;")
+        second_container_layout.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR};")
         second_container_layout.setLayout(second_layout)
 
         #

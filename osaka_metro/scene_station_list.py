@@ -16,6 +16,7 @@ class SideArrow(QWidget):
     def paintEvent(self, event):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
+        painter.setPen(Qt.NoPen)
         w = self.width()
         h = self.height()
         leftside_arrow_offset = 40
@@ -126,19 +127,19 @@ class SceneStationList(QWidget):
         self.top_layout.setSpacing(0)
         self.sta_leftmost = QLabel("")
         self.sta_leftmost.setFixedSize(90, 150)
-        self.sta_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #FFFFFF;")
+        self.sta_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         self.top_layout.addWidget(self.sta_leftmost)
         self.sta = []
         for i in range(13):
             label = VerticalText(f"")
-            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
+            label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
             label.setFixedSize(60, 150)
             label.setFont(self.sta_font)
             self.top_layout.addWidget(label)
             self.sta.append(label)
         self.sta_rightmost = QLabel("")
         self.sta_rightmost.setFixedSize(90, 150)
-        self.sta_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #FFFFFF;")
+        self.sta_rightmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         self.top_layout.addWidget(self.sta_rightmost)
         self.main_layout.addLayout(self.top_layout)
 
@@ -158,6 +159,7 @@ class SceneStationList(QWidget):
         self.second_layout.setSpacing(0)
         self.progress_leftmost = SideArrow()
         self.progress_leftmost.setFixedSize(90, 36)
+        self.progress_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         self.second_layout.addWidget(self.progress_leftmost)
         self.progress = []
         self.progress_index = 11
@@ -167,7 +169,7 @@ class SceneStationList(QWidget):
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: #FFFFFF;")
+                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
             elif i == self.progress_index:
                 label = MovingArrow()
                 label.setFixedSize(60, 36)
@@ -177,7 +179,7 @@ class SceneStationList(QWidget):
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {GREY_COLOR}; color: #FFFFFF;")
+                label.setStyleSheet(f"background-color: {GREY_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
 
             self.progress.append(label)
             self.second_layout.addWidget(label)
@@ -205,7 +207,7 @@ class SceneStationList(QWidget):
         self.min_leftmost.setAlignment(Qt.AlignCenter)
         self.min_leftmost.setFont(self.min_font)
         self.min_leftmost.setFixedSize(90, 30)
-        self.min_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")  
+        self.min_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")  
         self.third_layout.addWidget(self.min_leftmost)
         self.min = []
         for i in range(12):
@@ -213,14 +215,14 @@ class SceneStationList(QWidget):
             label.setAlignment(Qt.AlignCenter)
             label.setFixedSize(60, 30)
             label.setFont(self.min_font)
-            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")   
+            label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")   
             self.min.append(label)
             self.third_layout.addWidget(label)
         self.min_rightmost = QLabel("")
         self.min_rightmost.setAlignment(Qt.AlignRight)
         self.min_rightmost.setFixedSize(150, 30)
         self.min_rightmost.setFont(self.min_font)
-        self.min_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
+        self.min_rightmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.third_layout.addWidget(self.min_rightmost)
         self.main_layout.addLayout(self.third_layout)
 
@@ -242,20 +244,20 @@ class SceneStationList(QWidget):
         self.transfer_leftmost.setAlignment(Qt.AlignCenter)
         self.transfer_leftmost.setFont(self.sta_font)
         self.transfer_leftmost.setFixedSize(60, 124)
-        self.transfer_leftmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
+        self.transfer_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.bottom_layout.addWidget(self.transfer_leftmost)
         self.transfer = []
         for i in range(6):
             label = QLabel("轉乘")
             label.setAlignment(Qt.AlignCenter)
             label.setFixedSize(120, 124)
-            label.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
+            label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
             self.transfer.append(label)
             self.bottom_layout.addWidget(label)
         self.transfer_rightmost = QLabel("")
         self.transfer_rightmost.setAlignment(Qt.AlignRight)
         self.transfer_rightmost.setFixedSize(180, 124)
-        self.transfer_rightmost.setStyleSheet(f"background-color: #FFFFFF; color: #000000;")
+        self.transfer_rightmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.bottom_layout.addWidget(self.transfer_rightmost)
         self.main_layout.addLayout(self.bottom_layout)
 
