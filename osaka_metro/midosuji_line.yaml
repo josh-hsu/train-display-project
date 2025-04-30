@@ -1,80 +1,364 @@
+---
 line:
-  id: midosuji_line
-  lang: [jp, en, zh-TW]
-  name: [御堂筋線, Midosuji Line, 御堂筋線]
-  name_display: Midosuji Line
-  icon: "line_midosuji.png"
-  color: "#e60012"
-  direction: 天王寺 ➜ 江坂
+  id: Midosuji
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: M
+  name:
+    jp: 御堂筋線
+    jp-hinagana: みどうすじせん
+    en: Midosuji Line
+    zh-TW: 御堂筋線
   operator: Osaka Metro
-  displays:
-    - name: headup left screen
-      size: 1920 * 1080
-      type: oled
-      style: tv
+  directions:
+    - [M13, M22]
+    - [M11, M27]
+    - [M11, M30]
 
   stations:
-    - id: tennoji
-      name: 天王寺
-      name_display: Tennoji
-      next_duration_sec: 120
-      next_distance_km: 2.1
-      platform_number: 1
-      features: [transfer, terminal]
-      announcement_audio: "audio/tennoji.mp3"
-      display_image: "images/tennoji.jpg"
-      remarks: "Transfer to JR Loop Line and Kintetsu Abenobashi"
+    - id: M11
+      line: Midosuji
+      name:
+        jp: 江坂
+        jp-hiragana: えさか
+        en: Esaka
+        zh-TW: 江坂
+      transfer:
+        - [Kita-Osaka Kyuko, null, center]
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M10, 1.5, 180]
+      next_station: [M12, 2.0, 150]
+      door_open: left
 
-    - id: dobutsuenmae
-      name: 動物園前
-      name_display: Dobutsuen-mae
-      next_duration_sec: 90
-      next_distance_km: 1.3
-      platform_number: 2
-      features: [transfer]
-      announcement_audio: "audio/dobutsuenmae.mp3"
-      display_image: "images/dobutsuenmae.jpg"
-      remarks: "Transfer to Sakaisuji Line"
+    - id: M12
+      line: Midosuji
+      name:
+        jp: 東三国
+        jp-hiragana: ひがしみくに
+        en: Higashi-Mikuni
+        zh-TW: 東三國
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M11, 2.0, 150]
+      next_station: [M13, 0.9, 120]
+      door_open: right
 
-    - id: namba
-      name: 難波
-      name_display: Namba
-      next_duration_sec: 100
-      next_distance_km: 1.8
-      platform_number: 3
-      features: [transfer, shopping_area]
-      announcement_audio: "audio/namba.mp3"
-      display_image: "images/namba.jpg"
-      remarks: "Transfer to Nankai, Kintetsu and JR lines"
+    - id: M13
+      line: Midosuji
+      name:
+        jp: 新大阪
+        jp-hiragana: しんおおさか
+        en: Shin-Osaka
+        zh-TW: 新大阪
+      transfer:
+        - [JR, null, center]
+      gate_info:
+        - [north, 1-3]
+        - [center, 4-6]
+        - [south, 7-9]
+      previous_station: [M12, 0.9, 120]
+      next_station: [M14, 0.7, 90]
+      door_open: left
 
-    - id: shinsaibashi
-      name: 心斎橋
-      name_display: Shinsaibashi
-      next_duration_sec: 90
-      next_distance_km: 1.1
-      platform_number: 1
-      features: [shopping_area]
-      announcement_audio: "audio/shinsaibashi.mp3"
-      display_image: "images/shinsaibashi.jpg"
+    - id: M14
+      line: Midosuji
+      name:
+        jp: 西中島南方
+        jp-hiragana: にしなかじまみなみがた
+        en: Nishinakajima-Minamigata
+        zh-TW: 西中島南方
+      transfer:
+        - [Hankyu, null, east]
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M13, 0.7, 90]
+      next_station: [M15, 1.8, 150]
+      door_open: right
 
-    - id: honmachi
-      name: 本町
-      name_display: Honmachi
-      next_duration_sec: 110
-      next_distance_km: 1.7
-      platform_number: 2
-      features: [transfer, business_district]
-      announcement_audio: "audio/honmachi.mp3"
-      display_image: "images/honmachi.jpg"
-      remarks: "Transfer to Chuo Line and Yotsubashi Line"
+    - id: M15
+      line: Midosuji
+      name:
+        jp: 中津
+        jp-hiragana: なかつ
+        en: Nakatsu
+        zh-TW: 中津
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M14, 1.8, 150]
+      next_station: [M16, 1.2, 120]
+      door_open: left
 
-    - id: umeda
-      name: 梅田
-      name_display: Umeda
-      next_duration_sec: 0
-      next_distance_km: 0.0
-      platform_number: 4
-      features: [transfer, terminal]
-      announcement_audio: "audio/umeda.mp3"
-      display_image: "images/umeda.jpg"
-      remarks: "Transfer to JR, Hankyu and Hanshin lines"
+    - id: M16
+      line: Midosuji
+      name:
+        jp: 梅田
+        jp-hiragana: うめだ
+        en: Umeda
+        zh-TW: 梅田
+      transfer:
+        - [Tanimachi, T20, south]
+        - [Yotsubashi, Y11, south]
+        - [JR, null, center]
+        - [Hankyu, null, north]
+        - [Hanshin, null, south]
+      gate_info:
+        - [north, 1-5]
+        - [center, 6-9]
+        - [south, 11-18]
+      previous_station: [M15, 1.2, 120]
+      next_station: [M17, 1.5, 180]
+      door_open: left
+
+    - id: M17
+      line: Midosuji
+      name:
+        jp: 淀屋橋
+        jp-hiragana: よどやばし
+        en: Yodoyabashi
+        zh-TW: 淀屋橋
+      transfer:
+        - [Keihan, null, north]
+      gate_info:
+        - [north, 1-3]
+        - [center-north, 4-5]
+        - [center-south, 6-7]
+        - [south, 8-10]
+      previous_station: [M16, 1.5, 180]
+      next_station: [M18, 1.0, 120]
+      door_open: right
+
+    - id: M18
+      line: Midosuji
+      name:
+        jp: 本町
+        jp-hiragana: ほんまち
+        en: Hommachi
+        zh-TW: 本町
+      transfer:
+        - [Yotsubashi, Y13, west]
+        - [Chuo, C16, east]
+      gate_info:
+        - [north, 1-3]
+        - [center, 4-6]
+        - [south, 7-9]
+      previous_station: [M17, 1.0, 120]
+      next_station: [M19, 0.8, 90]
+      door_open: left
+      
+    - id: M19
+      line: Midosuji
+      name:
+        jp: 心斎橋
+        jp-hiragana: しんさいばし
+        en: Shinsaibashi
+        zh-TW: 心齋橋
+      transfer:
+        - [Yotsubashi, Y14, west]
+        - [Nagahori Tsurumi-ryokuchi, N15, east]
+      gate_info:
+        - [north, 1-3]
+        - [center, 4-6]
+        - [south, 7-9]
+      previous_station: [M18, 0.8, 90]
+      next_station: [M20, 1.0, 120]
+      door_open: right
+
+    - id: M20
+      line: Midosuji
+      name:
+        jp: 難波
+        jp-hiragana: なんば
+        en: Namba
+        zh-TW: 難波
+      transfer:
+        - [Yotsubashi, Y15, west]
+        - [Sennichimae, S16, east]
+        - [JR, null, center]
+        - [Hanshin, null, east]
+        - [Kintetsu, null, east]
+        - [Nankai, null, south]
+      gate_info:
+        - [north, 1-5]
+        - [center, 6-10]
+        - [south, 11-15]
+      previous_station: [M19, 1.0, 120]
+      next_station: [M21, 1.2, 150]
+      door_open: left
+
+    - id: M21
+      line: Midosuji
+      name:
+        jp: 大国町
+        jp-hiragana: だいこくちょう
+        en: Daikokucho
+        zh-TW: 大國町
+      transfer:
+        - [Yotsubashi, Y16, center]
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M20, 1.2, 150]
+      next_station: [M22, 0.8, 90]
+      door_open: right
+
+    - id: M22
+      line: Midosuji
+      name:
+        jp: 動物園前
+        jp-hiragana: どうぶつえんまえ
+        en: Dobutsuen-mae
+        zh-TW: 動物園前
+      transfer:
+        - [Sakaisuji, K19, center]
+        - [JR, null, north]
+        - [Hankai, null, south]
+        - [Nankai, null, south]
+      gate_info:
+        - [north, 1-3]
+        - [center, 4-6]
+        - [south, 7-9]
+      previous_station: [M21, 0.8, 90]
+      next_station: [M23, 1.0, 120]
+      door_open: left
+
+    - id: M23
+      line: Midosuji
+      name:
+        jp: 天王寺
+        jp-hiragana: てんのうじ
+        en: Tennoji
+        zh-TW: 天王寺
+      transfer:
+        - [Tanimachi, T27, east]
+        - [JR, null, center]
+        - [Kintetsu, null, east]
+        - [Hankai, null, south]
+      gate_info:
+        - [north, 1-4]
+        - [center, 5-8]
+        - [south, 9-12]
+      previous_station: [M22, 1.0, 120]
+      next_station: [M24, 1.2, 150]
+      door_open: right
+
+    - id: M24
+      line: Midosuji
+      name:
+        jp: 昭和町
+        jp-hiragana: しょうわちょう
+        en: Showacho
+        zh-TW: 昭和町
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      previous_station: [M23, 1.2, 150]
+      next_station: [M25, 0.8, 90]
+      door_open: left
+
+    - id: M25
+      line: Midosuji
+      name:
+        jp: 西田辺
+        jp-hiragana: にしたなべ
+        en: Nishitanabe
+        zh-TW: 西田邊
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      previous_station: [M24, 0.8, 90]
+      next_station: [M26, 1.0, 120]
+      door_open: right
+
+    - id: M26
+      line: Midosuji
+      name:
+        jp: 長居
+        jp-hiragana: ながい
+        en: Nagai
+        zh-TW: 長居
+      transfer:
+        - [JR, null, center]
+        - [Imazato Liner, null, center]
+      gate_info:
+        - [north, 1-2]
+        - [center, 3-4]
+        - [south, 5-6]
+      previous_station: [M25, 1.0, 120]
+      next_station: [M27, 1.2, 150]
+      door_open: left
+
+    - id: M27
+      line: Midosuji
+      name:
+        jp: あびこ
+        jp-hiragana: あびこ
+        en: Abiko
+        zh-TW: 我孫子
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      previous_station: [M26, 1.2, 150]
+      next_station: [M28, 1.5, 180]
+      door_open: right
+
+    - id: M28
+      line: Midosuji
+      name:
+        jp: 北花田
+        jp-hiragana: きたはなだ
+        en: Kitahanada
+        zh-TW: 北花田
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      previous_station: [M27, 1.5, 180]
+      next_station: [M29, 1.6, 180]
+      door_open: left
+
+    - id: M29
+      line: Midosuji
+      name:
+        jp: 新金岡
+        jp-hiragana: しんかなおか
+        en: Shinkanaoka
+        zh-TW: 新金岡
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      previous_station: [M28, 1.6, 180]
+      next_station: [M30, 1.5, 180]
+      door_open: right
+
+    - id: M30
+      line: Midosuji
+      name:
+        jp: なかもず
+        jp-hiragana: なかもず
+        en: Nakamozu
+        zh-TW: 中百舌鳥
+      transfer:
+        - [Nankai, null, east]
+        - [Semboku, null, east]
+      gate_info:
+        - [north, 1-3]
+        - [center, 4-6]
+        - [south, 7-9]
+      previous_station: [M29, 1.5, 180]
+      next_station: [null, null, null]
+      door_open: left

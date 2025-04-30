@@ -1,7 +1,7 @@
 import sys, os
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout,
-    QStackedWidget
+    QStackedWidget, QPushButton
 )
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
@@ -10,14 +10,21 @@ from PyQt5.QtCore import Qt, QTimer
 from scene_manager import SceneManager
 from animated_text_view import AnimatedTextView
 from osaka_metro.osaka_metro import *
+from line_info import LineInfo
 
 class TrainDisplay(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("車廂顯示器模擬")
-        self.setFixedSize(960, 512)
+        self.setFixedSize(960, 512 + 50)
         self.setStyleSheet("background-color: #ffffff;")    
         self.initUI()
+
+    def initLineInfo(self):
+        line_file = MIDOSUJI_LINE_INFO_WINDOWS
+        if (os.name == "posix"):
+            line_file = MIDOSUJI_LINE_INFO
+        self.line_info = LineInfo(line_file)
 
     def initUI(self):
         os_is_posix = False
@@ -32,11 +39,13 @@ class TrainDisplay(QWidget):
             font_current_station = QFont(family, 90, QFont.Bold)
             font_car = QFont(family, 48, QFont.Bold)
             font_station_number = QFont(family, 48, QFont.Bold)
+            debug_font = QFont(family, 16, QFont.Bold)
         else:
             font_large = QFont(family_win, 28)
             font_current_station = QFont(family_win, 78)
             font_car = QFont(family_win, 42)
             font_station_number = QFont(family_win, 36)
+            debug_font = QFont(family, 14, QFont.Bold)
 
         # 第一大列
         top_layout = QHBoxLayout()
@@ -151,6 +160,30 @@ class TrainDisplay(QWidget):
         self.carousel_timer.start(7000)
 
         #
+        # Debug 階段
+        #
+        debug_layout = QHBoxLayout()
+        debug_layout.setContentsMargins(0, 0, 0, 0)
+        debug_layout.setAlignment(Qt.AlignLeft)
+
+        debug_text = QLabel("Debug message: testing ...")
+        debug_text.setFont(debug_font)
+        debug_text.setFixedSize(400, 50)
+        debug_text.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+
+        debug_button = QPushButton("Next stage")
+        debug_button.setFixedSize(200, 50)
+        debug_button.clicked.connect(self.debug_next_stage)
+
+        debug_check_state = QPushButton("Check state")
+        debug_check_state.setFixedSize(200, 50)
+        debug_check_state.clicked.connect(self.debug_check_state)
+        
+        debug_layout.addWidget(debug_text)
+        debug_layout.addWidget(debug_button)
+        debug_layout.addWidget(debug_check_state)
+
+        #
         # 主垂直布局
         #
         main_layout = QVBoxLayout()
@@ -159,6 +192,7 @@ class TrainDisplay(QWidget):
         main_layout.addLayout(top_layout)
         main_layout.addWidget(second_container_layout)
         main_layout.addWidget(central)
+        main_layout.addLayout(debug_layout)
 
         self.setLayout(main_layout)
 
@@ -199,6 +233,11 @@ class TrainDisplay(QWidget):
         self.animation_group.finished.connect(on_finished)
         self.animation_group.start()
 
+    def debug_next_stage(self):
+        pass
+
+    def debug_check_state(self):
+        pass
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -15,6 +15,8 @@ ARROW_WIDGET_HEIGHT = 40
 
 ICON_PATH = "osaka_metro/transfer_icons/"
 ICON_PATH_WINDOWS = "osaka_metro\\transfer_icons\\"
+MIDOSUJI_LINE_INFO = "osaka_metro/midosuji_line.yaml"
+MIDOSUJI_LINE_INFO_WINDOWS = "osaka_metro\\midosuji_line.yaml"
 
 # icon map
 ICON_MAP = {
