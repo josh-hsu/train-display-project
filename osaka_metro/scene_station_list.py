@@ -100,7 +100,7 @@ class MovingArrow(QWidget):
         painter.drawPolygon(grey)
 
 class TransferInfo(QWidget):
-    def __init__(self, icon_names, station_names, icon_dir="osaka_metro\\transfer_icons\\", parent=None):
+    def __init__(self, icon_names, station_names, icon_dir=ICON_PATH, parent=None):
         super().__init__(parent)
 
         self.icon_names = icon_names
@@ -112,8 +112,7 @@ class TransferInfo(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setAlignment(Qt.AlignTop)
 
-        family = "Noto Sans JP SemiBold"
-        self.line_font = QFont(family, 12)
+        self.line_font = QFont(FONT_NAME, 12)
 
         for icon_name, station_name in zip(icon_names, station_names):
             row = QHBoxLayout()
