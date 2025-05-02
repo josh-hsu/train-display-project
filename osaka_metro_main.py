@@ -30,7 +30,7 @@ class OsakaMetroTrainDisplay(QWidget):
         self.route = self.line_info.get_current_route()
 
     def initRouteDirector(self, line_info: LineInfo = None):
-        self.train_state = -1
+        self.train_state = STATION_STATE_READY_TO_DEPART
         self.director = RouteDirector(line_info, self.route, interval_sec=5)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
@@ -215,10 +215,12 @@ class OsakaMetroTrainDisplay(QWidget):
         line_info = self.line_info
         current_station_id = line_info.get_current_route()[0]
         current_station = line_info.get_station(current_station_id)
+        termianl_station_id = line_info.get_current_route()[-1]
+        termianl_station = line_info.get_station(termianl_station_id)
         state = STATION_STATE_READY_TO_DEPART
-        self.textview_now_state.setText([f"{state}"])
+        self.textview_now_state.setText(NOW_STATE_MAP[f"{state}"])
         self.label_station_number.setText(f"{current_station_id}")
-        self.textview_station.setText(list(current_station.name.values()))
+        self.textview_station.setText(list(termianl_station.name.values()))
         self.scene_manager.notify_all_scenes(line_info, current_station, state)
 
     def update_train_state(self, station_id, state):

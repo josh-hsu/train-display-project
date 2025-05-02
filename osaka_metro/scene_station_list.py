@@ -1,5 +1,5 @@
 # scene_station_list.py
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QLayout
 from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtGui import QPainter, QColor, QPainterPath
@@ -212,35 +212,9 @@ class SceneStationList(QWidget):
         self.second_layout = QHBoxLayout()
         self.second_layout.setContentsMargins(0, 0, 0, 0)
         self.second_layout.setSpacing(0)
-        self.progress_leftmost = SideArrow()
-        self.progress_leftmost.setFixedSize(90, 36)
-        self.progress_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
-        self.second_layout.addWidget(self.progress_leftmost)
-        self.progress = []
         self.progress_index = 11
-        for i in range(13):
-            if i < self.progress_index:
-                label = AutoStretchLabel("")
-                label.setFont(self.min_font)
-                label.setAlignment(Qt.AlignCenter)
-                label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
-            elif i == self.progress_index:
-                label = MovingArrow()
-                label.setFixedSize(60, 36)
-            else:
-                label = QLabel("")
-                label.setFont(self.min_font)
-                label.setAlignment(Qt.AlignCenter)
-                label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {GREY_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
-
-            self.progress.append(label)
-            self.second_layout.addWidget(label)
-        self.progress_rightmost = QLabel()
-        self.progress_rightmost.setFixedSize(90, 36)
-        self.progress_rightmost.setStyleSheet(f"background-color: {GREY_COLOR};")
-        self.second_layout.addWidget(self.progress_rightmost)
+        self.progress = []
+        self.init_progress_bar(self.second_layout)
         self.main_layout.addLayout(self.second_layout)
 
         # 3rd layout: minute time
@@ -297,6 +271,55 @@ class SceneStationList(QWidget):
 
         self.setLayout(self.main_layout)
 
+    def clear_layout(self, layout: QLayout):
+        """安全刪除 layout 中所有 widgets 和子 layouts"""
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            child_layout = item.layout()
+
+            if widget is not None:
+                widget.setParent(None)
+                widget.deleteLater()
+
+            elif child_layout is not None:
+                self.clear_layout(child_layout)
+                child_layout.deleteLater()
+
+    def init_progress_bar(self, layout: QHBoxLayout):
+        # 清除 stack_layout 中的所有 widget
+        self.clear_layout(layout)
+        
+        self.progress_leftmost = SideArrow()
+        self.progress_leftmost.setFixedSize(90, 36)
+        self.progress_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+        layout.addWidget(self.progress_leftmost)
+        self.progress = []
+        for i in range(13):
+            if i < self.progress_index:
+                label = AutoStretchLabel("")
+                label.setFont(self.min_font)
+                label.setAlignment(Qt.AlignCenter)
+                label.setFixedSize(60, 36)
+                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+                self.progress.append(label)
+            elif i == self.progress_index:
+                label = MovingArrow()
+                label.setFixedSize(60, 36)
+            else:
+                label = AutoStretchLabel("")
+                label.setFont(self.min_font)
+                label.setAlignment(Qt.AlignCenter)
+                label.setFixedSize(60, 36)
+                label.setStyleSheet(f"background-color: {GREY_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+                self.progress.append(label)
+
+            layout.addWidget(label)
+        self.progress_rightmost = QLabel()
+        self.progress_rightmost.setFixedSize(90, 36)
+        self.progress_rightmost.setStyleSheet(f"background-color: {GREY_COLOR};")
+        layout.addWidget(self.progress_rightmost)
+
     def get_seven_stations_with_index(self, terminal, start, current):
         direction = 1 if terminal > start else -1  # 判斷方向
         stations = []
@@ -334,6 +357,11 @@ class SceneStationList(QWidget):
         end_id_num = extract_first_integer(end_id)
         current_id_num = extract_first_integer(self.display_station.id)
         seven_stations_num, current_index = self.get_seven_stations_with_index(end_id_num, start_id_num, current_id_num)
+        
+        if current_index < 5:
+            self.progress_index = 11 - (5 - current_index) * 2
+        self.init_progress_bar(self.second_layout)
+        
         for i in range(6):
             j = seven_stations_num[i]
             station_id = index_to_station_id(self.line_info.id_prefix, j)
@@ -343,8 +371,12 @@ class SceneStationList(QWidget):
             #print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
             if station:
                 self.sta[i * 2].setText(format_train_progress_station_name(station.name["jp"]))
-                self.progress[i * 2].setText(station_id)
                 self.min[i * 2].setText(str(station.next_station[2]))
+                if i * 2 < self.progress_index:
+                    self.progress[i * 2].setText(station_id)
+                else:
+                    self.progress[i * 2 - 1].setText(station_id)
+                #self.progress[i * 2].setText(station_id)
                 self.transfer_info_view[i].setData(transfer.get_station_list(), [TRANSFER_MAP[name] for name in transfer.get_station_list()])
             else:
                 self.sta[i*2].setText("???")
@@ -355,7 +387,7 @@ class SceneStationList(QWidget):
         self.min[11].setText("分")
         if station:
             self.sta[12].setText(station.name["jp"])
-            self.progress[self.progress_index+1].setText(station_id)
+            self.progress[-1].setText(station_id)
         
         #for i in range(6):
         #    self.transfer[i].setText("i")
