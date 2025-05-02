@@ -24,6 +24,20 @@ else:
     MIDOSUJI_LINE_INFO = "osaka_metro\\midosuji_line.yaml"
     FONT_NAME = "Noto Sans JP SemiBold"
 
+STATION_STATE_APPROACH = 0         # 車即將到達下一站
+STATION_STATE_ARRIVED = 1          # 車在車站
+STATION_STATE_NEXT = 2             # 車開往下一站
+STATION_STATE_READY_TO_DEPART = 3  # 車準備在起站發車
+STATION_STATE_IN_TERMINAL = 4      # 車在終點站
+
+NOW_STATE_MAP = {
+    "0": ["まもなく", "まもなく", "Arriving at", "即將到達"],
+    "2": ["次は", "つぎは", "Next", "下一站"],
+    "1": ["ただいま", "ただいま", "Now stopping at", "這一站"],
+    "3": ["", "", "For", "開往"],
+    "4": ["", "", "Arrived at", "已到達"],
+}
+
 # icon map
 ICON_MAP = {
     "Chuo": "line_chuo.png",

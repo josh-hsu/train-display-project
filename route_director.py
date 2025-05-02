@@ -8,7 +8,6 @@ from line_info import *
 ###
 class RouteDirector(QObject):
     report = pyqtSignal(object)   # 發送目前站 StationInfo
-    arrived_terminal = pyqtSignal()        # 抵達終點
 
     def __init__(self, line_info, route, interval_sec=10):
         super().__init__()
@@ -126,9 +125,6 @@ class RouteDirector(QObject):
             station, state = self.get_train_state_in_route(self.line_info, self.route, self.elapsed_time)
             self.report.emit([station, state])  # 通知 UI 換站
             time.sleep(self.interval)
-
-        if self._running:
-            self.arrived_terminal.emit()
         self._running = False
 
 # Usage

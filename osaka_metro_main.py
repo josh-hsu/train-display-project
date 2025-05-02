@@ -30,6 +30,7 @@ class OsakaMetroTrainDisplay(QWidget):
         self.route = self.line_info.get_current_route()
 
     def initRouteDirector(self, line_info: LineInfo = None):
+        self.train_state = -1
         self.director = RouteDirector(line_info, self.route, interval_sec=5)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
@@ -223,19 +224,19 @@ class OsakaMetroTrainDisplay(QWidget):
     def update_train_state(self, station_id, state):
         line_info = self.line_info
         station = line_info.get_station(station_id)
-        self.textview_now_state.setText([f"{state}"])
         self.label_station_number.setText(f"{station.id}")
         self.textview_station.setText(list(station.name.values()))
+        self.textview_now_state.setText(NOW_STATE_MAP[f"{state}"])
         self.scene_manager.notify_all_scenes(line_info, station, state)
 
     def route_director_callback(self, object):
         station = object[0]
         state = object[1]
-        print(f"Route Director Callback: {station}, {state}")
-        self.update_train_state(station, state)
+        if state is not self.train_state:
+            print(f"Route Director Callback: {station}, {state}")
+            self.update_train_state(station, state)
+        self.train_state = state
     
-    
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = OsakaMetroTrainDisplay()
