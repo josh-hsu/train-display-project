@@ -35,8 +35,11 @@ NOW_STATE_MAP = {
     "2": ["次は", "つぎは", "Next", "下一站"],
     "1": ["ただいま", "ただいま", "Now stopping at", "這一站"],
     "3": ["", "", "For", "開往"],
-    "4": ["", "", "Arrived at", "已到達"],
+    "4": ["終点", "しゅうてん", "Arrived at", "已到達"],
 }
+
+CAR_INST_TOP = ["", "", "Car No.", ""]
+CAR_INST_BOT = ["号車", "号車", "", "號車廂"]
 
 # icon map
 ICON_MAP = {

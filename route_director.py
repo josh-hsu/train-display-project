@@ -15,7 +15,7 @@ class RouteDirector(QObject):
         self.route = route             # [M13, M25]
         self.interval = interval_sec
         self._running = False
-        self.elapsed_time = 1000
+        self.elapsed_time = 0
 
         self.thread = QThread()
         self.moveToThread(self.thread)

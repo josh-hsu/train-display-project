@@ -26,12 +26,12 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initLineInfo(self, line_file):
         self.line_info = LineInfo(line_file)
-        self.line_info.set_route(3) # select route 1
+        self.line_info.set_route(4) # select route 1
         self.route = self.line_info.get_current_route()
 
     def initRouteDirector(self, line_info: LineInfo = None):
         self.train_state = STATION_STATE_READY_TO_DEPART
-        self.director = RouteDirector(line_info, self.route, interval_sec=5)
+        self.director = RouteDirector(line_info, self.route, interval_sec=10)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
 
@@ -39,15 +39,17 @@ class OsakaMetroTrainDisplay(QWidget):
         # 字體預設
         family = FONT_NAME
 
-        if (os):
+        if os.name == "posix":
             font_large = QFont(family, 32, QFont.Bold)
             font_current_station = QFont(family, 90, QFont.Bold)
             font_car = QFont(family, 48, QFont.Bold)
+            font_car_instructions = QFont(family, 16, QFont.Bold)
             font_station_number = QFont(family, 48, QFont.Bold)
         else:
             font_large = QFont(family, 28)
             font_current_station = QFont(family, 78)
             font_car = QFont(family, 42)
+            font_car_instructions = QFont(family, 16)
             font_station_number = QFont(family, 36)
 
         # 第一大列
@@ -61,13 +63,13 @@ class OsakaMetroTrainDisplay(QWidget):
         top_left_layout.setSpacing(0)
 
         # 目的地（480x240）
-        self.textview_destination = AnimatedTextView(220, 60, ["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
+        self.textview_destination = AnimatedTextView(220, 60, ["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"], animation_type="none")
         self.textview_destination.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
         self.textview_destination.start()
 
-        self.textview_now_state = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"])
+        self.textview_now_state = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"], animation_type="fold")
         self.textview_now_state.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.textview_now_state.setFont(font_large)
         self.textview_now_state.setAlignment(Qt.AlignRight)
@@ -91,16 +93,32 @@ class OsakaMetroTrainDisplay(QWidget):
         center_layout.addWidget(self.textview_station.widget())
 
         # 車廂編號（200x240）
+        right_layout = QVBoxLayout()
+        right_layout.setContentsMargins(0, 0, 0, 0)
+        right_layout.setSpacing(0)
+        self.label_top_car_number = AnimatedTextView(100, 20, CAR_INST_TOP, animation_type="none")
+        self.label_top_car_number.setFont(font_car_instructions)
+        self.label_top_car_number.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_top_car_number.setAlignment(Qt.AlignCenter)
+        self.label_top_car_number.start()
+        right_layout.addWidget(self.label_top_car_number.widget())
         self.label_car_number = QLabel("5")
         self.label_car_number.setFont(font_car)
-        self.label_car_number.setFixedSize(100, 120)
+        self.label_car_number.setFixedSize(100, 60)
         self.label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         self.label_car_number.setAlignment(Qt.AlignCenter)
-
+        self.label_car_number.setContentsMargins(0, 0, 0, 0)
+        right_layout.addWidget(self.label_car_number)
+        self.label_bottom_car_number = AnimatedTextView(100, 20, CAR_INST_BOT, animation_type="none")  
+        self.label_bottom_car_number.setFont(font_car_instructions)
+        self.label_bottom_car_number.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_bottom_car_number.setAlignment(Qt.AlignCenter)
+        self.label_bottom_car_number.start()
+        right_layout.addWidget(self.label_bottom_car_number.widget())
         # Combine top layout
         top_layout.addLayout(top_left_layout)
         top_layout.addLayout(center_layout)
-        top_layout.addWidget(self.label_car_number)
+        top_layout.addLayout(right_layout)
 
         #
         # 第二大列
