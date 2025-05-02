@@ -71,7 +71,7 @@ class TrainDisplay(QWidget):
         pass
     
     def debug_check_state(self):
-        self.operator_main.update_train_state()
+        pass
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

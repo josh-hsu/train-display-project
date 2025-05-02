@@ -165,7 +165,12 @@ class TransferInfo(QWidget):
 class SceneStationList(QWidget):
     def __init__(self):
         super().__init__()
-
+        self.line_info = None
+        self.display_station = None
+        self.station_state = STATION_STATE_READY_TO_DEPART
+        self.init_ui()
+    
+    def init_ui(self):
         if (os.name == "posix"):
             family = "Noto Sans JP"
             self.sta_font = QFont(family, 32, QFont.Bold)
@@ -203,16 +208,6 @@ class SceneStationList(QWidget):
         self.top_layout.addWidget(self.sta_rightmost)
         self.main_layout.addLayout(self.top_layout)
 
-        #######
-        self.sta[0].setText("西中島南方")
-        self.sta[2].setText("　中　津")
-        self.sta[4].setText("　梅　田")
-        self.sta[6].setText("　淀屋橋")
-        self.sta[8].setText("　本　町")
-        self.sta[10].setText("　心斎橋")
-        self.sta[12].setText("　なんば")
-        #######
-
         # 2nd layout: progress bar
         self.second_layout = QHBoxLayout()
         self.second_layout.setContentsMargins(0, 0, 0, 0)
@@ -248,16 +243,6 @@ class SceneStationList(QWidget):
         self.second_layout.addWidget(self.progress_rightmost)
         self.main_layout.addLayout(self.second_layout)
 
-        #######
-        self.progress[0].setText("M14")
-        self.progress[2].setText("M15")
-        self.progress[4].setText("M16")
-        self.progress[6].setText("M17")
-        self.progress[8].setText("M18")
-        self.progress[10].setText("M19")
-        self.progress[self.progress_index+1].setText("M20")
-        #######
-
         # 3rd layout: minute time
         self.third_layout = QHBoxLayout()
         self.third_layout.setContentsMargins(0, 0, 0, 0)
@@ -285,16 +270,6 @@ class SceneStationList(QWidget):
         self.third_layout.addWidget(self.min_rightmost)
         self.main_layout.addLayout(self.third_layout)
 
-        ########
-        self.min[0].setText("14")
-        self.min[2].setText("11")
-        self.min[4].setText("9")
-        self.min[6].setText("6")
-        self.min[8].setText("4")
-        self.min[10].setText("2")
-        self.min[11].setText("分")
-        ########
-
         # 4th layout
         self.bottom_layout = QHBoxLayout()
         self.bottom_layout.setContentsMargins(0, 0, 0, 0)
@@ -321,15 +296,25 @@ class SceneStationList(QWidget):
         self.main_layout.addLayout(self.bottom_layout)
 
         self.setLayout(self.main_layout)
-    
+
     def get_seven_stations_with_index(self, terminal, start, current):
         direction = 1 if terminal > start else -1  # 判斷方向
         stations = []
-
-        for i in range(5, -2, -1):  # 從前五站到前一站，共七站
-            station = current + direction * i
-            if (direction == 1 and station <= terminal) or (direction == -1 and station >= terminal):
+        
+        if start == current:
+            for i in range(6, -1, -1):
+                station = current + direction * i
+                if (direction == 1 and station <= terminal) or (direction == -1 and station >= terminal):
+                    stations.append(station)
+        elif abs(terminal - current) <= 5:
+            for i in range(7):
+                station = terminal - direction * i
                 stations.append(station)
+        else:
+            for i in range(5, -2, -1):  # 從前五站到前一站，共七站
+                station = current + direction * i
+                if (direction == 1 and station <= terminal) or (direction == -1 and station >= terminal):
+                    stations.append(station)
 
         # 找出 current 在 stations 中的位置（理論上一定會在內）
         try:
@@ -355,22 +340,22 @@ class SceneStationList(QWidget):
             station = self.line_info.get_station(station_id)
             transfer = station.transfer
             
-            print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
+            #print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
             if station:
                 self.sta[i * 2].setText(format_train_progress_station_name(station.name["jp"]))
                 self.progress[i * 2].setText(station_id)
                 self.min[i * 2].setText(str(station.next_station[2]))
-                self.transfer_info_view[i].setData(transfer.get_station_list(), transfer.get_station_list())
+                self.transfer_info_view[i].setData(transfer.get_station_list(), [TRANSFER_MAP[name] for name in transfer.get_station_list()])
             else:
                 self.sta[i*2].setText("???")
                 
         # 更新最右邊的站名
         station_id = index_to_station_id(self.line_info.id_prefix, seven_stations_num[6])
         station = self.line_info.get_station(station_id)
-        print(f"station_id: {station_id}, station: {station}")
-        self.sta[12].setText(station.name["jp"])
         self.min[11].setText("分")
-        self.progress[self.progress_index+1].setText(station_id)
+        if station:
+            self.sta[12].setText(station.name["jp"])
+            self.progress[self.progress_index+1].setText(station_id)
         
         #for i in range(6):
         #    self.transfer[i].setText("i")

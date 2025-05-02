@@ -6,6 +6,8 @@ STATION_STATE_NEXT = 2             # 車開往下一站
 STATION_STATE_READY_TO_DEPART = 3  # 車準備在起站發車
 STATION_STATE_IN_TERMINAL = 4      # 車在終點站
 
+DEPART_READY_TIME_SEC = 30
+
 def extract_first_integer(s):
     match = re.search(r'\d+', s)
     return int(match.group()) if match else None
@@ -127,8 +129,11 @@ class LineInfo:
     def get_all_stations(self):
         return self.stations
     
-    def get_routes(self, route):
-        pass
+    def get_route(self, route):
+        return self.directions[route] if route < len(self.directions) else None
+    
+    def get_current_route(self):
+        return self.directions[self.route] if self.route < len(self.directions) else None
     
     def set_route(self, direction_index):
         self.route = direction_index

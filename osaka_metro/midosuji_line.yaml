@@ -10,9 +10,12 @@ line:
     zh-TW: 御堂筋線
   operator: Osaka Metro
   directions:
-    - [M22, M13]
+    - [M13, M22]
     - [M11, M27]
     - [M11, M30]
+    - [M22, M13]
+    - [M27, M11]
+    - [M30, M11]
 
   stations:
     - id: M11
