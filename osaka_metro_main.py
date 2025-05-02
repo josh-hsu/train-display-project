@@ -1,7 +1,7 @@
 import sys, os
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QVBoxLayout, QHBoxLayout,
-    QStackedWidget, QPushButton
+    QStackedWidget
 )
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
@@ -10,19 +10,20 @@ from PyQt5.QtCore import Qt, QTimer
 from scene_manager import SceneManager
 from animated_text_view import AnimatedTextView
 from osaka_metro.osaka_metro import *
-from line_info import LineInfo
+from line_info import *
 
 class OsakaMetroTrainDisplay(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("車廂顯示器模擬")
         self.setFixedSize(960, 512)
-        self.setStyleSheet("background-color: #ffffff;")    
+        self.setStyleSheet("background-color: #ffffff;")
+        self.initLineInfo(MIDOSUJI_LINE_INFO)
+        self.setWindowTitle(f"車廂顯示器模擬 - {self.line_info.name['zh-TW']}")
         self.initUI()
 
-    def initLineInfo(self):
-        line_file = MIDOSUJI_LINE_INFO
+    def initLineInfo(self, line_file):
         self.line_info = LineInfo(line_file)
+        self.line_info.set_route(0)
 
     def initUI(self):
         # 字體預設
@@ -33,13 +34,11 @@ class OsakaMetroTrainDisplay(QWidget):
             font_current_station = QFont(family, 90, QFont.Bold)
             font_car = QFont(family, 48, QFont.Bold)
             font_station_number = QFont(family, 48, QFont.Bold)
-            debug_font = QFont(family, 16, QFont.Bold)
         else:
             font_large = QFont(family, 28)
             font_current_station = QFont(family, 78)
             font_car = QFont(family, 42)
             font_station_number = QFont(family, 36)
-            debug_font = QFont(family, 14, QFont.Bold)
 
         # 第一大列
         top_layout = QHBoxLayout()
@@ -58,14 +57,14 @@ class OsakaMetroTrainDisplay(QWidget):
         self.textview_destination.setAlignment(Qt.AlignRight)
         self.textview_destination.start()
 
-        self.textview_now_current = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"])
-        self.textview_now_current.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
-        self.textview_now_current.setFont(font_large)
-        self.textview_now_current.setAlignment(Qt.AlignRight)
-        self.textview_now_current.start()
+        self.textview_now_state = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"])
+        self.textview_now_state.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
+        self.textview_now_state.setFont(font_large)
+        self.textview_now_state.setAlignment(Qt.AlignRight)
+        self.textview_now_state.start()
 
         top_left_layout.addWidget(self.textview_destination.widget())
-        top_left_layout.addWidget(self.textview_now_current.widget())
+        top_left_layout.addWidget(self.textview_now_state.widget())
 
         # 現在/下一站（1280x100）
         center_layout = QVBoxLayout()
@@ -82,16 +81,16 @@ class OsakaMetroTrainDisplay(QWidget):
         center_layout.addWidget(self.textview_station.widget())
 
         # 車廂編號（200x240）
-        label_car_number = QLabel("5")
-        label_car_number.setFont(font_car)
-        label_car_number.setFixedSize(100, 120)
-        label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
-        label_car_number.setAlignment(Qt.AlignCenter)
+        self.label_car_number = QLabel("5")
+        self.label_car_number.setFont(font_car)
+        self.label_car_number.setFixedSize(100, 120)
+        self.label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_car_number.setAlignment(Qt.AlignCenter)
 
         # Combine top layout
         top_layout.addLayout(top_left_layout)
         top_layout.addLayout(center_layout)
-        top_layout.addWidget(label_car_number)
+        top_layout.addWidget(self.label_car_number)
 
         #
         # 第二大列
@@ -107,11 +106,11 @@ class OsakaMetroTrainDisplay(QWidget):
         label_station_number_left.setFixedSize(220, 50)
         label_station_number_left.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
         
-        label_station_number = QLabel("M19")
-        label_station_number.setFont(font_station_number)
-        label_station_number.setFixedSize(620, 50)
-        label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
-        label_station_number.setAlignment(Qt.AlignCenter)
+        self.label_station_number = QLabel("M19")
+        self.label_station_number.setFont(font_station_number)
+        self.label_station_number.setFixedSize(620, 50)
+        self.label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+        self.label_station_number.setAlignment(Qt.AlignCenter)
 
         label_station_number_right = QLabel("")
         label_station_number_right.setFixedSize(100, 50)
@@ -119,7 +118,7 @@ class OsakaMetroTrainDisplay(QWidget):
         
         # 第二大列新增
         second_layout.addWidget(label_station_number_left)
-        second_layout.addWidget(label_station_number)
+        second_layout.addWidget(self.label_station_number)
         second_layout.addWidget(label_station_number_right)
         second_layout.setContentsMargins(0, 0, 0, 0)
         second_layout.setSpacing(0)
@@ -201,6 +200,16 @@ class OsakaMetroTrainDisplay(QWidget):
 
         self.animation_group.finished.connect(on_finished)
         self.animation_group.start()
+
+    def update_train_state(self):
+        line_info = self.line_info
+        current_station_id = "M21"
+        current_station = line_info.get_station(current_station_id)
+        state = STATION_STATE_APPROACH
+        self.textview_now_state.setText([f"{state}"])
+        self.label_station_number.setText(f"{current_station_id}")
+        self.textview_station.setText(list(current_station.name.values()))
+        self.scene_manager.notify_all_scenes(line_info, current_station, state)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

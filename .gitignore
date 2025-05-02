@@ -1,3 +1,12 @@
-*.pyc
 *.DS_Store
+# 忽略 Python 編譯檔
+*.pyc
+*.pyo
+*.pyd
+
+# 忽略 __pycache__ 資料夾
 __pycache__/
+**/__pycache__/
+
+# 忽略所有 `.pyc` 檔案（包括子目錄）
+**/*.pyc

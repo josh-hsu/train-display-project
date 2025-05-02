@@ -28,7 +28,7 @@ class TrainDisplay(QWidget):
         debug_font = QFont(family, 14, QFont.Bold)
         
         # Osaka Metro Main view
-        osaka_main = OsakaMetroTrainDisplay()
+        self.operator_main = OsakaMetroTrainDisplay()
 
         #
         # Debug 階段
@@ -44,10 +44,12 @@ class TrainDisplay(QWidget):
 
         debug_button = QPushButton("Next stage")
         debug_button.setFixedSize(200, 50)
+        debug_button.setStyleSheet("background-color: #ffffff; color: #000000;")
         debug_button.clicked.connect(self.debug_next_stage)
 
         debug_check_state = QPushButton("Check state")
         debug_check_state.setFixedSize(200, 50)
+        debug_check_state.setStyleSheet("background-color: #ffffff; color: #000000;")
         debug_check_state.clicked.connect(self.debug_check_state)
         
         debug_layout.addWidget(debug_text)
@@ -60,7 +62,7 @@ class TrainDisplay(QWidget):
         main_layout = QVBoxLayout()
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
-        main_layout.addWidget(osaka_main)
+        main_layout.addWidget(self.operator_main)
         main_layout.addLayout(debug_layout)
 
         self.setLayout(main_layout)
@@ -69,7 +71,7 @@ class TrainDisplay(QWidget):
         pass
     
     def debug_check_state(self):
-        pass
+        self.operator_main.update_train_state()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

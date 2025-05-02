@@ -26,17 +26,21 @@ else:
 
 # icon map
 ICON_MAP = {
-    "Chou": "line_chuo",
+    "Chuo": "line_chuo.png",
     "Imazatosuji": "line_imazatosuji.png",
     "Midosuji": "line_midosuji.png",
-    "NHTRMRKC": "line_nagahoritsurumiryokuchi.png",
-    "New_Tram": "line_new_tram.png",
+    "Nagahori Tsurumi-ryokuchi": "line_nagahoritsurumiryokuchi.png",
+    "New Tram": "line_new_tram.png",
     "Sakaisuji": "line_sakaisuji.png",
     "Tanimachi": "line_tanimachi.png",
     "Yotsubashi": "line_yotsubashi.png",
     "Sennichimae": "line_sennichimae.png",
     "Kintetsu": "line_other.png",
     "Nankai": "line_other.png",
+    "Hankyu": "line_other.png",
+    "Keihan": "line_other.png",
     "Hanshin": "line_other.png",
     "JR": "line_other.png",
+    "Kita-Osaka Kyuko": "line_other.png",
+    "Imazato Liner": "line_other.png",
 }

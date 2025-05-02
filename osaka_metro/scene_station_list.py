@@ -8,6 +8,7 @@ from auto_stretch_label import AutoStretchLabel
 from vertical_label import VerticalText
 import os
 from osaka_metro.osaka_metro import *
+from line_info import *
 
 class SideArrow(QWidget):
     def __init__(self, parent=None):
@@ -102,25 +103,35 @@ class MovingArrow(QWidget):
 class TransferInfo(QWidget):
     def __init__(self, icon_names, station_names, icon_dir=ICON_PATH, parent=None):
         super().__init__(parent)
-
-        self.icon_names = icon_names
-        self.station_names = station_names
         self.icon_dir = icon_dir
-
-        layout = QVBoxLayout()
-        layout.setSpacing(0)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setAlignment(Qt.AlignTop)
-
         self.line_font = QFont(FONT_NAME, 12)
 
+        self.layout = QVBoxLayout()
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.layout.setAlignment(Qt.AlignTop)
+
+        self.setLayout(self.layout)
+        self.setData(icon_names, station_names)
+
+    def setData(self, icon_names, station_names):
+        # 清空原本 layout 的內容
+        while self.layout.count():
+            item = self.layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+            elif item.layout():
+                self._delete_layout(item.layout())
+
+        # 重新加入新的圖示與站名
         for icon_name, station_name in zip(icon_names, station_names):
             row = QHBoxLayout()
             row.setSpacing(0)
             row.setAlignment(Qt.AlignLeft)
+            row.setContentsMargins(0, 0, 0, 0)
 
             icon_path = os.path.join(self.icon_dir, ICON_MAP.get(icon_name, ""))
-            print(f"Load path: {icon_path}")
             icon_label = QLabel()
             if os.path.exists(icon_path):
                 pixmap = QPixmap(icon_path)
@@ -133,11 +144,23 @@ class TransferInfo(QWidget):
             text_label.setFixedSize(96, 24)
             text_label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: #000000;")
 
+            row_widget = QWidget()
+            row_widget.setLayout(row)
             row.addWidget(icon_label)
             row.addWidget(text_label)
-            layout.addLayout(row)
 
-        self.setLayout(layout)
+            self.layout.addWidget(row_widget)
+
+    def _delete_layout(self, layout):
+        """遞迴清理巢狀 layout 中的 widget"""
+        while layout.count():
+            item = layout.takeAt(0)
+            widget = item.widget()
+            if widget:
+                widget.deleteLater()
+            elif item.layout():
+                self._delete_layout(item.layout())
+        layout.deleteLater()
 
 class SceneStationList(QWidget):
     def __init__(self):
@@ -282,13 +305,13 @@ class SceneStationList(QWidget):
         self.transfer_leftmost.setFixedSize(60, 124)
         self.transfer_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.bottom_layout.addWidget(self.transfer_leftmost)
-        self.transfer = []
+        self.transfer_info_view = []
         for i in range(6):
             icon_keys = ["Sennichimae", "Kintetsu", "Nankai"]
             station_names = ["Sennichimae Line  ", "近鐵線", "南海線"]
             transfer_info_widget = TransferInfo(icon_keys, station_names)
             transfer_info_widget.setFixedSize(120, 124)
-            self.transfer.append(transfer_info_widget)
+            self.transfer_info_view.append(transfer_info_widget)
             self.bottom_layout.addWidget(transfer_info_widget)
         self.transfer_rightmost = QLabel("")
         self.transfer_rightmost.setAlignment(Qt.AlignRight)
@@ -298,3 +321,62 @@ class SceneStationList(QWidget):
         self.main_layout.addLayout(self.bottom_layout)
 
         self.setLayout(self.main_layout)
+    
+    def get_seven_stations_with_index(self, terminal, start, current):
+        direction = 1 if terminal > start else -1  # 判斷方向
+        stations = []
+
+        for i in range(5, -2, -1):  # 從前五站到前一站，共七站
+            station = current + direction * i
+            if (direction == 1 and station <= terminal) or (direction == -1 and station >= terminal):
+                stations.append(station)
+
+        # 找出 current 在 stations 中的位置（理論上一定會在內）
+        try:
+            current_index = stations.index(current)
+        except ValueError:
+            current_index = -1  # 如果 current 不在七站內（理論上不會發生）
+
+        print(f"get_seven_stations_with_index: {stations}, current_index: {current_index}")
+
+        return stations, current_index
+
+    def update_station_list(self):
+        route = self.line_info.directions[self.line_info.route]  # [M13, M22]
+        start_id = route[0]
+        end_id = route[1]
+        start_id_num = extract_first_integer(start_id)
+        end_id_num = extract_first_integer(end_id)
+        current_id_num = extract_first_integer(self.display_station.id)
+        seven_stations_num, current_index = self.get_seven_stations_with_index(end_id_num, start_id_num, current_id_num)
+        for i in range(6):
+            j = seven_stations_num[i]
+            station_id = index_to_station_id(self.line_info.id_prefix, j)
+            station = self.line_info.get_station(station_id)
+            transfer = station.transfer
+            
+            print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
+            if station:
+                self.sta[i * 2].setText(format_train_progress_station_name(station.name["jp"]))
+                self.progress[i * 2].setText(station_id)
+                self.min[i * 2].setText(str(station.next_station[2]))
+                self.transfer_info_view[i].setData(transfer.get_station_list(), transfer.get_station_list())
+            else:
+                self.sta[i*2].setText("???")
+                
+        # 更新最右邊的站名
+        station_id = index_to_station_id(self.line_info.id_prefix, seven_stations_num[6])
+        station = self.line_info.get_station(station_id)
+        print(f"station_id: {station_id}, station: {station}")
+        self.sta[12].setText(station.name["jp"])
+        self.min[11].setText("分")
+        self.progress[self.progress_index+1].setText(station_id)
+        
+        #for i in range(6):
+        #    self.transfer[i].setText("i")
+    
+    def receive_notify(self, line_info, display_station, station_state):
+        self.line_info = line_info
+        self.display_station = display_station
+        self.station_state = station_state
+        self.update_station_list()

@@ -10,7 +10,7 @@ line:
     zh-TW: 御堂筋線
   operator: Osaka Metro
   directions:
-    - [M13, M22]
+    - [M22, M13]
     - [M11, M27]
     - [M11, M30]
 
@@ -354,7 +354,6 @@ line:
         zh-TW: 中百舌鳥
       transfer:
         - [Nankai, null, east]
-        - [Semboku, null, east]
       gate_info:
         - [north, 1-3]
         - [center, 4-6]
