@@ -26,7 +26,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initLineInfo(self, line_file):
         self.line_info = LineInfo(line_file)
-        self.line_info.set_route(4) # select route 1
+        self.line_info.set_route(3) # select route 1
         self.route = self.line_info.get_current_route()
 
     def initRouteDirector(self, line_info: LineInfo = None):
