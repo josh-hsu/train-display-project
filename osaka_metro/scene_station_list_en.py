@@ -176,11 +176,13 @@ class SceneStationListEN(QWidget):
             self.sta_font = QFont(family, 32, QFont.Bold)
             self.en_font = QFont(family, 18, QFont.Bold)
             self.min_font = QFont(family, 24, QFont.Bold)
+            self.approx_font = QFont(family, 18, QFont.Bold)
         else:
             family = "Noto Sans JP SemiBold"
             self.sta_font = QFont(family, 28, QFont.Bold)
             self.en_font = QFont(family, 16, QFont.Bold)
             self.min_font = QFont(family, 20, QFont.Bold)
+            self.approx_font = QFont(family, 12, QFont.Bold)
         
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
@@ -224,9 +226,9 @@ class SceneStationListEN(QWidget):
         self.third_layout = QHBoxLayout()
         self.third_layout.setContentsMargins(0, 0, 0, 0)
         self.third_layout.setSpacing(0)
-        self.min_leftmost = QLabel("約")
+        self.min_leftmost = QLabel("Approx.")
         self.min_leftmost.setAlignment(Qt.AlignCenter)
-        self.min_leftmost.setFont(self.min_font)
+        self.min_leftmost.setFont(self.approx_font)
         self.min_leftmost.setFixedSize(90, 30)
         self.min_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")  
         self.third_layout.addWidget(self.min_leftmost)
@@ -242,7 +244,7 @@ class SceneStationListEN(QWidget):
         self.min_rightmost = QLabel("")
         self.min_rightmost.setAlignment(Qt.AlignRight)
         self.min_rightmost.setFixedSize(150, 30)
-        self.min_rightmost.setFont(self.min_font)
+        self.min_rightmost.setFont(self.approx_font)
         self.min_rightmost.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.third_layout.addWidget(self.min_rightmost)
         self.main_layout.addLayout(self.third_layout)
@@ -365,6 +367,18 @@ class SceneStationListEN(QWidget):
             self.progress_index = 11 - (5 - current_index) * 2
         self.init_progress_bar(self.second_layout)
         
+        # 計算實際分鐘
+        travel_minute = [0, 0, 0, 0, 0, 0]
+        for i in range(current_index + 1):
+            j = seven_stations_num[i]
+            station_id = index_to_station_id(self.line_info.id_prefix, j)
+            station = self.line_info.get_station(station_id)
+            if station:
+                print(f"station_id: {station_id}, station: {station.name['jp']}, next min: {station.next_station[2]}")
+                minute = int(station.next_station[2])
+                for k in range(i):
+                    travel_minute[k] += minute
+        
         for i in range(6):
             j = seven_stations_num[i]
             station_id = index_to_station_id(self.line_info.id_prefix, j)
@@ -375,7 +389,7 @@ class SceneStationListEN(QWidget):
             if station:
                 station_name_disp = format_train_progress_station_name(station.name["en"])
                 self.sta[i].setText(f"   {station_name_disp}")
-                self.min[i * 2].setText(str(station.next_station[2]))
+                self.min[i * 2].setText(f"{travel_minute[i]/60:.0f}")
                 if i * 2 < self.progress_index:
                     self.progress[i * 2].setText(station_id)
                 else:
@@ -388,7 +402,7 @@ class SceneStationListEN(QWidget):
         # 更新最右邊的站名
         station_id = index_to_station_id(self.line_info.id_prefix, seven_stations_num[6])
         station = self.line_info.get_station(station_id)
-        self.min[11].setText("分")
+        self.min[11].setText("min")
         if station:
             self.sta[6].setText(station.name["en"])
             self.progress[-1].setText(station_id)

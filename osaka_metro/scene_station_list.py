@@ -362,6 +362,18 @@ class SceneStationList(QWidget):
             self.progress_index = 11 - (5 - current_index) * 2
         self.init_progress_bar(self.second_layout)
         
+        # 計算實際分鐘
+        travel_minute = [0, 0, 0, 0, 0, 0]
+        for i in range(current_index + 1):
+            j = seven_stations_num[i]
+            station_id = index_to_station_id(self.line_info.id_prefix, j)
+            station = self.line_info.get_station(station_id)
+            if station:
+                print(f"station_id: {station_id}, station: {station.name['jp']}, next min: {station.next_station[2]}")
+                minute = int(station.next_station[2])
+                for k in range(i):
+                    travel_minute[k] += minute
+        
         for i in range(6):
             j = seven_stations_num[i]
             station_id = index_to_station_id(self.line_info.id_prefix, j)
@@ -371,7 +383,7 @@ class SceneStationList(QWidget):
             #print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
             if station:
                 self.sta[i * 2].setText(format_train_progress_station_name(station.name["jp"]))
-                self.min[i * 2].setText(str(station.next_station[2]))
+                self.min[i * 2].setText(f"{travel_minute[i]/60:.0f}")
                 if i * 2 < self.progress_index:
                     self.progress[i * 2].setText(station_id)
                 else:
