@@ -4,10 +4,11 @@ from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtGui import QPainter, QColor, QPainterPath
 from PyQt5.QtGui import QBrush, QPolygon
-from auto_stretch_label import AutoStretchLabel
-from rotated_label import RotatedLabel
+
 import os
 from osaka_metro.osaka_metro import *
+from rotated_label import RotatedLabel
+from train_textview_libs import *
 from line_info import *
 
 class SideArrow(QWidget):
@@ -139,7 +140,7 @@ class TransferInfo(QWidget):
             icon_label.setFixedSize(24, 24)
             icon_label.setScaledContents(True)
 
-            text_label = AutoStretchLabel(station_name)
+            text_label = StretchTextLabel(station_name)
             text_label.setFont(self.line_font)
             text_label.setFixedSize(96, 24)
             text_label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: #000000;")
@@ -302,7 +303,7 @@ class SceneStationListEN(QWidget):
         self.progress = []
         for i in range(13):
             if i < self.progress_index:
-                label = AutoStretchLabel("")
+                label = StretchTextLabel("")
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
@@ -312,7 +313,7 @@ class SceneStationListEN(QWidget):
                 label = MovingArrow()
                 label.setFixedSize(60, 36)
             else:
-                label = AutoStretchLabel("")
+                label = StretchTextLabel("")
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)

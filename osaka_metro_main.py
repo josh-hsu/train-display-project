@@ -8,10 +8,12 @@ from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
 from PyQt5.QtCore import Qt, QTimer
 
 from scene_manager import SceneManager
-from animated_text_view import AnimatedTextView
+#from animated_text_view import AnimatedTextView
 from osaka_metro.osaka_metro import *
 from line_info import *
 from route_director import RouteDirector
+
+from train_textview_libs import *
 
 class OsakaMetroTrainDisplay(QWidget):
     def __init__(self):
@@ -63,45 +65,53 @@ class OsakaMetroTrainDisplay(QWidget):
         top_left_layout.setSpacing(0)
 
         # 目的地（480x240）
-        self.textview_destination = AnimatedTextView(220, 60, ["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"], animation_type="none")
-        self.textview_destination.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.textview_destination = AnimatedTextView_T()
+        self.textview_destination.setFixedSize(220, 60)
+        self.textview_destination.setTexts(["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
+        self.textview_destination.setMinimumHeight(60)
+        self.textview_destination.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};border: 2px solid #ccc;")
+        #self.textview_destination.setStyleSheet("background-color: #f0f0f0; color: #333; border: 2px solid #ccc; border-radius: 5px;")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
-        self.textview_destination.start()
 
-        self.textview_now_state = AnimatedTextView(220, 60, ["まもらく", "まもらく", "即將到達", "Arriving at"], animation_type="fold")
-        self.textview_now_state.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
+        self.textview_now_state = AnimatedTextView_T()
+        self.textview_now_state.setFixedSize(220, 60)
+        self.textview_destination.setMinimumHeight(60)
+        self.textview_now_state.setTexts(["まもらく", "まもらく", "即將到達", "Arriving at"])
+        self.textview_now_state.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};border: 2px solid #ccc;")
         self.textview_now_state.setFont(font_large)
         self.textview_now_state.setAlignment(Qt.AlignRight)
-        self.textview_now_state.start()
+        self.textview_now_state.setAnimationType(AnimatedTextView_T.ANIMATION_FOLD)
 
-        top_left_layout.addWidget(self.textview_destination.widget())
-        top_left_layout.addWidget(self.textview_now_state.widget())
+        top_left_layout.addWidget(self.textview_destination)
+        top_left_layout.addWidget(self.textview_now_state)
 
         # 現在/下一站（1280x100）
         center_layout = QVBoxLayout()
         center_layout.setContentsMargins(0, 0, 0, 0)
         center_layout.setSpacing(0)
 
-        self.textview_station = AnimatedTextView(620, 120, ["心斎橋", "しんさいばし", "心齋橋", "Shinsaibashi"],
-                                                 animation_type="fold", interval_ms=3000)
-        self.textview_station.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
+        self.textview_station = AnimatedTextView_T()
+        self.textview_station.setFixedSize(620, 120)
+        self.textview_station.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
         self.textview_station.setFont(font_current_station)
         self.textview_station.setAlignment(Qt.AlignCenter)
-        self.textview_station.start()
+        self.textview_station.setAnimationType(AnimatedTextView_T.ANIMATION_FOLD)
 
-        center_layout.addWidget(self.textview_station.widget())
+        center_layout.addWidget(self.textview_station)
 
         # 車廂編號（200x240）
         right_layout = QVBoxLayout()
         right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(0)
-        self.label_top_car_number = AnimatedTextView(100, 20, CAR_INST_TOP, animation_type="none")
+        self.label_top_car_number = AnimatedTextView_T()
+        self.label_top_car_number.setFixedSize(100, 20)
+        self.label_top_car_number.setTexts(CAR_INST_TOP)
         self.label_top_car_number.setFont(font_car_instructions)
-        self.label_top_car_number.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_top_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         self.label_top_car_number.setAlignment(Qt.AlignCenter)
-        self.label_top_car_number.start()
-        right_layout.addWidget(self.label_top_car_number.widget())
+        self.label_top_car_number.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
+        right_layout.addWidget(self.label_top_car_number)
         self.label_car_number = QLabel("5")
         self.label_car_number.setFont(font_car)
         self.label_car_number.setFixedSize(100, 60)
@@ -109,12 +119,14 @@ class OsakaMetroTrainDisplay(QWidget):
         self.label_car_number.setAlignment(Qt.AlignCenter)
         self.label_car_number.setContentsMargins(0, 0, 0, 0)
         right_layout.addWidget(self.label_car_number)
-        self.label_bottom_car_number = AnimatedTextView(100, 20, CAR_INST_BOT, animation_type="none")  
+        self.label_bottom_car_number = AnimatedTextView_T()
+        self.label_bottom_car_number.setFixedSize(100, 20)
+        self.label_bottom_car_number.setTexts(CAR_INST_BOT)
         self.label_bottom_car_number.setFont(font_car_instructions)
-        self.label_bottom_car_number.setStyleSheetAll(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_bottom_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
         self.label_bottom_car_number.setAlignment(Qt.AlignCenter)
-        self.label_bottom_car_number.start()
-        right_layout.addWidget(self.label_bottom_car_number.widget())
+        self.label_bottom_car_number.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
+        right_layout.addWidget(self.label_bottom_car_number)
         # Combine top layout
         top_layout.addLayout(top_left_layout)
         top_layout.addLayout(center_layout)
@@ -236,17 +248,17 @@ class OsakaMetroTrainDisplay(QWidget):
         termianl_station_id = line_info.get_current_route()[-1]
         termianl_station = line_info.get_station(termianl_station_id)
         state = STATION_STATE_READY_TO_DEPART
-        self.textview_now_state.setText(NOW_STATE_MAP[f"{state}"])
+        self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
         self.label_station_number.setText(f"{current_station_id}")
-        self.textview_station.setText(list(termianl_station.name.values()))
+        self.textview_station.setTexts(list(termianl_station.name.values()))
         self.scene_manager.notify_all_scenes(line_info, current_station, state)
 
     def update_train_state(self, station_id, state):
         line_info = self.line_info
         station = line_info.get_station(station_id)
         self.label_station_number.setText(f"{station.id}")
-        self.textview_station.setText(list(station.name.values()))
-        self.textview_now_state.setText(NOW_STATE_MAP[f"{state}"])
+        self.textview_station.setTexts(list(station.name.values()))
+        self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
         self.scene_manager.notify_all_scenes(line_info, station, state)
 
     def route_director_callback(self, object):

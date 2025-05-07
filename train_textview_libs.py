@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QStackedLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QStackedLayout, QLabel, QGraphicsOpacityEffect
 from PyQt5.QtCore import QTimer, QPropertyAnimation, QPoint, QParallelAnimationGroup, QRect, QEasingCurve, Qt
 from PyQt5.QtGui import QFont, QFontMetrics
 from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QComboBox, QHBoxLayout, QSpinBox, QLabel
@@ -76,7 +76,7 @@ class StretchTextLabel(QLabel):
         self.adjustTextDisplay()
 
 
-class AnimatedTextView(QWidget):
+class AnimatedTextView_T(QWidget):
     """
     一個可以自動輪播文字的控件，具有多種動畫效果。
     """
@@ -94,6 +94,11 @@ class AnimatedTextView(QWidget):
         self.interval = 3000        # 默認間隔3秒
         self.anim_duration = 500    # 默認動畫持續500毫秒
         self.animation_type = self.ANIMATION_SLIDE  # 默認動畫類型
+        
+        # 保存字體和樣式設定
+        self.current_font = self.font()
+        self.current_alignment = Qt.AlignCenter
+        self.current_stylesheet = ""
         
         # UI初始化
         self.setupUI()
@@ -124,6 +129,13 @@ class AnimatedTextView(QWidget):
         
         if self.labels:
             self.stack_layout.setCurrentWidget(self.labels[0])
+            # 確保第一個標籤立即可見且位置正確
+            self.labels[0].move(0, 0)
+            self.labels[0].show()
+            self.labels[0].adjustTextDisplay()
+            # 強制立即更新
+            self.labels[0].update()
+            self.update()
         
         if len(texts) > 1:
             self.start()
@@ -144,22 +156,36 @@ class AnimatedTextView(QWidget):
         # 創建新標籤
         for text in self.data:
             label = StretchTextLabel(text)
-            label.setAlignment(Qt.AlignCenter)  # 默認居中對齊
+            label.setAlignment(self.current_alignment)  # 使用已保存的對齊方式
+            label.setFont(self.current_font)  # 使用已保存的字體
+            if self.current_stylesheet:
+                label.setStyleSheet(self.current_stylesheet)  # 使用已保存的樣式表
+            
+            # 確保所有標籤都具有正確的大小
+            label.setGeometry(0, 0, self.width(), self.height())
             self.stack_layout.addWidget(label)
             self.labels.append(label)
+        
+        # 立即處理所有標籤
+        for label in self.labels:
+            label.adjustTextDisplay()
     
     def setFont(self, font):
         """設置所有標籤的字體"""
+        self.current_font = QFont(font)  # 保存字體設定
         for label in self.labels:
             label.setFont(font)
     
     def setStyleSheet(self, style):
         """設置所有標籤的樣式表"""
+        self.current_stylesheet = style  # 保存樣式表
         for label in self.labels:
             label.setStyleSheet(style)
+        super().setStyleSheet(style)  # 也應用到自身
     
     def setAlignment(self, alignment):
         """設置所有標籤的對齊方式"""
+        self.current_alignment = alignment  # 保存對齊方式
         for label in self.labels:
             label.setAlignment(alignment)
     
@@ -279,7 +305,7 @@ class AnimatedTextView(QWidget):
         self.animation_group.start()
     
     def _animateFold(self, current_label, next_label):
-        """滑動動畫效果"""
+        """折疊動畫效果"""
         width = self.width()
         height = self.height()
         
@@ -320,8 +346,6 @@ class AnimatedTextView(QWidget):
     
     def _animateFade(self, current_label, next_label):
         """淡入淡出動畫效果"""
-        from PyQt5.QtWidgets import QGraphicsOpacityEffect
-        
         # 設置初始位置
         current_label.setGeometry(0, 0, self.width(), self.height())
         next_label.setGeometry(0, 0, self.width(), self.height())
@@ -374,8 +398,21 @@ class AnimatedTextView(QWidget):
     def resizeEvent(self, event):
         """當控件大小改變時調整所有標籤"""
         super().resizeEvent(event)
+        # 確保所有標籤都具有正確的大小
         for label in self.labels:
+            label.setGeometry(0, 0, self.width(), self.height())
             label.adjustTextDisplay()
+            
+    def showEvent(self, event):
+        """當控件顯示時確保標籤正確顯示"""
+        super().showEvent(event)
+        if self.labels and self.current_index < len(self.labels):
+            # 確保當前標籤是可見的
+            current_label = self.labels[self.current_index]
+            current_label.move(0, 0)
+            current_label.show()
+            current_label.adjustTextDisplay()
+            self.stack_layout.setCurrentWidget(current_label)
 
 class DemoWindow(QMainWindow):
     def __init__(self):
@@ -391,19 +428,19 @@ class DemoWindow(QMainWindow):
         main_layout = QVBoxLayout(central_widget)
         
         # 創建 AnimatedTextView
-        self.animated_view = AnimatedTextView()
+        self.animated_view = AnimatedTextView_T()
         self.animated_view.setMinimumHeight(100)
         
         # 設置示例文字
         self.sample_texts = [
-            "這是一個簡短的文本",
-            "這是一個稍長一點的文本示例，用來測試文字自動調整功能",
-            "這是一個非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常長的文本，用來測試文字在極端情況下的表現"
+            "西中島南方",
+            "にしなかじまみなみがた",
+            "Nishinakajima-Minamigata"
         ]
         self.animated_view.setTexts(self.sample_texts)
         
         # 設置字體
-        font = QFont("Noto Sans JP", 32)
+        font = QFont("Noto Sans JP SemiBold", 64)
         self.animated_view.setFont(font)
         
         # 設置樣式表
@@ -470,10 +507,10 @@ class DemoWindow(QMainWindow):
     def changeAnimationType(self, index):
         """切換動畫類型"""
         animation_types = [
-            AnimatedTextView.ANIMATION_SLIDE,
-            AnimatedTextView.ANIMATION_FOLD,
-            AnimatedTextView.ANIMATION_FADE,
-            AnimatedTextView.ANIMATION_NONE
+            AnimatedTextView_T.ANIMATION_SLIDE,
+            AnimatedTextView_T.ANIMATION_FOLD,
+            AnimatedTextView_T.ANIMATION_FADE,
+            AnimatedTextView_T.ANIMATION_NONE
         ]
         if 0 <= index < len(animation_types):
             self.animated_view.setAnimationType(animation_types[index])
