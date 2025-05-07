@@ -9,13 +9,14 @@ from line_info import *
 class RouteDirector(QObject):
     report = pyqtSignal(object)   # 發送目前站 StationInfo
 
-    def __init__(self, line_info, route, interval_sec=10):
+    def __init__(self, line_info, route, interval_sec=10, interval_inc=10, init_elapsed_time=0):
         super().__init__()
         self.line_info = line_info     # line_info: LineInfo
         self.route = route             # [M13, M25]
         self.interval = interval_sec
+        self.increment = interval_inc
         self._running = False
-        self.elapsed_time = 1200
+        self.elapsed_time = init_elapsed_time
 
         self.thread = QThread()
         self.moveToThread(self.thread)
@@ -121,7 +122,7 @@ class RouteDirector(QObject):
         while state != STATION_STATE_IN_TERMINAL:
             if not self._running:
                 break
-            self.elapsed_time += 20
+            self.elapsed_time += self.increment
             station, state = self.get_train_state_in_route(self.line_info, self.route, self.elapsed_time)
             self.report.emit([station, state])  # 通知 UI 換站
             time.sleep(self.interval)
