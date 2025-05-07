@@ -405,7 +405,8 @@ class SceneStationListEN(QWidget):
         station = self.line_info.get_station(station_id)
         self.min[11].setText("min")
         if station:
-            self.sta[6].setText(station.name["en"])
+            station_name_disp = format_train_progress_station_name(station.name["en"])
+            self.sta[6].setText(f"   {station_name_disp}")
             self.progress[-1].setText(station_id)
         
         #for i in range(6):
