@@ -124,7 +124,7 @@ class RouteDirector(QObject):
                 break
             self.elapsed_time += self.increment
             station, state = self.get_train_state_in_route(self.line_info, self.route, self.elapsed_time)
-            self.report.emit([station, state])  # 通知 UI 換站
+            self.report.emit([station, state, self.elapsed_time])  # 通知 UI 換站
             time.sleep(self.interval)
         self._running = False
 

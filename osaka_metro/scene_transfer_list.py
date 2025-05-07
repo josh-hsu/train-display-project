@@ -222,7 +222,7 @@ class SceneTransferList(QWidget):
             icon_text="T", 
             bg_color="#800080",  # Purple
             top_title=f"{TRANSFER_MAP[entry.name]}",
-            bottom_title=entry.name
+            bottom_title=f"{entry.name} Line"
         )
         station_widget = TransferLineWidget(
             icon_text="T", 
@@ -261,7 +261,7 @@ class SceneTransferList(QWidget):
                 icon_text="T", 
                 bg_color="#800080",  # Purple
                 top_title=f"{TRANSFER_MAP[entry.name]}",
-                bottom_title=entry.name
+                bottom_title=f"{entry.name} Line"
             )
             line_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
             row_layout.addWidget(line_widget)

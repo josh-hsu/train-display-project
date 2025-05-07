@@ -10,3 +10,5 @@ __pycache__/
 
 # 忽略所有 `.pyc` 檔案（包括子目錄）
 **/*.pyc
+
+playground*

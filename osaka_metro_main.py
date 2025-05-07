@@ -33,7 +33,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initRouteDirector(self, line_info: LineInfo, default_elapsed_time):
         self.train_state = STATION_STATE_READY_TO_DEPART
-        self.director = RouteDirector(line_info, self.route, interval_sec=10, init_elapsed_time=default_elapsed_time)
+        self.director = RouteDirector(line_info, self.route, interval_sec=5, init_elapsed_time=default_elapsed_time)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
 
@@ -281,8 +281,9 @@ class OsakaMetroTrainDisplay(QWidget):
     def route_director_callback(self, object):
         station = object[0]
         state = object[1]
+        elapsed_time = object[2]
+        print(f"Route Director Callback: {station}, {state}, timestamp {elapsed_time}")
         if state is not self.train_state:
-            print(f"Route Director Callback: {station}, {state}")
             self.update_train_state(station, state)
         self.train_state = state
     

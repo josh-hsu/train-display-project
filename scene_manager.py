@@ -7,10 +7,9 @@ from osaka_metro.scene_transfer_list import SceneTransferList
 class SceneManager:
     def __init__(self):
         self.scenes = {
-            "scene_transfer_list": SceneTransferList(),
             "scene_station_list": SceneStationList(),
             "scene_station_list_en": SceneStationListEN(),
-            
+            "scene_transfer_list": SceneTransferList(),
             #"scene_door_inst": SceneStationList(),
         }
 
