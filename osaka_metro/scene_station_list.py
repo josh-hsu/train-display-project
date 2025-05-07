@@ -178,8 +178,8 @@ class SceneStationList(QWidget):
             self.min_font = QFont(family, 24, QFont.Bold)
         else:
             family = "Noto Sans JP SemiBold"
-            self.sta_font = QFont(family, 28, QFont.Bold)
-            self.min_font = QFont(family, 20, QFont.Bold)
+            self.sta_font = QFont(family, 28)
+            self.min_font = QFont(family, 20)
         
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
@@ -197,10 +197,9 @@ class SceneStationList(QWidget):
         self.top_layout.addWidget(self.sta_leftmost)
         self.sta = []
         for i in range(13):
-            label = VerticalText(f"")
+            label = VerticalText(f"", font=self.sta_font)
             label.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
             label.setFixedSize(60, 150)
-            label.setFont(self.sta_font)
             self.top_layout.addWidget(label)
             self.sta.append(label)
         self.sta_rightmost = QLabel("")
