@@ -28,7 +28,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initLineInfo(self, line_file):
         self.line_info = LineInfo(line_file)
-        self.line_info.set_route(3) # select route 1
+        self.line_info.set_route(4) # select route 1
         self.route = self.line_info.get_current_route()
 
     def initRouteDirector(self, line_info: LineInfo = None):
@@ -67,18 +67,17 @@ class OsakaMetroTrainDisplay(QWidget):
         # 目的地（480x240）
         self.textview_destination = AnimatedTextView_T()
         self.textview_destination.setFixedSize(220, 60)
-        self.textview_destination.setTexts(["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
+        self.textview_destination.setTexts(DEST_STATION_INFO)
         self.textview_destination.setMinimumHeight(60)
-        self.textview_destination.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};border: 2px solid #ccc;")
-        #self.textview_destination.setStyleSheet("background-color: #f0f0f0; color: #333; border: 2px solid #ccc; border-radius: 5px;")
+        self.textview_destination.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR}; {BORDER_DEBUG}")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
 
         self.textview_now_state = AnimatedTextView_T()
         self.textview_now_state.setFixedSize(220, 60)
         self.textview_destination.setMinimumHeight(60)
-        self.textview_now_state.setTexts(["まもらく", "まもらく", "即將到達", "Arriving at"])
-        self.textview_now_state.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};border: 2px solid #ccc;")
+        self.textview_now_state.setTexts(NOW_STATE_MAP['0'])
+        self.textview_now_state.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR}; {BORDER_DEBUG}")
         self.textview_now_state.setFont(font_large)
         self.textview_now_state.setAlignment(Qt.AlignRight)
         self.textview_now_state.setAnimationType(AnimatedTextView_T.ANIMATION_FOLD)
@@ -93,7 +92,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
         self.textview_station = AnimatedTextView_T()
         self.textview_station.setFixedSize(620, 120)
-        self.textview_station.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR};")
+        self.textview_station.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR}; {BORDER_DEBUG}")
         self.textview_station.setFont(font_current_station)
         self.textview_station.setAlignment(Qt.AlignCenter)
         self.textview_station.setAnimationType(AnimatedTextView_T.ANIMATION_FOLD)
@@ -105,25 +104,25 @@ class OsakaMetroTrainDisplay(QWidget):
         right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(0)
         self.label_top_car_number = AnimatedTextView_T()
-        self.label_top_car_number.setFixedSize(100, 20)
+        self.label_top_car_number.setFixedSize(100, 30)
         self.label_top_car_number.setTexts(CAR_INST_TOP)
         self.label_top_car_number.setFont(font_car_instructions)
-        self.label_top_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_top_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR}; {BORDER_DEBUG}")
         self.label_top_car_number.setAlignment(Qt.AlignCenter)
         self.label_top_car_number.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
         right_layout.addWidget(self.label_top_car_number)
         self.label_car_number = QLabel("5")
         self.label_car_number.setFont(font_car)
         self.label_car_number.setFixedSize(100, 60)
-        self.label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR}; {BORDER_DEBUG}")
         self.label_car_number.setAlignment(Qt.AlignCenter)
         self.label_car_number.setContentsMargins(0, 0, 0, 0)
         right_layout.addWidget(self.label_car_number)
         self.label_bottom_car_number = AnimatedTextView_T()
-        self.label_bottom_car_number.setFixedSize(100, 20)
+        self.label_bottom_car_number.setFixedSize(100, 30)
         self.label_bottom_car_number.setTexts(CAR_INST_BOT)
         self.label_bottom_car_number.setFont(font_car_instructions)
-        self.label_bottom_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.label_bottom_car_number.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR}; {BORDER_DEBUG}")
         self.label_bottom_car_number.setAlignment(Qt.AlignCenter)
         self.label_bottom_car_number.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
         right_layout.addWidget(self.label_bottom_car_number)
@@ -144,17 +143,17 @@ class OsakaMetroTrainDisplay(QWidget):
         # 站號
         label_station_number_left = QLabel("")
         label_station_number_left.setFixedSize(220, 50)
-        label_station_number_left.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+        label_station_number_left.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         
         self.label_station_number = QLabel("M19")
         self.label_station_number.setFont(font_station_number)
         self.label_station_number.setFixedSize(620, 50)
-        self.label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+        self.label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         self.label_station_number.setAlignment(Qt.AlignCenter)
 
         label_station_number_right = QLabel("")
         label_station_number_right.setFixedSize(100, 50)
-        label_station_number_right.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR};")
+        label_station_number_right.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {MIDOSUJI_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         
         # 第二大列新增
         second_layout.addWidget(label_station_number_left)
@@ -162,7 +161,7 @@ class OsakaMetroTrainDisplay(QWidget):
         second_layout.addWidget(label_station_number_right)
         second_layout.setContentsMargins(0, 0, 0, 0)
         second_layout.setSpacing(0)
-        second_container_layout.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR};")
+        second_container_layout.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; {BORDER_DEBUG}")
         second_container_layout.setLayout(second_layout)
 
         #
@@ -241,17 +240,32 @@ class OsakaMetroTrainDisplay(QWidget):
         self.animation_group.finished.connect(on_finished)
         self.animation_group.start()
 
+    def format_train_destination(self):
+        line_info = self.line_info
+        self.destination_texts = []
+        termianl_station_id = line_info.get_current_route()[-1]
+        termianl_station = line_info.get_station(termianl_station_id)
+
+        self.destination_texts.append(f"{termianl_station.name['jp']}{DEST_STATION_INFO[0]}")
+        self.destination_texts.append(f"{termianl_station.name['jp-hiragana']}{DEST_STATION_INFO[1]}")
+        self.destination_texts.append(f"{DEST_STATION_INFO[2]}{termianl_station.name['en']}")
+        self.destination_texts.append(f"{DEST_STATION_INFO[3]}{termianl_station.name['zh-TW']}")
+
     def start_new_train(self):
         line_info = self.line_info
         current_station_id = line_info.get_current_route()[0]
         current_station = line_info.get_station(current_station_id)
         termianl_station_id = line_info.get_current_route()[-1]
         termianl_station = line_info.get_station(termianl_station_id)
-        state = STATION_STATE_READY_TO_DEPART
-        self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
+        self.format_train_destination()
+        self.train_state = STATION_STATE_READY_TO_DEPART
+        self.textview_now_state.setTexts(NOW_STATE_MAP[f"{self.train_state}"])
+        self.textview_destination.setTexts(self.destination_texts)
         self.label_station_number.setText(f"{current_station_id}")
         self.textview_station.setTexts(list(termianl_station.name.values()))
-        self.scene_manager.notify_all_scenes(line_info, current_station, state)
+        self.label_top_car_number.setTexts(CAR_INST_TOP)
+        self.label_bottom_car_number.setTexts(CAR_INST_BOT)
+        self.scene_manager.notify_all_scenes(line_info, current_station, self.train_state)
 
     def update_train_state(self, station_id, state):
         line_info = self.line_info
@@ -259,6 +273,9 @@ class OsakaMetroTrainDisplay(QWidget):
         self.label_station_number.setText(f"{station.id}")
         self.textview_station.setTexts(list(station.name.values()))
         self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
+        self.textview_destination.setTexts(self.destination_texts)
+        self.label_top_car_number.setTexts(CAR_INST_TOP)
+        self.label_bottom_car_number.setTexts(CAR_INST_BOT)
         self.scene_manager.notify_all_scenes(line_info, station, state)
 
     def route_director_callback(self, object):

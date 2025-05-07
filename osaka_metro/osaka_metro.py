@@ -7,6 +7,7 @@ GREY_COLOR = "#747678"
 GREY_COLOR2 = "#838383"
 BLACK_COLOR = "#000000"
 MIDOSUJI_BACKGROUND_COLOR = "#FFFFFF"
+BORDER_DEBUG = "" #"border: 2px solid #ccc;"
 
 # 動畫時間設定
 ANIMATION_INTERVAL_MS = 1000
@@ -29,6 +30,9 @@ STATION_STATE_ARRIVED = 1          # 車在車站
 STATION_STATE_NEXT = 2             # 車開往下一站
 STATION_STATE_READY_TO_DEPART = 3  # 車準備在起站發車
 STATION_STATE_IN_TERMINAL = 4      # 車在終點站
+
+DEST_STATION_INFO = ["　ゆき", "　ゆき", "For　", "開往　"]
+MIDOSUJI_LINE_NAME = ["御堂筋線", "みどうすじせん", "Midosuji Line", "御堂筋線"]
 
 NOW_STATE_MAP = {
     "0": ["まもなく", "まもなく", "Arriving at", "即將到達"],
