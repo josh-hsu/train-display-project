@@ -297,7 +297,7 @@ class SceneStationList(QWidget):
         self.progress = []
         for i in range(13):
             if i < self.progress_index:
-                label = StretchTextLabel("")
+                label = QLabel("")
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
@@ -307,7 +307,7 @@ class SceneStationList(QWidget):
                 label = MovingArrow()
                 label.setFixedSize(60, 36)
             else:
-                label = StretchTextLabel("")
+                label = QLabel("")
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)

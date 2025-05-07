@@ -16,7 +16,7 @@ from route_director import RouteDirector
 from train_textview_libs import *
 
 class OsakaMetroTrainDisplay(QWidget):
-    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=1700):
+    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=1900):
         super().__init__()
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
@@ -33,7 +33,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initRouteDirector(self, line_info: LineInfo, default_elapsed_time):
         self.train_state = STATION_STATE_READY_TO_DEPART
-        self.director = RouteDirector(line_info, self.route, interval_sec=5, init_elapsed_time=default_elapsed_time)
+        self.director = RouteDirector(line_info, self.route, interval_sec=2, init_elapsed_time=default_elapsed_time)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
 
