@@ -123,9 +123,15 @@ class AnimatedTextView_T(QWidget):
     def setTexts(self, texts):
         """設置要顯示的文字列表"""
         self.stop()
+        
+        # Reset animation state to ensure it's not stuck
+        self.is_animating = False
+        
         self.data = texts
         self.current_index = 0
         self.initLabels()
+        
+        print(f"set texts {texts}")
         
         if self.labels:
             self.stack_layout.setCurrentWidget(self.labels[0])
@@ -137,8 +143,12 @@ class AnimatedTextView_T(QWidget):
             self.labels[0].update()
             self.update()
         
+        # Add a debug print to verify we're deciding to start
         if len(texts) > 1:
+            print(f"Starting animation for {len(texts)} texts")
             self.start()
+        else:
+            print("Not starting animation - only one or zero texts")
     
     def setText(self, text):
         """設置單個文字"""
@@ -419,6 +429,7 @@ class DemoWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("AnimatedTextView 示例")
         self.setGeometry(100, 100, 600, 400)
+        self.setFixedWidth(600)
         
         # 創建中央窗口部件
         central_widget = QWidget()
@@ -440,7 +451,7 @@ class DemoWindow(QMainWindow):
         self.animated_view.setTexts(self.sample_texts)
         
         # 設置字體
-        font = QFont("Noto Sans JP SemiBold", 64)
+        font = QFont("Noto Sans JP SemiBold", 100)
         self.animated_view.setFont(font)
         
         # 設置樣式表

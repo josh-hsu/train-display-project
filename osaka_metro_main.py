@@ -80,7 +80,7 @@ class OsakaMetroTrainDisplay(QWidget):
         self.textview_now_state.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {BLACK_COLOR}; {BORDER_DEBUG}")
         self.textview_now_state.setFont(font_large)
         self.textview_now_state.setAlignment(Qt.AlignRight)
-        self.textview_now_state.setAnimationType(AnimatedTextView_T.ANIMATION_FOLD)
+        self.textview_now_state.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
 
         top_left_layout.addWidget(self.textview_destination)
         top_left_layout.addWidget(self.textview_now_state)
