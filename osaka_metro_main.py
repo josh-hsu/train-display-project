@@ -235,6 +235,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
         def on_finished():
             self.scene_container.setCurrentIndex(next_index)
+            next_widget.on_scene_present()
             current_widget.move(0, 0)
             self.current_index = next_index
             self.animation_group = None  # 清除引用

@@ -45,6 +45,8 @@ NOW_STATE_MAP = {
 CAR_INST_TOP = ["", "", "Car No.", ""]
 CAR_INST_BOT = ["号車", "号車", "", "號車廂"]
 
+DOOR_OPEN_INST = ["こちら側のドアが開きます / Doors on this side will open."]
+
 # icon map
 ICON_MAP = {
     "Chuo": "line_chuo.png",

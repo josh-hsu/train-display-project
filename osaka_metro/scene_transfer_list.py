@@ -274,7 +274,10 @@ class SceneTransferList(QWidget):
         row_layout.addStretch(1)
         
         return container
-        
+    
+    def on_scene_present(self):
+        pass
+
     def receive_notify(self, line_info, display_station, station_state):
         self.line_info = line_info
         self.station = display_station

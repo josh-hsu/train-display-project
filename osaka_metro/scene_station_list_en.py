@@ -412,6 +412,9 @@ class SceneStationListEN(QWidget):
         #for i in range(6):
         #    self.transfer[i].setText("i")
     
+    def on_scene_present(self):
+        pass
+
     def receive_notify(self, line_info, display_station, station_state):
         self.line_info = line_info
         self.display_station = display_station

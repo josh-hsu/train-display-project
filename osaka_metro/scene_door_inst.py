@@ -1,11 +1,12 @@
 import sys
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import QPropertyAnimation, QRect, QEasingCurve, Qt
 from PyQt5.QtGui import QPainter, QPolygon, QColor, QLinearGradient, QBrush
 from PyQt5.QtCore import QPoint, Qt, QPropertyAnimation, QRect
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QSpacerItem,
                             QHBoxLayout, QSizePolicy, QMainWindow, QFrame)
 import sys
+from osaka_metro.osaka_metro import *
 
 class TrainDoor(QWidget):
     def __init__(
@@ -160,10 +161,30 @@ class ArrowWidget(QWidget):
 class SceneDoorInst(QWidget):
     def __init__(self):
         super().__init__()
-        self.setFixedSize(960, 340)
-        desired_height = 340
 
-        layout = QHBoxLayout(self)
+        # 主布局 - 垂直布局
+        self.main_layout = QVBoxLayout(self)
+        self.main_layout.setContentsMargins(0, 0, 0, 0)
+        self.main_layout.setSpacing(0)
+        
+        self.setFixedSize(960, 342)
+        
+        # 1. 頂部標題區域 - 固定在頂部
+        self.transfer_instruction = QLabel(DOOR_OPEN_INST[0])
+        self.transfer_instruction.setFont(QFont(FONT_NAME, 24))
+        self.transfer_instruction.setStyleSheet(f"color: #e5171f; background-color: {TRANSFER_GREY_COLOR}; {BORDER_DEBUG}")
+        self.transfer_instruction.setAlignment(Qt.AlignCenter)
+        self.transfer_instruction.setFixedSize(960, 50)
+        self.main_layout.addWidget(self.transfer_instruction)
+        
+        # 2. 中間轉乘信息區域 - 會垂直居中
+        # 使用一個容器來包含轉乘信息，這樣可以控制它在垂直方向上的居中
+        self.transfer_container_outer = QWidget()
+        self.transfer_container_outer.setFixedWidth(960)
+
+        desired_height = 342 - 50
+
+        layout = QHBoxLayout(self.transfer_container_outer)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
@@ -199,7 +220,8 @@ class SceneDoorInst(QWidget):
         # 再加一個 spacer 對稱
         layout.addSpacerItem(spacer)
 
-        self.setLayout(layout)
+        #self.setLayout(layout)
+        self.main_layout.addWidget(self.transfer_container_outer)
 
     def animate_doors(self):
         self.left_door.animate()
@@ -209,6 +231,9 @@ class SceneDoorInst(QWidget):
 
     def update_scene(self):
         pass
+
+    def on_scene_present(self):
+        self.animate_doors()
 
     def receive_notify(self, line_info, display_station, station_state):
         self.line_info = line_info
