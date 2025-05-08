@@ -7,6 +7,8 @@ GREY_COLOR2 = "#838383"
 BLACK_COLOR = "#000000"
 TRANSFER_GREY_COLOR = "#D7D5D5"
 WHITE_BACKGROUND_COLOR = "#FFFFFF"
+INFO_BACKGROUND_COLOR = "#D9DBDC"
+GATE_INFO_BACKGROUND_COLOR = "#F2B73F"
 BORDER_DEBUG = "" #"border: 2px solid #ccc;"
 
 # 動畫時間設定
@@ -111,6 +113,16 @@ LINE_COLOR_MAP = {
   "JR": "#000000",
   "Kita-Osaka Kyuko": "#000000",
   "Imazato Liner": "#000000"
+}
+
+GATE_NAME_MAP = {
+    "north" : "北改札",
+    "center" : "中改札",
+    "south" : "南改札",
+    "center-north": "中改札",
+    "center-south": "中改札",
+    "east" : "東改札",
+    "west" : "西改札"
 }
 
 
