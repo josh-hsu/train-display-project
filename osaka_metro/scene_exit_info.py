@@ -101,6 +101,99 @@ class TrainMovingWidget(QWidget):
         self.train_widget.labelRearFiveCabs()
         
 
+class ExitInfoHeader(QWidget):
+    def __init__(self, gate_name="南改札", gate_label="Ticket Gate", exit_text="出口", exit_label="Exit", number_text="3 - 10"):
+        super().__init__()
+        self.setFixedWidth(300)
+        layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+
+        font_title = QFont("Noto Sans JP", 16, QFont.Bold)
+        font_subtitle = QFont("Noto Sans JP", 12, QFont.Bold)
+        font_exit_number = QFont("Noto Sans JP", 28, QFont.Bold)
+        self.setStyleSheet("color: #000000; ")
+
+        # 第一欄：南改札 / Ticket Gate
+        col1 = QVBoxLayout()
+        col1.setContentsMargins(5, 0, 5, 0)
+        label1 = QLabel(gate_name)
+        label1.setFont(font_title)
+        label1.setAlignment(Qt.AlignCenter)
+        label2 = QLabel(gate_label)
+        label2.setFont(font_subtitle)
+        label2.setAlignment(Qt.AlignCenter)
+        col1.addWidget(label1)
+        col1.addWidget(label2)
+
+        # 第二欄：出口 / Exit
+        col2 = QVBoxLayout()
+        col2.setContentsMargins(5, 0, 5, 0)
+        label3 = QLabel(exit_text)
+        label3.setFont(font_title)
+        label3.setAlignment(Qt.AlignCenter)
+        label4 = QLabel(exit_label)
+        label4.setFont(font_subtitle)
+        label4.setAlignment(Qt.AlignCenter)
+        col2.addWidget(label3)
+        col2.addWidget(label4)
+
+        # 第三欄：數字（3 - 10）
+        col3 = QVBoxLayout()
+        col3.setContentsMargins(5, 0, 5, 0)
+        label5 = QLabel(number_text)
+        label5.setFont(font_exit_number)
+        label5.setAlignment(Qt.AlignCenter)
+        col3.addWidget(label5)
+
+        layout.addLayout(col1)
+        layout.addLayout(col2)
+        layout.addLayout(col3)
+        self.setLayout(layout)
+    
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.fillRect(self.rect(), QColor("#F2B73F"))
+
+class ExitInfoItem(QLabel):
+    def __init__(self, text):
+        super().__init__(text)
+        font_title = QFont("Noto Sans JP", 24, QFont.Bold)
+        
+        # 自動偵測是否有兩行（用 \n 判斷）
+        if '\n' in text:
+            self.setFixedSize(300, 80)
+        else:
+            self.setFixedSize(300, 50)
+            
+        self.setFont(font_title)
+        self.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.setStyleSheet("color: #000000;  padding-left: 2px;")
+
+class ExitInfo(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setFixedWidth(300)
+
+        layout = QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(2)
+
+        self.header = ExitInfoHeader()
+        layout.addWidget(self.header)
+
+        # 範例出口資訊項目
+        items = [
+            "ヒューリック大阪ビル\n船場センタービル",
+            "難波神社・御堂筋",
+            "心斎橋駅・OPA方面",
+        ]
+        for text in items:
+            layout.addWidget(ExitInfoItem(text))
+
+        layout.addStretch()
+        self.setLayout(layout)
+
 # 黑色訊息欄
 class MessageInfoWidget(QLabel):
     def __init__(self):
@@ -118,6 +211,21 @@ class GateLayoutWidget(QWidget):
         super().__init__()
         self.setFixedSize(960, 210)
         self.setStyleSheet("background-color: white;")
+
+        layout = QHBoxLayout()
+        layout.setContentsMargins(20, 10, 20, 10)
+        layout.setSpacing(5)
+
+        # 建立三個 ExitInfo
+        exit1 = ExitInfo()
+        exit2 = ExitInfo()
+        exit3 = ExitInfo()
+
+        layout.addWidget(exit1)
+        layout.addWidget(exit2)
+        layout.addWidget(exit3)
+
+        self.setLayout(layout)
 
     def paintEvent(self, event):
         painter = QPainter(self)
