@@ -1,12 +1,13 @@
 import sys
 from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtCore import QPropertyAnimation, QRect, QEasingCurve, Qt
+from PyQt5.QtCore import QPropertyAnimation, QRect, QEasingCurve, Qt, QTimer
 from PyQt5.QtGui import QPainter, QPolygon, QColor, QLinearGradient, QBrush
 from PyQt5.QtCore import QPoint, Qt, QPropertyAnimation, QRect
 from PyQt5.QtWidgets import (QApplication, QWidget, QLabel, QVBoxLayout, QSpacerItem,
                             QHBoxLayout, QSizePolicy, QMainWindow, QFrame)
 import sys
 from osaka_metro.osaka_metro import *
+
 
 class TrainDoor(QWidget):
     def __init__(
@@ -52,14 +53,23 @@ class TrainDoor(QWidget):
         self.door_label = QLabel(self)
         self.door_label.setPixmap(door_pixmap)
 
+        # 保存門的初始位置和尺寸
         if self.side == "left":
-            self.door_label.setGeometry(side_width, 0, half_width, desired_height)
+            self.initial_geometry = QRect(side_width, 0, half_width, desired_height)
+            self.door_label.setGeometry(self.initial_geometry)
         else:
-            self.door_label.setGeometry(0, 0, half_width, desired_height)
+            self.initial_geometry = QRect(0, 0, half_width, desired_height)
+            self.door_label.setGeometry(self.initial_geometry)
             self.side_label.setGeometry(half_width, 0, side_width, desired_height)
 
         total_width = half_width + side_width
         self.setFixedSize(total_width, desired_height)
+        
+        # 計算動畫結束位置
+        if self.side == "left":
+            self.end_geometry = QRect(-half_width, 0, half_width, desired_height)
+        else:  # right
+            self.end_geometry = QRect(self.width(), 0, half_width, desired_height)
 
     def animate(self):
         # 先把側邊圖層提到最上層
@@ -68,17 +78,17 @@ class TrainDoor(QWidget):
         anim = QPropertyAnimation(self.door_label, b"geometry")
         anim.setDuration(1000)
         anim.setEasingCurve(QEasingCurve.OutCubic)
-        start_rect = self.door_label.geometry()
-
-        if self.side == "left":
-            end_rect = QRect(-start_rect.width(), 0, start_rect.width(), start_rect.height())
-        else:  # right
-            end_rect = QRect(self.width(), 0, start_rect.width(), start_rect.height())
-
-        anim.setStartValue(start_rect)
-        anim.setEndValue(end_rect)
+        
+        anim.setStartValue(self.initial_geometry)
+        anim.setEndValue(self.end_geometry)
         anim.start()
         self.animation = anim  # 保持參考
+        
+    def reset_position(self):
+        # 立即復位到初始位置，不使用動畫
+        if hasattr(self, 'animation') and self.animation.state() == QPropertyAnimation.Running:
+            self.animation.stop()  # 先停止任何正在運行的動畫
+        self.door_label.setGeometry(self.initial_geometry)
 
 
 class ArrowWidget(QWidget):
@@ -90,6 +100,10 @@ class ArrowWidget(QWidget):
         
         self.setMinimumSize(150, 150)
         self.setMaximumSize(300, 300)
+        
+        # 記錄初始位置和動畫結束位置
+        self.initial_geometry = None
+        self.end_geometry = None
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -140,22 +154,33 @@ class ArrowWidget(QWidget):
 
     def animate(self):
         self.raise_()  # 確保箭頭在頂層（如果有重疊）
+        
+        # 第一次調用時保存初始幾何信息
+        if self.initial_geometry is None:
+            self.initial_geometry = self.geometry()
+            
+            # 計算結束位置
+            dx = self.width() // 2
+            if self.side == 'left':
+                self.end_geometry = QRect(self.initial_geometry.x() - dx, self.initial_geometry.y(), 
+                                          self.initial_geometry.width(), self.initial_geometry.height())
+            else:
+                self.end_geometry = QRect(self.initial_geometry.x() + dx, self.initial_geometry.y(), 
+                                          self.initial_geometry.width(), self.initial_geometry.height())
 
         anim = QPropertyAnimation(self, b"geometry")
         anim.setDuration(600)
-        #anim.setEasingCurve(Qt.EaseOutCubic)
-        start_rect = self.geometry()
-
-        dx = self.width() // 2
-        if self.side == 'left':
-            end_rect = QRect(start_rect.x() - dx, start_rect.y(), start_rect.width(), start_rect.height())
-        else:
-            end_rect = QRect(start_rect.x() + dx, start_rect.y(), start_rect.width(), start_rect.height())
-
-        anim.setStartValue(start_rect)
-        anim.setEndValue(end_rect)
+        anim.setStartValue(self.initial_geometry)
+        anim.setEndValue(self.end_geometry)
         anim.start()
         self.anim = anim  # 保持引用避免被GC
+        
+    def reset_position(self):
+        # 立即復位到初始位置，不使用動畫
+        if hasattr(self, 'anim') and self.anim.state() == QPropertyAnimation.Running:
+            self.anim.stop()  # 先停止任何正在運行的動畫
+        if self.initial_geometry:
+            self.setGeometry(self.initial_geometry)
 
 
 class SceneDoorInst(QWidget):
@@ -220,19 +245,60 @@ class SceneDoorInst(QWidget):
         # 再加一個 spacer 對稱
         layout.addSpacerItem(spacer)
 
-        #self.setLayout(layout)
         self.main_layout.addWidget(self.transfer_container_outer)
+        
+        # 創建定時器，用於控制動畫循環
+        self.animation_timer = QTimer(self)
+        self.animation_timer.setSingleShot(True)
+        self.animation_timer.timeout.connect(self.reset_and_delay)
+        
+        self.reset_timer = QTimer(self)
+        self.reset_timer.setSingleShot(True)
+        self.reset_timer.timeout.connect(self.start_animation)
+        
+        # 設置動畫次數計數器
+        self.animation_count = 0
+        self.max_animations = 3
 
     def animate_doors(self):
+        # 執行門和箭頭的動畫
         self.left_door.animate()
         self.right_door.animate()
         self.left_arrow.animate()
         self.right_arrow.animate()
+        
+        # 設置定時器，1秒後復位
+        self.animation_timer.start(1200)
+
+    def reset_positions(self):
+        # 立即復位所有門和箭頭的位置，不使用動畫
+        self.left_door.reset_position()
+        self.right_door.reset_position()
+        self.left_arrow.reset_position()
+        self.right_arrow.reset_position()
+    
+    def reset_and_delay(self):
+        # 立即復位
+        self.reset_positions()
+        
+        # 動畫計數增加
+        self.animation_count += 1
+        
+        # 檢查是否達到最大動畫次數
+        if self.animation_count < self.max_animations:
+            # 延遲1秒後開始下一次動畫
+            self.reset_timer.start(1200)
+    
+    def start_animation(self):
+        # 開始新一輪動畫
+        self.animate_doors()
 
     def update_scene(self):
         pass
 
     def on_scene_present(self):
+        # 重置計數器，開始第一次動畫
+        self.animation_count = 0
         self.animate_doors()
 
     def receive_notify(self, line_info, display_station, station_state):
@@ -250,7 +316,6 @@ if __name__ == "__main__":
     w.show()
 
     # 動畫測試（延遲執行）
-    from PyQt5.QtCore import QTimer
-    QTimer.singleShot(1000, w.animate_doors)
+    QTimer.singleShot(1000, w.on_scene_present)
 
     sys.exit(app.exec_())
