@@ -106,8 +106,9 @@ class MessageInfoWidget(QLabel):
     def __init__(self):
         super().__init__()
         self.setFixedSize(960, 50)
+        self.setFont(QFont("Noto Sans JP", 28, QFont.Bold))
         self.setText("こちら側のドアが開きます")
-        self.setStyleSheet("background-color: black; color: red; font-size: 20px;")
+        self.setStyleSheet("background-color: black; color: red;")
         self.setAlignment(Qt.AlignCenter)
 
 
