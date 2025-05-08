@@ -12,11 +12,11 @@ from osaka_metro.osaka_metro import *
 class TrainDoor(QWidget):
     def __init__(
         self,
-        image_path: str = "osaka_metro\\doors\\doors.png",
+        image_path: str = f"{DOOR_PATH}doors.png",
         side: str = "left",
         desired_height: int = 300,
-        side_image_left: str = "osaka_metro\\doors\\door_side_left.png",
-        side_image_right: str = "osaka_metro\\doors\\door_side_right.png",
+        side_image_left: str = f"{DOOR_PATH}door_side_left.png",
+        side_image_right: str = f"{DOOR_PATH}door_side_right.png",
         parent=None
     ):
         super().__init__(parent)
