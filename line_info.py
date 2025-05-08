@@ -15,6 +15,24 @@ def extract_first_integer(s):
 def index_to_station_id(prefix: str, index: int) -> str:
     return f"{prefix}{index}"
 
+def get_station_prefix_number(s: str) -> tuple[str, int]:
+    """
+    將輸入的字串分割為字母與數字部分。
+    
+    參數:
+        s (str): 輸入字串，例如 "T20", "C02", "U2"
+    
+    回傳:
+        tuple[str, int]: 字母（字串）與數字（整數）
+    """
+    if not s or len(s) < 2:
+        raise ValueError("輸入格式錯誤，至少需要一個字母與一個數字")
+
+    letter = s[0]
+    number = int(s[1:])
+
+    return letter, number
+
 def format_train_progress_station_name(name: str):
     """
     Format Japanese station names according to specific rules:

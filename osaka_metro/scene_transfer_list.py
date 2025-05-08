@@ -5,7 +5,7 @@ from PyQt5.QtGui import QFont, QPainter, QColor, QPen
 from PyQt5.QtCore import Qt, QSize
 
 from osaka_metro.osaka_metro import *
-from line_info import LineInfo, StationInfo, TransferInfo, TransferEntry
+from line_info import *
 
 class CircleIconLabel(QLabel):
     """Custom QLabel that displays a circular background with text centered"""
@@ -118,7 +118,7 @@ class SceneTransferList(QWidget):
         # 1. 頂部標題區域 - 固定在頂部
         self.transfer_instruction = QLabel("のりかえ / Transfer")
         self.transfer_instruction.setFont(QFont(FONT_NAME, 28))
-        self.transfer_instruction.setStyleSheet(f"color: {BLACK_COLOR}; {BORDER_DEBUG}")
+        self.transfer_instruction.setStyleSheet(f"color: {BLACK_COLOR}; background-color: {TRANSFER_GREY_COLOR}; {BORDER_DEBUG}")
         self.transfer_instruction.setAlignment(Qt.AlignCenter)
         self.transfer_instruction.setFixedSize(960, 50)
         self.main_layout.addWidget(self.transfer_instruction)
@@ -127,7 +127,7 @@ class SceneTransferList(QWidget):
         # 使用一個容器來包含轉乘信息，這樣可以控制它在垂直方向上的居中
         self.transfer_container_outer = QWidget()
         self.transfer_container_outer.setFixedWidth(960)
-        
+
         # 創建垂直布局使轉乘信息在容器中垂直居中
         self.transfer_container_layout = QVBoxLayout(self.transfer_container_outer)
         self.transfer_container_layout.setContentsMargins(0, 0, 0, 0)
@@ -218,18 +218,22 @@ class SceneTransferList(QWidget):
         # 添加左側彈性空間，幫助實現居中
         single_layout.addStretch(1)
 
+        # 檢查字母以及數字站號
+        station_prefix, station_number = get_station_prefix_number(entry.code)
+        station_color = LINE_COLOR_MAP[entry.name]
+
         line_widget = TransferLineWidget(
-            icon_text="T", 
-            bg_color="#800080",  # Purple
+            icon_text=station_prefix, 
+            bg_color=station_color,  # Purple
             top_title=f"{TRANSFER_MAP[entry.name]}",
             bottom_title=f"{entry.name} Line"
         )
         station_widget = TransferLineWidget(
-            icon_text="T", 
-            bg_color="#800080",  # Purple
+            icon_text=station_prefix, 
+            bg_color=station_color,  # Purple
             top_title=self.station.name['jp'],
             bottom_title=self.station.name['en'],
-            station_num="20"
+            station_num=f"{station_number}"
         )
         station_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         line_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
@@ -258,8 +262,8 @@ class SceneTransferList(QWidget):
         # 添加所有無代碼的轉乘條目
         for entry in entries:
             line_widget = TransferLineWidget(
-                icon_text="T", 
-                bg_color="#800080",  # Purple
+                icon_text="<", 
+                bg_color="#000000",  # Purple
                 top_title=f"{TRANSFER_MAP[entry.name]}",
                 bottom_title=f"{entry.name} Line"
             )

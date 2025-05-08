@@ -7,6 +7,7 @@ GREY_COLOR = "#747678"
 GREY_COLOR2 = "#838383"
 BLACK_COLOR = "#000000"
 MIDOSUJI_BACKGROUND_COLOR = "#FFFFFF"
+TRANSFER_GREY_COLOR = "#D7D5D5"
 BORDER_DEBUG = "" #"border: 2px solid #ccc;"
 
 # 動畫時間設定
@@ -86,4 +87,25 @@ TRANSFER_MAP = {
     "JR": "JR線",
     "Kita-Osaka Kyuko": "北大阪急行線",
     "Imazato Liner": "今里ライナー線",
+}
+
+LINE_COLOR_MAP = {
+  "Chuo": "#019a66",
+  "Imazatosuji": "#f8b500",
+  "Midosuji": "#e5171f",
+  "Nagahori Tsurumi-ryokuchi": "#a9cc51",
+  "New Tram": "#00b2e5",
+  "Sakaisuji": "#804000",
+  "Tanimachi": "#8f76d6",
+  "Yotsubashi": "#0078ba",
+  "Sennichimae": "#f08fc0",
+  "Kintetsu": "#000000",
+  "Nankai": "#000000",
+  "Hankyu": "#000000",
+  "Keihan": "#000000",
+  "Hanshin": "#000000",
+  "Hankai": "#000000",
+  "JR": "#000000",
+  "Kita-Osaka Kyuko": "#000000",
+  "Imazato Liner": "#000000"
 }
