@@ -1,13 +1,12 @@
 import os
 
 # 顏色設定
-MIDOSUJI_RED_COLOR = "#E5171F"
 BLUE_COLOR = "#2633BC"
 GREY_COLOR = "#747678"
 GREY_COLOR2 = "#838383"
 BLACK_COLOR = "#000000"
-MIDOSUJI_BACKGROUND_COLOR = "#FFFFFF"
 TRANSFER_GREY_COLOR = "#D7D5D5"
+WHITE_BACKGROUND_COLOR = "#FFFFFF"
 BORDER_DEBUG = "" #"border: 2px solid #ccc;"
 
 # 動畫時間設定
@@ -109,3 +108,7 @@ LINE_COLOR_MAP = {
   "Kita-Osaka Kyuko": "#000000",
   "Imazato Liner": "#000000"
 }
+
+
+# Line 
+MIDOSUJI_RED_COLOR = LINE_COLOR_MAP['Midosuji']

@@ -43,7 +43,7 @@ class TrainDisplay(QWidget):
         self.debug_text = QLabel("Debug message: testing ...")
         self.debug_text.setFont(debug_font)
         self.debug_text.setFixedSize(700, 50)
-        self.debug_text.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.debug_text.setStyleSheet(f"background-color: {WHITE_BACKGROUND_COLOR}; color: {GREY_COLOR};")
 
         self.debug_next_stage_button = QPushButton("Next stage")
         self.debug_next_stage_button.setFixedSize(100, 50)

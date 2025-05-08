@@ -64,7 +64,7 @@ class TransferLineWidget(QWidget):
         
         # Set widget properties
         self.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        self.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; {BORDER_DEBUG}")
+        self.setStyleSheet(f"background-color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         self.setFixedHeight(70)
         
         # Create main layout
