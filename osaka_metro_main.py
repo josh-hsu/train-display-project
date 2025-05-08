@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 
 from scene_manager import SceneManager
 #from animated_text_view import AnimatedTextView
@@ -16,7 +16,9 @@ from route_director import RouteDirector
 from train_textview_libs import *
 
 class OsakaMetroTrainDisplay(QWidget):
-    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=1900):
+    operation_route_callback = pyqtSignal(object)
+    
+    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=600):
         super().__init__()
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
@@ -282,6 +284,7 @@ class OsakaMetroTrainDisplay(QWidget):
         station = object[0]
         state = object[1]
         elapsed_time = object[2]
+        self.operation_route_callback.emit(object)
         print(f"Route Director Callback: {station}, {state}, timestamp {elapsed_time}")
         if state is not self.train_state:
             self.update_train_state(station, state)

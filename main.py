@@ -9,6 +9,7 @@ from PyQt5.QtCore import Qt
 from osaka_metro.osaka_metro import *
 from line_info import LineInfo
 from osaka_metro_main import OsakaMetroTrainDisplay
+from route_director import RouteDirector
 
 class TrainDisplay(QWidget):
     def __init__(self):
@@ -29,6 +30,8 @@ class TrainDisplay(QWidget):
         
         # Osaka Metro Main view
         self.operator_main = OsakaMetroTrainDisplay(MIDOSUJI_LINE_INFO, 4)
+        self.operator_main.operation_route_callback.connect(self.operation_callback)
+        self.route_director = self.operator_main.director
 
         #
         # Debug 階段
@@ -37,24 +40,24 @@ class TrainDisplay(QWidget):
         debug_layout.setContentsMargins(0, 0, 0, 0)
         debug_layout.setAlignment(Qt.AlignLeft)
 
-        debug_text = QLabel("Debug message: testing ...")
-        debug_text.setFont(debug_font)
-        debug_text.setFixedSize(400, 50)
-        debug_text.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
+        self.debug_text = QLabel("Debug message: testing ...")
+        self.debug_text.setFont(debug_font)
+        self.debug_text.setFixedSize(700, 50)
+        self.debug_text.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};")
 
-        debug_button = QPushButton("Next stage")
-        debug_button.setFixedSize(200, 50)
-        debug_button.setStyleSheet("background-color: #ffffff; color: #000000;")
-        debug_button.clicked.connect(self.debug_next_stage)
+        self.debug_next_stage_button = QPushButton("Next stage")
+        self.debug_next_stage_button.setFixedSize(100, 50)
+        self.debug_next_stage_button.setStyleSheet("background-color: #ffffff; color: #000000;")
+        self.debug_next_stage_button.clicked.connect(self.do_next_stage)
 
-        debug_check_state = QPushButton("Check state")
-        debug_check_state.setFixedSize(200, 50)
-        debug_check_state.setStyleSheet("background-color: #ffffff; color: #000000;")
-        debug_check_state.clicked.connect(self.debug_check_state)
+        self.debug_start_over_button = QPushButton("Start over")
+        self.debug_start_over_button.setFixedSize(100, 50)
+        self.debug_start_over_button.setStyleSheet("background-color: #ffffff; color: #000000;")
+        self.debug_start_over_button.clicked.connect(self.do_start_over)
         
-        debug_layout.addWidget(debug_text)
-        debug_layout.addWidget(debug_button)
-        debug_layout.addWidget(debug_check_state)
+        debug_layout.addWidget(self.debug_text)
+        debug_layout.addWidget(self.debug_next_stage_button)
+        debug_layout.addWidget(self.debug_start_over_button)
 
         #
         # 主垂直布局
@@ -67,11 +70,17 @@ class TrainDisplay(QWidget):
 
         self.setLayout(main_layout)
     
-    def debug_next_stage(self):
-        pass
+    def operation_callback(self, object):
+        station = object[0]
+        state = object[1]
+        elapsed_time = object[2]
+        self.debug_text.setText(f"Route Director Callback: {station}, {state}, timestamp {elapsed_time}")
+
+    def do_next_stage(self):
+        self.route_director.elapsed_time += 40
     
-    def debug_check_state(self):
-        pass
+    def do_start_over(self):
+        self.route_director.elapsed_time = 0
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

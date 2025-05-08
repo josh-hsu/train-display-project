@@ -76,19 +76,19 @@ class TransferLineWidget(QWidget):
         
         # Create top title label (Japanese text)
         self.top_title_label = QLabel(top_title)
-        self.top_title_label.setFont(QFont(FONT_NAME, 24, QFont.Bold))
+        self.top_title_label.setFont(QFont(FONT_NAME, 20, QFont.Bold))
         self.top_title_label.setStyleSheet(f"color: {BLACK_COLOR}; {BORDER_DEBUG}")
         
         # Create bottom title label (English text)
         self.bottom_title_label = QLabel(bottom_title)
-        self.bottom_title_label.setFont(QFont(FONT_NAME, 20, QFont.Bold))
+        self.bottom_title_label.setFont(QFont(FONT_NAME, 18, QFont.Bold))
         self.bottom_title_label.setStyleSheet(f"color: {BLACK_COLOR}; {BORDER_DEBUG}")
         
         # Add widgets to text layout
         text_layout.addWidget(self.top_title_label)
         text_layout.addWidget(self.bottom_title_label)
-        text_layout.setSpacing(5)
-        text_layout.setContentsMargins(0, 5, 0, 5)
+        text_layout.setSpacing(1)
+        text_layout.setContentsMargins(0, 1, 0, 1)
         
         # Add left icon and text to main layout
         main_layout.addWidget(self.left_icon)
@@ -97,7 +97,7 @@ class TransferLineWidget(QWidget):
         main_layout.addStretch(1)  # Push station number icon to the right edge
         
         # Set spacing and margins
-        main_layout.setContentsMargins(10, 5, 10, 5)
+        main_layout.setContentsMargins(5, 2, 5, 2)
 
 
 class SceneTransferList(QWidget):
