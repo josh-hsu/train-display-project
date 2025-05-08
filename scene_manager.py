@@ -10,7 +10,7 @@ class SceneManager:
             "scene_station_list": SceneStationList(),
             "scene_station_list_en": SceneStationListEN(),
             "scene_transfer_list": SceneTransferList(),
-            #"scene_door_inst": SceneStationList(),
+            "scene_door_inst": SceneDoorInst(),
         }
 
     def get_scene(self, name):
