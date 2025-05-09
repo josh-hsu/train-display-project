@@ -31,7 +31,10 @@ class SingleCabWidget(QWidget):
 
         # 畫上文字（如有）
         if self.text:
-            painter.setPen(QPen(Qt.black))
+            if self.text == "5":
+                painter.setPen(QPen(Qt.white))
+            else:
+                painter.setPen(QPen(Qt.black))
             font = QFont(FONT_NAME, 28, QFont.Bold)
             painter.setFont(font)
             painter.drawText(self.rect(), Qt.AlignCenter, self.text)
