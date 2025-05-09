@@ -73,10 +73,11 @@ class OsakaMetroTrainDisplay(QWidget):
         self.textview_destination.setStyleSheet(f"background-color: {WHITE_BACKGROUND_COLOR}; color: {GREY_COLOR}; {BORDER_DEBUG}")
         self.textview_destination.setFont(font_large)
         self.textview_destination.setAlignment(Qt.AlignRight)
+        self.textview_destination.setAnimationType(AnimatedTextView_T.ANIMATION_NONE)
 
         self.textview_now_state = AnimatedTextView_T()
         self.textview_now_state.setFixedSize(220, 60)
-        self.textview_destination.setMinimumHeight(60)
+        self.textview_now_state.setMinimumHeight(60)
         self.textview_now_state.setTexts(NOW_STATE_MAP['0'])
         self.textview_now_state.setStyleSheet(f"background-color: {WHITE_BACKGROUND_COLOR}; color: {BLACK_COLOR}; {BORDER_DEBUG}")
         self.textview_now_state.setFont(font_large)
@@ -277,14 +278,23 @@ class OsakaMetroTrainDisplay(QWidget):
         self.destination_texts.append(f"{DEST_STATION_INFO[2]}{termianl_station.name['en']}")
         self.destination_texts.append(f"{DEST_STATION_INFO[3]}{termianl_station.name['zh-TW']}")
 
+    def prepare_line_name(self):
+        line_info = self.line_info
+        self.destination_texts = []
+
+        self.destination_texts.append(line_info.name['jp'])
+        self.destination_texts.append(line_info.name['jp-hinagana'])
+        self.destination_texts.append(line_info.name['en'])
+        self.destination_texts.append(line_info.name['zh-TW'])
+
     def start_new_train(self):
         line_info = self.line_info
         current_station_id = line_info.get_current_route()[0]
         current_station = line_info.get_station(current_station_id)
         termianl_station_id = line_info.get_current_route()[-1]
         termianl_station = line_info.get_station(termianl_station_id)
-        self.format_train_destination()
         self.train_state = STATION_STATE_READY_TO_DEPART
+        self.prepare_line_name()
         self.textview_now_state.setTexts(NOW_STATE_MAP[f"{self.train_state}"])
         self.textview_destination.setTexts(self.destination_texts)
         self.label_station_number.setText(f"{current_station_id}")
@@ -297,6 +307,10 @@ class OsakaMetroTrainDisplay(QWidget):
         line_info = self.line_info
         station = line_info.get_station(station_id)
         self.train_state = state
+        if state == STATION_STATE_READY_TO_DEPART:
+            self.prepare_line_name()
+        else:
+            self.format_train_destination()
         self.label_station_number.setText(f"{station.id}")
         self.textview_station.setTexts(list(station.name.values()))
         self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
