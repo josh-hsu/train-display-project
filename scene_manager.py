@@ -3,6 +3,7 @@ from osaka_metro.scene_station_list import SceneStationList
 from osaka_metro.scene_door_inst import SceneDoorInst
 from osaka_metro.scene_station_list_en import SceneStationListEN
 from osaka_metro.scene_transfer_list import SceneTransferList
+from osaka_metro.scene_exit_info import GateInfoWidget
 
 class SceneManager:
     def __init__(self):
@@ -11,6 +12,7 @@ class SceneManager:
             "scene_station_list_en": SceneStationListEN(),
             "scene_transfer_list": SceneTransferList(),
             "scene_door_inst": SceneDoorInst(),
+            "scene_exit_info" : GateInfoWidget(),
         }
 
     def get_scene(self, name):

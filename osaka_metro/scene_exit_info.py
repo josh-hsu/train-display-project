@@ -27,10 +27,9 @@ class SingleCabWidget(QWidget):
         # 畫上文字（如有）
         if self.text:
             painter.setPen(QPen(Qt.black))
-            font = QFont("Noto Sans JP", 32, QFont.Bold)
+            font = QFont("Noto Sans JP SemiBold", 28, QFont.Bold)
             painter.setFont(font)
             painter.drawText(self.rect(), Qt.AlignCenter, self.text)
-
 
 
 # 十節車廂列車
@@ -69,17 +68,28 @@ class TrainMovingWidget(QWidget):
         self.train_widget = TrainCabWidget()
         self.train_widget.setParent(self)
 
+        self._setup_animation()
+
+    def _setup_animation(self):
         # 動畫初始與結束位置
-        start_x = self.width() - 130
+        self.start_x = self.width() - 130
         cab_full_width = 130 + 2
-        end_x = -5 * cab_full_width
+        self.end_x = -5 * cab_full_width
 
         self.animation = QPropertyAnimation(self.train_widget, b"geometry")
-        self.animation.setDuration(1500)
-        self.animation.setStartValue(QRect(start_x, 15, self.train_widget.width(), self.train_widget.height()))
-        self.animation.setEndValue(QRect(end_x, 15, self.train_widget.width(), self.train_widget.height()))
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(QRect(self.start_x, 15, self.train_widget.width(), self.train_widget.height()))
+        self.animation.setEndValue(QRect(self.end_x, 15, self.train_widget.width(), self.train_widget.height()))
         self.animation.finished.connect(self.onAnimationFinished)
+
+        # 初始位置設定
+        self.reset()
+
+    def animate(self):
         self.animation.start()
+
+    def reset(self):
+        self.train_widget.setGeometry(self.start_x, 15, self.train_widget.width(), self.train_widget.height())
 
     def paintEvent(self, event):
         super().paintEvent(event)
@@ -92,6 +102,7 @@ class TrainMovingWidget(QWidget):
         y_pos = 65
         line_len = 720
         painter.drawLine(x_start, y_pos, x_start + line_len, y_pos)
+
         pen = QPen(Qt.red, 4)
         painter.setPen(pen)
         y_pos = 69
@@ -109,14 +120,15 @@ class ExitInfoHeader(QWidget):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
-        font_title = QFont("Noto Sans JP", 16, QFont.Bold)
-        font_subtitle = QFont("Noto Sans JP", 12, QFont.Bold)
-        font_exit_number = QFont("Noto Sans JP", 28, QFont.Bold)
-        self.setStyleSheet("color: #000000; ")
+        font_title = QFont("Noto Sans JP SemiBold", 16, QFont.Bold)
+        font_subtitle = QFont("Noto Sans JP SemiBold", 12, QFont.Bold)
+        font_exit_number = QFont("Noto Sans JP SemiBold", 28, QFont.Bold)
+        self.setStyleSheet("color: #000000; background-color: transparent;")
 
         # 第一欄：南改札 / Ticket Gate
         col1 = QVBoxLayout()
-        col1.setContentsMargins(5, 0, 5, 0)
+        col1.setContentsMargins(0, 0, 0, 0)
+        col1.setSpacing(0)
         label1 = QLabel(gate_name)
         label1.setFont(font_title)
         label1.setAlignment(Qt.AlignCenter)
@@ -158,17 +170,17 @@ class ExitInfoHeader(QWidget):
 class ExitInfoItem(QLabel):
     def __init__(self, text):
         super().__init__(text)
-        font_title = QFont("Noto Sans JP", 24, QFont.Bold)
+        font_title = QFont("Noto Sans JP SemiBold", 20, QFont.Bold)
         
         # 自動偵測是否有兩行（用 \n 判斷）
         if '\n' in text:
-            self.setFixedSize(300, 80)
+            self.setFixedSize(300, 68)
         else:
-            self.setFixedSize(300, 50)
+            self.setFixedSize(300, 32)
             
         self.setFont(font_title)
         self.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        self.setStyleSheet("color: #000000;  padding-left: 2px;")
+        self.setStyleSheet("color: #000000;  padding-left: 2px; background-color: transparent;")
 
 class ExitInfo(QWidget):
     def __init__(self):
@@ -193,16 +205,6 @@ class ExitInfo(QWidget):
 
         layout.addStretch()
         self.setLayout(layout)
-
-# 黑色訊息欄
-class MessageInfoWidget(QLabel):
-    def __init__(self):
-        super().__init__()
-        self.setFixedSize(960, 50)
-        self.setFont(QFont("Noto Sans JP", 28, QFont.Bold))
-        self.setText("こちら側のドアが開きます")
-        self.setStyleSheet("background-color: black; color: red;")
-        self.setAlignment(Qt.AlignCenter)
 
 
 # 出口資訊（保留白底）
@@ -232,6 +234,16 @@ class GateLayoutWidget(QWidget):
         painter.fillRect(self.rect(), QColor("#D9DBDC"))
 
 
+# 黑色訊息欄
+class MessageInfoWidget(QLabel):
+    def __init__(self):
+        super().__init__()
+        self.setFixedSize(960, 50)
+        self.setFont(QFont("Noto Sans JP SemiBold", 28, QFont.Bold))
+        self.setText("こちら側のドアが開きます")
+        self.setStyleSheet("background-color: black; color: red;")
+        self.setAlignment(Qt.AlignCenter)
+
 # 主組合視圖
 class GateInfoWidget(QWidget):
     def __init__(self):
@@ -252,6 +264,20 @@ class GateInfoWidget(QWidget):
 
         self.setLayout(layout)
 
+    def on_scene_present(self):
+        self.train_view.animate()
+
+    def update_scene(self):
+        pass
+
+    def on_scene_disappear(self):
+        self.train_view.reset()
+
+    def receive_notify(self, line_info, display_station, station_state):
+        self.line_info = line_info
+        self.station = display_station
+        self.station_state = station_state
+        self.update_scene()
 
 # 執行主視窗
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ else:
     ICON_PATH = "osaka_metro\\transfer_icons\\"
     MIDOSUJI_LINE_INFO = "osaka_metro\\midosuji_line.yaml"
     FONT_NAME = "Noto Sans JP SemiBold"
-    DOOR_PATH = "osaka_metro\\osaka_metro\\"
+    DOOR_PATH = "osaka_metro\\doors\\"
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站
 STATION_STATE_ARRIVED = 1          # 車在車站

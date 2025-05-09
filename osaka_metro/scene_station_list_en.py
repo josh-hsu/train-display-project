@@ -415,6 +415,9 @@ class SceneStationListEN(QWidget):
     def on_scene_present(self):
         pass
 
+    def on_scene_disappear(self):
+        pass
+
     def receive_notify(self, line_info, display_station, station_state):
         self.line_info = line_info
         self.display_station = display_station
