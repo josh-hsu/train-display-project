@@ -18,7 +18,7 @@ from train_textview_libs import *
 class OsakaMetroTrainDisplay(QWidget):
     operation_route_callback = pyqtSignal(object)
     
-    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=600):
+    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=0):
         super().__init__()
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
@@ -35,7 +35,7 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initRouteDirector(self, line_info: LineInfo, default_elapsed_time):
         self.train_state = STATION_STATE_READY_TO_DEPART
-        self.director = RouteDirector(line_info, self.route, interval_sec=2, init_elapsed_time=default_elapsed_time)
+        self.director = RouteDirector(line_info, self.route, interval_sec=1, interval_inc=1, init_elapsed_time=default_elapsed_time)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
 
@@ -205,8 +205,31 @@ class OsakaMetroTrainDisplay(QWidget):
 
         self.setLayout(main_layout)
 
+    def scene_switch_immediately(self):
+        start_index = self.scene_manager.start_index_of_state[self.train_state]
+        end_index = self.scene_manager.end_index_of_state[self.train_state]
+        self.current_index = start_index
+
+        print(f"reset, start: {start_index} end: {end_index} next: {self.current_index}")
+
+        current_widget = self.scene_container.widget(self.current_index)
+        self.scene_container.setCurrentIndex(self.current_index)
+        current_widget.on_scene_present()
+        for i in range(len(self.scene_keys)):
+            scene = self.scene_container.widget(i)
+            if scene is not current_widget:
+                scene.on_scene_disappear()
+
     def animate_scene_switch(self):
+        start_index = self.scene_manager.start_index_of_state[self.train_state]
+        end_index = self.scene_manager.end_index_of_state[self.train_state]
         next_index = (self.current_index + 1) % len(self.scene_keys)
+
+        if next_index > end_index or next_index < start_index:
+            next_index = start_index
+
+        print(f"callback, start: {start_index} end: {end_index} next: {next_index}")
+
         current_widget = self.scene_container.widget(self.current_index)
         next_widget = self.scene_container.widget(next_index)
 
@@ -274,6 +297,7 @@ class OsakaMetroTrainDisplay(QWidget):
     def update_train_state(self, station_id, state):
         line_info = self.line_info
         station = line_info.get_station(station_id)
+        self.train_state = state
         self.label_station_number.setText(f"{station.id}")
         self.textview_station.setTexts(list(station.name.values()))
         self.textview_now_state.setTexts(NOW_STATE_MAP[f"{state}"])
@@ -281,6 +305,7 @@ class OsakaMetroTrainDisplay(QWidget):
         self.label_top_car_number.setTexts(CAR_INST_TOP)
         self.label_bottom_car_number.setTexts(CAR_INST_BOT)
         self.scene_manager.notify_all_scenes(line_info, station, state)
+        self.scene_switch_immediately()
 
     def route_director_callback(self, object):
         station = object[0]

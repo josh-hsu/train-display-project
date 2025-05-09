@@ -29,7 +29,7 @@ class TrainDisplay(QWidget):
         debug_font = QFont(family, 14, QFont.Bold)
         
         # Osaka Metro Main view
-        self.operator_main = OsakaMetroTrainDisplay(MIDOSUJI_LINE_INFO, 4)
+        self.operator_main = OsakaMetroTrainDisplay(MIDOSUJI_LINE_INFO, 3)
         self.operator_main.operation_route_callback.connect(self.operation_callback)
         self.route_director = self.operator_main.director
 
