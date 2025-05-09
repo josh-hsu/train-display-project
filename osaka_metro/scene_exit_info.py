@@ -23,7 +23,10 @@ class SingleCabWidget(QWidget):
         painter = QPainter(self)
         pen = QPen(Qt.black, 2)
         painter.setPen(pen)
-        painter.setBrush(Qt.transparent)
+        if self.text and self.text == "5":
+            painter.setBrush(Qt.red)
+        else:
+            painter.setBrush(Qt.transparent)
         painter.drawRect(1, 1, self.width() - 2, self.height() - 2)
 
         # 畫上文字（如有）
@@ -54,10 +57,13 @@ class TrainCabWidget(QWidget):
         total_width = 10 * 130 + 9 * 2 + 8
         self.setFixedSize(total_width, 50)
 
-    def labelRearFiveCabs(self):
+    def labelRearFiveCabs(self, reset=False):
         for i in range(5):
             label = str(i + 1)
-            self.cabs[9 - i].setLabel(label)  # 從最右邊開始標 5→1
+            if reset:
+                self.cabs[9 - i].setLabel("")  # 從最右邊開始標 5→1
+            else:
+                self.cabs[9 - i].setLabel(label)
 
 
 # 動畫容器：TrainMovingWidget
@@ -92,6 +98,7 @@ class TrainMovingWidget(QWidget):
 
     def reset(self):
         self.train_widget.setGeometry(self.start_x, 15, self.train_widget.width(), self.train_widget.height())
+        self.train_widget.labelRearFiveCabs(reset=True)
 
     def paintEvent(self, event):
         super().paintEvent(event)
