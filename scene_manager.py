@@ -32,7 +32,7 @@ class SceneManager:
             STATION_STATE_APPROACH: 5,
             STATION_STATE_ARRIVED: 5,
             STATION_STATE_NEXT: 3,
-            STATION_STATE_READY_TO_DEPART: 2,
+            STATION_STATE_READY_TO_DEPART: 1,
             STATION_STATE_IN_TERMINAL: 5,
         }
 

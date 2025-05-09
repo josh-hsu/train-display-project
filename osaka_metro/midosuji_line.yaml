@@ -28,9 +28,11 @@ line:
       transfer:
         - [Kita-Osaka Kyuko, null, center]
       gate_info:
-        - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [江坂公園, 吹田市役所]
+        south: [江坂駅前バス停, カリーノ江坂]
       previous_station: [M10, 1.5, 180]
       next_station: [M12, 2.0, 150]
       door_open: left
@@ -44,9 +46,11 @@ line:
         zh-TW: 東三國
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [三国本町公園, 東三国小学校]
+        south: [淀川区役所, 新大阪センイシティ]
       previous_station: [M11, 2.0, 150]
       next_station: [M13, 0.9, 120]
       door_open: right
@@ -61,9 +65,11 @@ line:
       transfer:
         - [JR, null, center]
       gate_info:
-        - [north, 1-3]
-        - [center, 4-6]
-        - [south, 7-9]
+        - [central, 1-4]
+        - [south, 5-7]
+      gate_info_detail:
+        central: [JR新大阪駅, 新阪急大阪大楼, 宮原1・2丁目]
+        south: [大阪米尔帕克酒店, 宮原3・4丁目, 西中島7丁目]
       previous_station: [M12, 0.9, 120]
       next_station: [M14, 0.7, 90]
       door_open: left
@@ -78,9 +84,11 @@ line:
       transfer:
         - [Hankyu, null, east]
       gate_info:
-        - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [南方駅, 淀川河川敷公園]
+        south: [西中島南方商店街, 淀川消防署]
       previous_station: [M13, 0.7, 90]
       next_station: [M15, 1.8, 150]
       door_open: right
@@ -95,8 +103,10 @@ line:
       transfer: []
       gate_info:
         - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [梅田芸術劇場, 中津公園]
+        south: [茶屋町, 阪急中津駅]
       previous_station: [M14, 1.8, 150]
       next_station: [M16, 1.2, 120]
       door_open: left
@@ -116,8 +126,12 @@ line:
         - [Hanshin, null, south]
       gate_info:
         - [north, 1-5]
-        - [center, 6-9]
+        - [central, 6-9]
         - [south, 11-18]
+      gate_info_detail:
+        north: [阪急三番街, ヨドバシカメラ梅田, 大阪ステーションシティ]
+        central: [JR線, ekimo umeda]
+        south: [谷町線, 四つ橋線, 阪神線, 阪急百貨店, 阪神百貨店, Whityうめだ]
       previous_station: [M15, 1.2, 120]
       next_station: [M17, 1.5, 180]
       door_open: left
@@ -132,10 +146,13 @@ line:
       transfer:
         - [Keihan, null, north]
       gate_info:
-        - [north, 1-3]
-        - [center-north, 4-5]
-        - [center-south, 6-7]
-        - [south, 8-10]
+        - [north, 1-7]
+        - [central, 8-10]
+        - [south, 11-13]
+      gate_info_detail:
+        north: [京阪線, 大阪市役所, 中央公会堂, 中之島公園]
+        central: [日本生命本館ビル, 淀屋橋三井ビルディング]
+        south: [ヒューリック大阪ビル, 朝日生命ビル, 明治安田生命, 大阪御堂筋ビル]
       previous_station: [M16, 1.5, 180]
       next_station: [M18, 1.0, 120]
       door_open: right
@@ -151,9 +168,13 @@ line:
         - [Yotsubashi, Y13, west]
         - [Chuo, C16, east]
       gate_info:
-        - [north, 1-3]
-        - [center, 4-6]
-        - [south, 7-9]
+        - [north, 1-6]
+        - [central, 7-8]
+        - [south, 9-10]
+      gate_info_detail:
+        north: [住友生命ビル, 第二有楽ビル, 御堂筋本町ビル, 御堂ビル]
+        central: [心斎橋筋, 本町ガーデンシティ, ヨドコウビル]
+        south: [中央大通, イトウビル, 船場センタービル, DICビル]
       previous_station: [M17, 1.0, 120]
       next_station: [M19, 0.8, 90]
       door_open: left
@@ -170,8 +191,10 @@ line:
         - [Nagahori Tsurumi-ryokuchi, N15, east]
       gate_info:
         - [north, 1-3]
-        - [center, 4-6]
-        - [south, 7-9]
+        - [south, 4-8]
+      gate_info_detail:
+        north: [クリスタ長堀, 心斎橋東急ビル, 心斎橋プラザビル]
+        south: [大丸百貨店, 東洋ビル, OPA, 日航ビル]
       previous_station: [M18, 0.8, 90]
       next_station: [M20, 1.0, 120]
       door_open: right
@@ -191,9 +214,15 @@ line:
         - [Kintetsu, null, east]
         - [Nankai, null, south]
       gate_info:
-        - [north, 1-5]
-        - [center, 6-10]
-        - [south, 11-15]
+        - [south, 1-10]
+        - [central, 11-13]
+        - [north, 14-25]
+        - [east, 14-25]
+      gate_info_detail:
+        south: [南海線, 高島屋, 府立体育会館, ekimo namba, NAMBAなんなん]
+        central: [戎橋筋, なんば御堂筋ビル, ekimo namba]
+        north: [近鉄線, 阪神線, 道頓堀, なんばHIPS, ekimo namba, なんばウォーク]
+        east: [近鉄線, 阪神線, 道頓堀, なんばHIPS, ekimo namba, なんばウォーク]
       previous_station: [M19, 1.0, 120]
       next_station: [M21, 1.2, 150]
       door_open: left
@@ -209,8 +238,10 @@ line:
         - [Yotsubashi, Y16, center]
       gate_info:
         - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [south, 3-6]
+      gate_info_detail:
+        north: [浪速区役所, 木津卸売市場, 浪速図書館]
+        south: [今宮戎神社]
       previous_station: [M20, 1.2, 150]
       next_station: [M22, 0.8, 90]
       door_open: right
@@ -228,9 +259,11 @@ line:
         - [Hankai, null, south]
         - [Nankai, null, south]
       gate_info:
-        - [north, 1-3]
-        - [center, 4-6]
-        - [south, 7-9]
+        - [east, 1-2]
+        - [west, 3-9]
+      gate_info_detail:
+        east: [新世界, 通天閣, 天王寺動物園, 天王寺公園]
+        west: [JR線, 阪堺線, 西成警察署]
       previous_station: [M21, 0.8, 90]
       next_station: [M23, 1.0, 120]
       door_open: left
@@ -248,9 +281,11 @@ line:
         - [Kintetsu, null, east]
         - [Hankai, null, south]
       gate_info:
-        - [north, 1-4]
-        - [center, 5-8]
-        - [south, 9-12]
+        - [north, 1-3]
+        - [south, 4-6]
+      gate_info_detail:
+        north: [天王寺公園, 大阪市立美術館, 四天王寺]
+        south: [あべのハルカス, 近鉄百貨店, JR天王寺駅]
       previous_station: [M22, 1.0, 120]
       next_station: [M24, 1.2, 150]
       door_open: right
@@ -264,8 +299,11 @@ line:
         zh-TW: 昭和町
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [south, 3-4]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [文の里商店街, 阿倍野区役所]
+        south: [阪南中公園, 大阪市立阪南中学校]
       previous_station: [M23, 1.2, 150]
       next_station: [M25, 0.8, 90]
       door_open: left
@@ -279,8 +317,11 @@ line:
         zh-TW: 西田邊
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [south, 3-4]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [長池公園, 阪南町商店街]
+        south: [大阪市立南田辺小学校, 南港通]
       previous_station: [M24, 0.8, 90]
       next_station: [M26, 1.0, 120]
       door_open: right
@@ -297,8 +338,10 @@ line:
         - [Imazato Liner, null, center]
       gate_info:
         - [north, 1-2]
-        - [center, 3-4]
-        - [south, 5-6]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [長居公園, 大阪市立自然史博物館]
+        south: [JR長居駅, 長居スタジアム]
       previous_station: [M25, 1.0, 120]
       next_station: [M27, 1.2, 150]
       door_open: left
@@ -312,8 +355,11 @@ line:
         zh-TW: 我孫子
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [south, 3-4]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [あびこ観音寺, 我孫子商店街]
+        south: [大阪市立我孫子中学校, 阪南大学]
       previous_station: [M26, 1.2, 150]
       next_station: [M28, 1.5, 180]
       door_open: right
@@ -327,8 +373,11 @@ line:
         zh-TW: 北花田
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [south, 3-4]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [イオンモール堺北花田, 北花田公園]
+        south: [堺市立五箇荘中学校, 北花田駅前商店街]
       previous_station: [M27, 1.5, 180]
       next_station: [M29, 1.6, 180]
       door_open: left
@@ -342,8 +391,11 @@ line:
         zh-TW: 新金岡
       transfer: []
       gate_info:
-        - [north, 1-2]
-        - [south, 3-4]
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [堺市役所, 大泉緑地]
+        south: [堺市立新金岡小学校, 新金岡団地]
       previous_station: [M28, 1.6, 180]
       next_station: [M30, 1.5, 180]
       door_open: right
@@ -358,9 +410,11 @@ line:
       transfer:
         - [Nankai, null, east]
       gate_info:
-        - [north, 1-3]
-        - [center, 4-6]
-        - [south, 7-9]
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [南海高野線中百舌鳥駅, 大阪府立大学]
+        south: [堺市立中百舌鳥小学校, 中百舌鳥公園]
       previous_station: [M29, 1.5, 180]
       next_station: [null, null, null]
       door_open: left

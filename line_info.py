@@ -110,6 +110,7 @@ class StationInfo:
         self.name = data.get("name", {})  # jp, jp-hinagana, en, zh-TW
         self.transfer = TransferInfo(data.get("transfer", []))
         self.gate_info = data.get("gate_info", {})
+        self.gate_info_detail = data.get("gate_info_detail", {})
         self.previous_station = data.get("previous_station", [])
         self.next_station = data.get("next_station", [])
         self.door_open = data.get("door_open")

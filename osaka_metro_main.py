@@ -8,7 +8,6 @@ from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 
 from scene_manager import SceneManager
-#from animated_text_view import AnimatedTextView
 from osaka_metro.osaka_metro import *
 from line_info import *
 from route_director import RouteDirector

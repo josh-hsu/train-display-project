@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPainter, QPen, QColor, QFont
 from PyQt5.QtCore import Qt, QPropertyAnimation, QRect
 
+from line_info import *
+from osaka_metro.osaka_metro import *
 
 # 單一車廂
 class SingleCabWidget(QWidget):
@@ -27,7 +29,7 @@ class SingleCabWidget(QWidget):
         # 畫上文字（如有）
         if self.text:
             painter.setPen(QPen(Qt.black))
-            font = QFont("Noto Sans JP SemiBold", 28, QFont.Bold)
+            font = QFont(FONT_NAME, 28, QFont.Bold)
             painter.setFont(font)
             painter.drawText(self.rect(), Qt.AlignCenter, self.text)
 
@@ -113,64 +115,90 @@ class TrainMovingWidget(QWidget):
         
 
 class ExitInfoHeader(QWidget):
-    def __init__(self, gate_name="南改札", gate_label="Ticket Gate", exit_text="出口", exit_label="Exit", number_text="3 - 10"):
+    def __init__(self):
         super().__init__()
         self.setFixedWidth(300)
         layout = QHBoxLayout()
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
 
-        font_title = QFont("Noto Sans JP SemiBold", 16, QFont.Bold)
-        font_subtitle = QFont("Noto Sans JP SemiBold", 12, QFont.Bold)
-        font_exit_number = QFont("Noto Sans JP SemiBold", 28, QFont.Bold)
+        font_title = QFont(FONT_NAME, 16, QFont.Bold)
+        font_subtitle = QFont(FONT_NAME, 12, QFont.Bold)
+        font_exit_number = QFont(FONT_NAME, 28, QFont.Bold)
         self.setStyleSheet("color: #000000; background-color: transparent;")
+        
+        self.should_present = False
 
         # 第一欄：南改札 / Ticket Gate
         col1 = QVBoxLayout()
         col1.setContentsMargins(0, 0, 0, 0)
         col1.setSpacing(0)
-        label1 = QLabel(gate_name)
-        label1.setFont(font_title)
-        label1.setAlignment(Qt.AlignCenter)
-        label2 = QLabel(gate_label)
-        label2.setFont(font_subtitle)
-        label2.setAlignment(Qt.AlignCenter)
-        col1.addWidget(label1)
-        col1.addWidget(label2)
+        self.gate_name_label = QLabel("")
+        self.gate_name_label.setFont(font_title)
+        self.gate_name_label.setAlignment(Qt.AlignCenter)
+        self.gate_en_name_label = QLabel("")
+        self.gate_en_name_label.setFont(font_subtitle)
+        self.gate_en_name_label.setAlignment(Qt.AlignCenter)
+        col1.addWidget(self.gate_name_label)
+        col1.addWidget(self.gate_en_name_label)
 
         # 第二欄：出口 / Exit
         col2 = QVBoxLayout()
         col2.setContentsMargins(5, 0, 5, 0)
-        label3 = QLabel(exit_text)
-        label3.setFont(font_title)
-        label3.setAlignment(Qt.AlignCenter)
-        label4 = QLabel(exit_label)
-        label4.setFont(font_subtitle)
-        label4.setAlignment(Qt.AlignCenter)
-        col2.addWidget(label3)
-        col2.addWidget(label4)
+        self.exit_label = QLabel("")
+        self.exit_label.setFont(font_title)
+        self.exit_label.setAlignment(Qt.AlignCenter)
+        self.exit_en_label = QLabel("")
+        self.exit_en_label.setFont(font_subtitle)
+        self.exit_en_label.setAlignment(Qt.AlignCenter)
+        col2.addWidget(self.exit_label)
+        col2.addWidget(self.exit_en_label)
 
         # 第三欄：數字（3 - 10）
         col3 = QVBoxLayout()
         col3.setContentsMargins(5, 0, 5, 0)
-        label5 = QLabel(number_text)
-        label5.setFont(font_exit_number)
-        label5.setAlignment(Qt.AlignCenter)
-        col3.addWidget(label5)
+        self.exit_num_label = QLabel("")
+        self.exit_num_label.setFont(font_exit_number)
+        self.exit_num_label.setAlignment(Qt.AlignCenter)
+        col3.addWidget(self.exit_num_label)
 
         layout.addLayout(col1)
         layout.addLayout(col2)
         layout.addLayout(col3)
         self.setLayout(layout)
     
+    def set_info_header(self, gate_name="", number_text=""):
+        gate_label="Ticket Gate"
+        exit_text="出口"
+        exit_label="Exit"
+        if len(gate_name) > 0:
+            self.gate_name_label.setText(gate_name)
+            self.gate_en_name_label.setText(gate_label)
+            self.exit_num_label.setText(number_text)
+            self.exit_label.setText(exit_text)
+            self.exit_en_label.setText(exit_label)
+            self.should_present = True
+            self.setStyleSheet("color: #000000; background-color: transparent;")
+        else:
+            self.gate_name_label.setText("")
+            self.gate_en_name_label.setText("")
+            self.exit_num_label.setText("")
+            self.exit_label.setText("")
+            self.exit_en_label.setText("")
+            self.should_present = False
+        self.paintEvent(None)
+    
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.fillRect(self.rect(), QColor("#F2B73F"))
+        if self.should_present:
+            painter.fillRect(self.rect(), QColor("#F2B73F"))
+        else:
+            painter.fillRect(self.rect(), QColor("#D9DBDC"))
 
 class ExitInfoItem(QLabel):
     def __init__(self, text):
         super().__init__(text)
-        font_title = QFont("Noto Sans JP SemiBold", 20, QFont.Bold)
+        font_title = QFont(FONT_NAME, 20, QFont.Bold)
         
         # 自動偵測是否有兩行（用 \n 判斷）
         if '\n' in text:
@@ -194,17 +222,26 @@ class ExitInfo(QWidget):
         self.header = ExitInfoHeader()
         layout.addWidget(self.header)
 
-        # 範例出口資訊項目
-        items = [
-            "ヒューリック大阪ビル\n船場センタービル",
-            "難波神社・御堂筋",
-            "心斎橋駅・OPA方面",
-        ]
-        for text in items:
-            layout.addWidget(ExitInfoItem(text))
+        self.exit_info_col_1 = ExitInfoItem("")
+        self.exit_info_col_2 = ExitInfoItem("")
+        self.exit_info_col_3 = ExitInfoItem("")
+        self.exit_info = [self.exit_info_col_1, self.exit_info_col_2, self.exit_info_col_3]
+
+        layout.addWidget(self.exit_info_col_1)
+        layout.addWidget(self.exit_info_col_2)
+        layout.addWidget(self.exit_info_col_3)
 
         layout.addStretch()
         self.setLayout(layout)
+    
+    def set_exit_header(self, name, exit_num):
+        self.header.set_info_header(name, exit_num)
+    
+    def set_exit_info(self, list):
+        for i in range(len(list)):
+            if i < 3:
+                self.exit_info[i].setText(list[i])
+            
 
 
 # 出口資訊（保留白底）
@@ -219,13 +256,13 @@ class GateLayoutWidget(QWidget):
         layout.setSpacing(5)
 
         # 建立三個 ExitInfo
-        exit1 = ExitInfo()
-        exit2 = ExitInfo()
-        exit3 = ExitInfo()
+        self.exit_left = ExitInfo()
+        self.exit_center = ExitInfo()
+        self.exit_right = ExitInfo()
 
-        layout.addWidget(exit1)
-        layout.addWidget(exit2)
-        layout.addWidget(exit3)
+        layout.addWidget(self.exit_left)
+        layout.addWidget(self.exit_center)
+        layout.addWidget(self.exit_right)
 
         self.setLayout(layout)
 
@@ -239,7 +276,7 @@ class MessageInfoWidget(QLabel):
     def __init__(self):
         super().__init__()
         self.setFixedSize(960, 50)
-        self.setFont(QFont("Noto Sans JP SemiBold", 28, QFont.Bold))
+        self.setFont(QFont(FONT_NAME, 28, QFont.Bold))
         self.setText("こちら側のドアが開きます")
         self.setStyleSheet("background-color: black; color: red;")
         self.setAlignment(Qt.AlignCenter)
@@ -268,6 +305,24 @@ class GateInfoWidget(QWidget):
         self.train_view.animate()
 
     def update_scene(self):
+        exit_info = self.station.gate_info
+        exit_info_detail = self.station.gate_info_detail
+        
+        for gate_item in exit_info:
+            gate_name = gate_item[0]
+            gate_exit = gate_item[1]
+            gate_detail = exit_info_detail[gate_name]
+            print(f"name {gate_name}, exit {gate_exit}, detail {gate_detail}")
+            
+            if gate_name == "center" or gate_name == "central":
+                left_panel = self.gate_info.exit_left
+                left_panel.set_exit_header(GATE_NAME_MAP[gate_name], gate_exit)
+                left_panel.set_exit_info(gate_detail)
+            elif gate_name == "south":
+                right_panel = self.gate_info.exit_right
+                right_panel.set_exit_header(GATE_NAME_MAP[gate_name], gate_exit)
+                right_panel.set_exit_info(gate_detail)
+            
         pass
 
     def on_scene_disappear(self):
@@ -283,5 +338,10 @@ class GateInfoWidget(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = GateInfoWidget()
+    exit_info = window.gate_info.exit_center
+    exit_info.set_exit_header("Test Gate", "3 ~ 7")
+    exit_info.set_exit_info(["123", "456", "789"])
+    window.on_scene_present()
+    
     window.show()
     sys.exit(app.exec_())

@@ -118,6 +118,7 @@ LINE_COLOR_MAP = {
 GATE_NAME_MAP = {
     "north" : "北改札",
     "center" : "中改札",
+    "central" : "中改札",
     "south" : "南改札",
     "center-north": "中改札",
     "center-south": "中改札",
