@@ -38,7 +38,7 @@ class RouteDirector(QObject):
     def get_time_elapsed(self):
         return self.elapsed_time
 
-    def get_train_state_in_route(self, line_info, route, elapsedTimeSec, stayInStationSec=30, approachingSec=50):
+    def get_train_state_in_route(self, line_info, route, elapsedTimeSec, stayInStationSec=30, approachingSec=40):
         """
         Calculate the current train state and station based on elapsed time.
         

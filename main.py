@@ -74,7 +74,7 @@ class TrainDisplay(QWidget):
         station = object[0]
         state = object[1]
         elapsed_time = object[2]
-        self.debug_text.setText(f"Route Director Callback: {station}, {state}, timestamp {elapsed_time}")
+        self.debug_text.setText(f"Route Director Callback: {station}, {STATION_STATE_INTERPRET_MAP[state]}, timestamp {elapsed_time}")
 
     def do_next_stage(self):
         self.route_director.elapsed_time += 40

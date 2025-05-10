@@ -35,6 +35,14 @@ STATION_STATE_NEXT = 2             # 車開往下一站
 STATION_STATE_READY_TO_DEPART = 3  # 車準備在起站發車
 STATION_STATE_IN_TERMINAL = 4      # 車在終點站
 
+STATION_STATE_INTERPRET_MAP = {
+    STATION_STATE_APPROACH: "即將到下一站",
+    STATION_STATE_ARRIVED: "停靠中",
+    STATION_STATE_NEXT: "前往下一站",
+    STATION_STATE_READY_TO_DEPART: "準備發車",
+    STATION_STATE_IN_TERMINAL: "在終點站",
+}
+
 DEST_STATION_INFO = ["　ゆき", "　ゆき", "For　", "開往　"]
 MIDOSUJI_LINE_NAME = ["御堂筋線", "みどうすじせん", "Midosuji Line", "御堂筋線"]
 
