@@ -134,6 +134,7 @@ class TrainDisplay(QWidget):
     
     def start_operating_line(self):
         self.operator_main.start_line_and_route(self.line_file, self.line_route, 0)
+        self.route_director = self.operator_main.director
     
     def operation_callback(self, object):
         station = object[0]

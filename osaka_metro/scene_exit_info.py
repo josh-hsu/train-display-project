@@ -320,7 +320,7 @@ class GateInfoWidget(QWidget):
         
         for gate_item in exit_info:
             gate_name = gate_item[0]
-            gate_exit = gate_item[1]
+            gate_exit = str(gate_item[1])
             gate_detail = exit_info_detail[gate_name]
             print(f"name {gate_name}, exit {gate_exit}, detail {gate_detail}")
             
