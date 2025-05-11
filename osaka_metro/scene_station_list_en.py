@@ -12,8 +12,9 @@ from train_textview_libs import *
 from line_info import *
 
 class SideArrow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, line_color, parent=None):
         super().__init__(parent)
+        self.line_color = line_color
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -37,16 +38,17 @@ class SideArrow(QWidget):
         complete_path.lineTo(leftside_arrow_offset, 0)
         complete_path.closeSubpath()
 
-        painter.setBrush(QColor(MIDOSUJI_RED_COLOR))
+        painter.setBrush(QColor(self.line_color))
         painter.drawPath(complete_path)
 
         painter.end()
 
 class MovingArrow(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, line_color, parent=None):
         super().__init__(parent)
         self.setMinimumSize(120, 40)  # 預設尺寸，可自己調整
         self.blue_is_red = False  # 目前藍色部分是不是變紅色
+        self.line_color = line_color
 
         # Timer
         self.timer = QTimer(self)
@@ -63,7 +65,7 @@ class MovingArrow(QWidget):
         painter.setPen(Qt.NoPen)
 
         # 紅色部分
-        red_brush = QBrush(QColor(MIDOSUJI_RED_COLOR))
+        red_brush = QBrush(QColor(self.line_color))
         painter.setBrush(red_brush)
         
         red1 = QPolygon([QPoint(0,0), QPoint(20,0), QPoint(0,18)])
@@ -73,7 +75,7 @@ class MovingArrow(QWidget):
 
         # 藍色部分
         if self.blue_is_red:
-            painter.setBrush(QColor(MIDOSUJI_RED_COLOR))  # 當作紅色
+            painter.setBrush(QColor(RED_COLOR))  # 當作紅色
         else:
             painter.setBrush(QColor(BLUE_COLOR))  # 正常藍色
     
@@ -106,6 +108,7 @@ class TransferInfo(QWidget):
         super().__init__(parent)
         self.icon_dir = icon_dir
         self.line_font = QFont(FONT_NAME, 12)
+        self.line_color = "#e5171f"
 
         self.layout = QVBoxLayout()
         self.layout.setSpacing(0)
@@ -169,6 +172,7 @@ class SceneStationListEN(QWidget):
         self.line_info = None
         self.display_station = None
         self.station_state = STATION_STATE_READY_TO_DEPART
+        self.line_color = "#e5171f" #default to red
         self.init_ui()
     
     def init_ui(self):
@@ -188,7 +192,7 @@ class SceneStationListEN(QWidget):
         self.main_layout = QVBoxLayout()
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        self.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; {BORDER_DEBUG}")
+        self.setStyleSheet(f"background-color: {self.line_color}; {BORDER_DEBUG}")
         self.setFixedSize(960, 342)
         
         # station names layout
@@ -296,9 +300,9 @@ class SceneStationListEN(QWidget):
         # 清除 stack_layout 中的所有 widget
         self.clear_layout(layout)
         
-        self.progress_leftmost = SideArrow()
+        self.progress_leftmost = SideArrow(self.line_color)
         self.progress_leftmost.setFixedSize(90, 36)
-        self.progress_leftmost.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
+        self.progress_leftmost.setStyleSheet(f"background-color: {self.line_color}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         layout.addWidget(self.progress_leftmost)
         self.progress = []
         for i in range(13):
@@ -307,11 +311,13 @@ class SceneStationListEN(QWidget):
                 label.setFont(self.min_font)
                 label.setAlignment(Qt.AlignCenter)
                 label.setFixedSize(60, 36)
-                label.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
+                label.setStyleSheet(f"background-color: {self.line_color}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
                 self.progress.append(label)
+                layout.addWidget(label)
             elif i == self.progress_index:
-                label = MovingArrow()
-                label.setFixedSize(60, 36)
+                self.moving_arrow = MovingArrow(self.line_color)
+                self.moving_arrow.setFixedSize(60, 36)
+                layout.addWidget(self.moving_arrow)
             else:
                 label = QLabel("")
                 label.setFont(self.min_font)
@@ -319,8 +325,8 @@ class SceneStationListEN(QWidget):
                 label.setFixedSize(60, 36)
                 label.setStyleSheet(f"background-color: {GREY_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
                 self.progress.append(label)
-
-            layout.addWidget(label)
+                layout.addWidget(label)
+   
         self.progress_rightmost = QLabel()
         self.progress_rightmost.setFixedSize(90, 36)
         self.progress_rightmost.setStyleSheet(f"background-color: {GREY_COLOR}; {BORDER_DEBUG}")
@@ -351,7 +357,7 @@ class SceneStationListEN(QWidget):
         except ValueError:
             current_index = -1  # 如果 current 不在七站內（理論上不會發生）
 
-        print(f"get_seven_stations_with_index: {stations}, current_index: {current_index}")
+        #print(f"get_seven_stations_with_index: {stations}, current_index: {current_index}")
 
         return stations, current_index
 
@@ -420,6 +426,7 @@ class SceneStationListEN(QWidget):
 
     def receive_notify(self, line_info, display_station, station_state):
         self.line_info = line_info
+        self.line_color = line_info.main_color
         self.display_station = display_station
         self.station_state = station_state
         self.update_station_list()

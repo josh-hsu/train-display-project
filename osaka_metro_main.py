@@ -24,8 +24,9 @@ class OsakaMetroTrainDisplay(QWidget):
         self.route_select = route_select
         self.director = None
         if self.line_file is None:
-            self.line_select = "midosuji"
+            self.line_select = "Midosuji"
             self.line_file = f"{LINE_INFO_FILE_FOLDER}{LINE_INFO_FILE_PATH_MAP[self.line_select]}"
+        self.line_color = "#e5171f"
         
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
@@ -36,6 +37,8 @@ class OsakaMetroTrainDisplay(QWidget):
         self.line_info = LineInfo(line_file)
         self.line_info.set_route(route_select)
         self.route = self.line_info.get_current_route()
+        self.line_color = self.line_info.main_color
+        self.station_num_container_layout.setStyleSheet(f"background-color: {self.line_color}; {BORDER_DEBUG}")
 
     def initRouteDirector(self, line_info: LineInfo, default_elapsed_time):
         self.train_state = STATION_STATE_READY_TO_DEPART
@@ -143,8 +146,8 @@ class OsakaMetroTrainDisplay(QWidget):
         #
         # 第二大列
         #
-        second_container_layout = QWidget()
-        second_container_layout.setFixedHeight(50)
+        self.station_num_container_layout = QWidget()
+        self.station_num_container_layout.setFixedHeight(50)
         second_layout = QHBoxLayout()
         second_layout.setContentsMargins(0, 0, 0, 0)
         second_layout.setSpacing(0)
@@ -152,26 +155,23 @@ class OsakaMetroTrainDisplay(QWidget):
         # 站號
         label_station_number_left = QLabel("")
         label_station_number_left.setFixedSize(220, 50)
-        label_station_number_left.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         
         self.label_station_number = QLabel("M19")
         self.label_station_number.setFont(font_station_number)
         self.label_station_number.setFixedSize(620, 50)
-        self.label_station_number.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
         self.label_station_number.setAlignment(Qt.AlignCenter)
 
         label_station_number_right = QLabel("")
         label_station_number_right.setFixedSize(100, 50)
-        label_station_number_right.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; color: {WHITE_BACKGROUND_COLOR}; {BORDER_DEBUG}")
-        
+
         # 第二大列新增
         second_layout.addWidget(label_station_number_left)
         second_layout.addWidget(self.label_station_number)
         second_layout.addWidget(label_station_number_right)
         second_layout.setContentsMargins(0, 0, 0, 0)
         second_layout.setSpacing(0)
-        second_container_layout.setStyleSheet(f"background-color: {MIDOSUJI_RED_COLOR}; {BORDER_DEBUG}")
-        second_container_layout.setLayout(second_layout)
+        self.station_num_container_layout.setStyleSheet(f"background-color: #000000; {BORDER_DEBUG}")
+        self.station_num_container_layout.setLayout(second_layout)
 
         #
         # 第三列
@@ -207,7 +207,7 @@ class OsakaMetroTrainDisplay(QWidget):
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         main_layout.addLayout(top_layout)
-        main_layout.addWidget(second_container_layout)
+        main_layout.addWidget(self.station_num_container_layout)
         main_layout.addWidget(central)
 
         self.setLayout(main_layout)

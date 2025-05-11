@@ -1,6 +1,7 @@
 import os
 
 # 顏色設定
+RED_COLOR = "#e5171f"
 BLUE_COLOR = "#2633BC"
 GREY_COLOR = "#747678"
 GREY_COLOR2 = "#838383"
@@ -30,8 +31,8 @@ else:
     DOOR_PATH = "osaka_metro\\doors\\"
 
 LINE_INFO_FILE_PATH_MAP = {
-    "midosuji" : "midosuji_line.yaml",
-    "tanimachi" : "tanimachi_line.yaml"
+    "Midosuji" : "midosuji_line.yaml",
+    "Tanimachi" : "tanimachi_line.yaml"
 }
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站
@@ -49,7 +50,6 @@ STATION_STATE_INTERPRET_MAP = {
 }
 
 DEST_STATION_INFO = ["　ゆき", "　ゆき", "For　", "開往　"]
-MIDOSUJI_LINE_NAME = ["御堂筋線", "みどうすじせん", "Midosuji Line", "御堂筋線"]
 
 NOW_STATE_MAP = {
     "0": ["まもなく", "まもなく", "Arriving at", "即將到達"],
@@ -140,7 +140,3 @@ GATE_NAME_MAP = {
     "east" : "東改札",
     "west" : "西改札"
 }
-
-
-# Line 
-MIDOSUJI_RED_COLOR = LINE_COLOR_MAP['Midosuji']

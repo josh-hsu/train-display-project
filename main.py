@@ -25,7 +25,7 @@ class TrainDisplay(QWidget):
         debug_font = QFont(family, 14, QFont.Bold)
         
         # Osaka Metro Main view
-        line_select = "midosuji"
+        line_select = "Midosuji"
         self.line_file = f"{LINE_INFO_FILE_FOLDER}{LINE_INFO_FILE_PATH_MAP[line_select]}"
         self.line_info = LineInfo(self.line_file)
         self.line_route = 0
@@ -106,6 +106,9 @@ class TrainDisplay(QWidget):
         main_layout.addWidget(control_panel)
 
         self.setLayout(main_layout)
+        
+        # 整理資料
+        self.refresh_routes()
     
     def change_operating_line(self, index):
         line_list = list(LINE_INFO_FILE_PATH_MAP.keys())
