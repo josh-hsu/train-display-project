@@ -32,7 +32,8 @@ else:
 
 LINE_INFO_FILE_PATH_MAP = {
     "Midosuji" : "midosuji_line.yaml",
-    "Tanimachi" : "tanimachi_line.yaml"
+    "Tanimachi" : "tanimachi_line.yaml",
+    "Chuo" : "chuo_line.yaml",
 }
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站

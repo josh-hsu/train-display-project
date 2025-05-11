@@ -1,0 +1,296 @@
+---
+line:
+  id: Chuo
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: C
+  name:
+    jp: 中央線
+    jp-hinagana: ちゅうおうせん
+    en: Chuo Line
+    zh-TW: 中央線
+  operator: Osaka Metro
+  directions:
+    - [C9, C23] # 宇宙廣場 - 長田 (往生駒方向)
+    - [C23, C9] # 長田 - 宇宙廣場
+    - [C9, C19] # 宇宙廣場 - 森之宮 (部分列車終點)
+    - [C19, C9] # 森之宮 - 宇宙廣場
+
+  stations:
+    - id: C9
+      line: Chuo
+      name:
+        jp: 夢洲
+        jp-hiragana: ゆめしま
+        en: Yumeshima
+        zh-TW: 夢洲
+      transfer: []
+      gate_info:
+        - [north, 1-4] # 綜合出口
+      gate_info_detail:
+        north: [EXPO2025博覧会]
+      previous_station: [C8, 0, 0]
+      next_station: [C10, 1.8, 120] # 距離和時間為估計值
+      door_open: left
+
+    - id: C10
+      line: Chuo
+      name:
+        jp: コスモスクエア
+        jp-hiragana: こすもすくえあ
+        en: Cosmosquare
+        zh-TW: 宇宙廣場
+      transfer:
+        - [New Tram, P09, center] # 南港港城線
+      gate_info:
+        - [main, 1-4] # 綜合出口
+      gate_info_detail:
+        main: [大阪國際展覽中心(Intex Osaka), 大阪府咲洲廳舍(Cosmo Tower), ATC亞洲太平洋貿易中心, 南港港城線連絡]
+      previous_station: [C9, 1.8, 120]
+      next_station: [C11, 2.6, 180] # 距離和時間為估計值
+      door_open: left
+
+    - id: C11
+      line: Chuo
+      name:
+        jp: 大阪港
+        jp-hiragana: おおさかこう
+        en: Osakako
+        zh-TW: 大阪港
+      transfer: []
+      gate_info:
+        - [west, 1-2]
+        - [east, 3-4]
+      gate_info_detail:
+        west: [海遊館, 天保山大摩天輪, 天保山港灣村]
+        east: [築港地區, 大阪港郵局]
+      previous_station: [C10, 2.6, 180]
+      next_station: [C12, 1.5, 120]
+      door_open: right
+
+    - id: C12
+      line: Chuo
+      name:
+        jp: 朝潮橋
+        jp-hiragana: あさしおばし
+        en: Asashiobashi
+        zh-TW: 朝潮橋
+      transfer: []
+      gate_info:
+        - [west, 1-3]
+        - [east, 4-6]
+      gate_info_detail:
+        west: [大阪市中央體育館(丸善Intec Arena大阪), 八幡屋公園]
+        east: [港區役所, 港圖書館]
+      previous_station: [C11, 1.5, 120]
+      next_station: [C13, 1.7, 120]
+      door_open: left
+
+    - id: C13
+      line: Chuo
+      name:
+        jp: 弁天町
+        jp-hiragana: べんてんちょう
+        en: Bentencho
+        zh-TW: 弁天町
+      transfer:
+        - [JR, null, north] # JR大阪環狀線
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-6]
+      gate_info_detail:
+        east: [大阪港灣局, 國道43號線]
+        west: [JR弁天町駅, 大阪海灣巨塔酒店, 空庭溫泉 OSAKA BAY TOWER]
+      previous_station: [C12, 1.7, 120]
+      next_station: [C14, 1.3, 90]
+      door_open: right
+
+    - id: C14
+      line: Chuo
+      name:
+        jp: 九条
+        jp-hiragana: くじょう
+        en: Kujo
+        zh-TW: 九条
+      transfer:
+        - [Hanshin, null, west] # 阪神難波線
+      gate_info:
+        - [east, 1-3]
+        - [west, 4-6]
+      gate_info_detail:
+        east: [松島公園, 大阪掖済会病院]
+        west: [阪神九条駅, 九条親榮會商店街, 京瓷巨蛋大阪方面]
+      previous_station: [C13, 1.3, 90]
+      next_station: [C15, 1.3, 90]
+      door_open: left
+
+    - id: C15
+      line: Chuo
+      name:
+        jp: 阿波座
+        jp-hiragana: あわざ
+        en: Awaza
+        zh-TW: 阿波座
+      transfer:
+        - [Sennichimae, S13, center] # 千日前線
+      gate_info:
+        - [north, 1-5]
+        - [south, 6-10]
+      gate_info_detail:
+        north: [大阪Utsubo網球中心, 靭公園(東側)]
+        south: [千日前線連絡, 日本生命病院, 大阪西郵便局]
+      previous_station: [C14, 1.3, 90]
+      next_station: [C16, 1.1, 90]
+      door_open: right
+
+    - id: C16
+      line: Chuo
+      name:
+        jp: 本町
+        jp-hiragana: ほんまち
+        en: Hommachi
+        zh-TW: 本町
+      transfer:
+        - [Midosuji, M18, west] # 御堂筋線
+        - [Yotsubashi, Y13, west] # 四橋線
+      gate_info:
+        - [east, 17-20, 22-24] # 中央線側出口
+        - [west, 連結御堂筋線/四橋線出口]
+      gate_info_detail:
+        east: [船場中心大樓, 大阪產業創造館, 東警察署]
+        west: [御堂筋線連絡, 四橋線連絡, 相愛學園本町學舍]
+      previous_station: [C15, 1.1, 90]
+      next_station: [C17, 0.7, 60]
+      door_open: left
+
+    - id: C17
+      line: Chuo
+      name:
+        jp: 堺筋本町
+        jp-hiragana: さかいすじほんまち
+        en: Sakaisuji-Hommachi
+        zh-TW: 堺筋本町
+      transfer:
+        - [Sakaisuji, K15, center] # 堺筋線
+      gate_info:
+        - [north, 1-3, 12, 17]
+        - [south, 6-11]
+      gate_info_detail:
+        north: [船場中心大樓, 大阪商工會議所]
+        south: [堺筋線連絡, Mydome Osaka (大阪產業會館), 南警察署]
+      previous_station: [C16, 0.7, 60]
+      next_station: [C18, 1.0, 90]
+      door_open: right
+
+    - id: C18
+      line: Chuo
+      name:
+        jp: 谷町四丁目
+        jp-hiragana: たにまちよんちょうめ
+        en: Tanimachi 4-chome
+        zh-TW: 谷町四丁目
+      transfer:
+        - [Tanimachi, T23, center] # 谷町線
+      gate_info:
+        - [east, 9-11] # 中央線側主要出口
+        - [west, 1A,1B,2-8] # 谷町線側主要出口
+      gate_info_detail:
+        east: [難波宮跡公園, 國立病院機構大阪醫療中心]
+        west: [谷町線連絡, 大阪城大手門, 大阪歷史博物館, NHK大阪放送局, 大阪府廳本館]
+      previous_station: [C17, 1.0, 90]
+      next_station: [C19, 1.3, 90]
+      door_open: left
+
+    - id: C19
+      line: Chuo
+      name:
+        jp: 森ノ宮
+        jp-hiragana: もりのみや
+        en: Morinomiya
+        zh-TW: 森之宮
+      transfer:
+        - [Nagahori Tsurumi-ryokuchi, N20, south] # 長堀鶴見綠地線
+        - [JR, null, north] # JR大阪環狀線
+      gate_info:
+        - [west, 1-2, 7B]
+        - [east, 3-6, 7A]
+      gate_info_detail:
+        west: [JR森之宮駅, 大阪城公園(森之宮口), 玉造稻荷神社]
+        east: [長堀鶴見綠地線連絡, 大阪府立成人病中心, 森之宮Q's Mall BASE]
+      previous_station: [C18, 1.3, 90]
+      next_station: [C20, 1.2, 90]
+      door_open: right
+
+    - id: C20
+      line: Chuo
+      name:
+        jp: 緑橋
+        jp-hiragana: みどりばし
+        en: Midoribashi
+        zh-TW: 綠橋
+      transfer:
+        - [Imazatosuji, I20, center] # 今里筋線
+      gate_info:
+        - [west, 1-3]
+        - [east, 4-7]
+      gate_info_detail:
+        west: [東成區役所, 東中本公園]
+        east: [今里筋線連絡, 東成稅務署, 神路公園]
+      previous_station: [C19, 1.2, 90]
+      next_station: [C21, 1.2, 90]
+      door_open: left
+
+    - id: C21
+      line: Chuo
+      name:
+        jp: 深江橋
+        jp-hiragana: ふかえばし
+        en: Fukaebashi
+        zh-TW: 深江橋
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [阪神高速13號東大阪線, 深江鄉土資料館]
+        south: [東成民中心, 諏訪神社]
+      previous_station: [C20, 1.2, 90]
+      next_station: [C22, 1.4, 90]
+      door_open: right
+
+    - id: C22
+      line: Chuo
+      name:
+        jp: 高井田
+        jp-hiragana: たかいだ
+        en: Takaida
+        zh-TW: 高井田
+      transfer:
+        - [JR, null, north] # JR大阪東線 (高井田中央駅)
+      gate_info:
+        - [west, 1-2]
+        - [east, 3]
+      gate_info_detail:
+        west: [東大阪市役所高井田分室, 長瀨川]
+        east: [JR高井田中央駅, 東大阪市立高井田中小學校]
+      previous_station: [C21, 1.4, 90]
+      next_station: [C23, 1.7, 120]
+      door_open: left
+
+    - id: C23
+      line: Chuo
+      name:
+        jp: 長田
+        jp-hiragana: ながた
+        en: Nagata
+        zh-TW: 長田
+      transfer:
+        - [Kintetsu, null, east] # 近鐵京阪奈線 (直通運轉)
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [近鐵京阪奈線連絡, 東大阪市長田圖書館, 阪神高速東大阪線長田出入口]
+        south: [東大阪JCT, クリエイション・コア東大阪]
+      previous_station: [C22, 1.7, 120]
+      next_station: [C24, 0, 0] # 中央線終點, 之後為近鐵京阪奈線
+      door_open: right

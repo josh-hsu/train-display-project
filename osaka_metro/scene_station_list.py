@@ -377,8 +377,11 @@ class SceneStationList(QWidget):
             station_id = index_to_station_id(self.line_info.id_prefix, j)
             station = self.line_info.get_station(station_id)
             if station:
+                min = station.next_station[2]
+                if min is None:
+                    min = "0"
                 #print(f"station_id: {station_id}, station: {station.name['jp']}, next min: {station.next_station[2]}")
-                minute = int(station.next_station[2])
+                minute = int(min)
                 for k in range(i):
                     travel_minute[k] += minute
         
