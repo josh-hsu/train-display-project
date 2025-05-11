@@ -126,7 +126,12 @@ class TransferInfo(QWidget):
                 self._delete_layout(item.layout())
 
         # 重新加入新的圖示與站名
+        transfer_count_limit = 5
         for icon_name, station_name in zip(icon_names, station_names):
+            transfer_count_limit-= 1
+            if transfer_count_limit < 0:
+                break
+            
             row = QHBoxLayout()
             row.setSpacing(0)
             row.setAlignment(Qt.AlignLeft)

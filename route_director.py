@@ -22,6 +22,34 @@ class RouteDirector(QObject):
         self.moveToThread(self.thread)
         self.thread.started.connect(self._run)
 
+    def __del__(self):
+        """
+        解構子：確保對象被銷毀時正確關閉執行緒
+        """
+        # 確保執行緒正確停止
+        if hasattr(self, '_running') and self._running:
+            self._running = False
+            
+        # 確保執行緒已退出
+        if hasattr(self, 'thread') and self.thread.isRunning():
+            self.thread.quit()
+            # 給執行緒一些時間來退出
+            if not self.thread.wait(1000):  # 等待最多1000毫秒
+                # 如果執行緒沒有在指定時間內退出，則強制終止
+                self.thread.terminate()
+                self.thread.wait()  # 等待執行緒真正結束
+                
+        # 確保斷開所有信號連接
+        try:
+            if hasattr(self, 'thread') and self.thread.started:
+                self.thread.started.disconnect()
+        except Exception:
+            # 如果信號已經斷開連接，可能會引發異常，我們可以安全地忽略它
+            pass
+                
+        print("RouteDirector 已正確清理並銷毀")
+
+
     def start(self):
         if not self._running:
             self._running = True

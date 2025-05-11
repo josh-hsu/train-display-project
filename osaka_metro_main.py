@@ -17,15 +17,20 @@ from train_textview_libs import *
 class OsakaMetroTrainDisplay(QWidget):
     operation_route_callback = pyqtSignal(object)
     
-    def __init__(self, line_file=MIDOSUJI_LINE_INFO, route_select=3, default_elapsed_time=0):
+    def __init__(self, line_file=None, route_select=0, elapsed_time=0):
         super().__init__()
+        
+        self.line_file = line_file
+        self.route_select = route_select
+        self.director = None
+        if self.line_file is None:
+            self.line_select = "midosuji"
+            self.line_file = f"{LINE_INFO_FILE_FOLDER}{LINE_INFO_FILE_PATH_MAP[self.line_select]}"
+        
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
-        self.initLineInfo(line_file, route_select)
-        self.setWindowTitle(f"車廂顯示器模擬 - {self.line_info.name['zh-TW']}")
         self.initUI()
-        self.initRouteDirector(self.line_info, default_elapsed_time)
-        self.start_new_train()
+        self.start_line_and_route(self.line_file, self.route_select, elapsed_time)
 
     def initLineInfo(self, line_file, route_select):
         self.line_info = LineInfo(line_file)
@@ -34,6 +39,8 @@ class OsakaMetroTrainDisplay(QWidget):
 
     def initRouteDirector(self, line_info: LineInfo, default_elapsed_time):
         self.train_state = STATION_STATE_READY_TO_DEPART
+        if self.director is not None:
+            self.director.__del__()
         self.director = RouteDirector(line_info, self.route, interval_sec=1, interval_inc=1, init_elapsed_time=default_elapsed_time)
         self.director.report.connect(self.route_director_callback)
         self.director.start()
@@ -329,6 +336,14 @@ class OsakaMetroTrainDisplay(QWidget):
         if state is not self.train_state:
             self.update_train_state(station, state)
         self.train_state = state
+    
+    def start_line_and_route(self, line, route, elapsed):
+        self.line_file = line
+        self.route_select = route
+        self.initLineInfo(self.line_file, self.route_select)
+        self.setWindowTitle(f"車廂顯示器模擬 - {self.line_info.name['zh-TW']}")
+        self.initRouteDirector(self.line_info, elapsed)
+        self.start_new_train()
     
 if __name__ == "__main__":
     app = QApplication(sys.argv)

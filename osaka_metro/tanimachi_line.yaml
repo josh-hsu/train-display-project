@@ -1,0 +1,503 @@
+---
+line:
+  id: Tanimachi
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: T
+  name:
+    jp: 谷町線
+    jp-hinagana: たにまちせん
+    en: Tanimachi Line
+    zh-TW: 谷町線
+  operator: Osaka Metro
+  directions:
+    - [T11, T35] # Dainichi - Yaominami
+    - [T35, T11] # Yaominami - Dainichi
+    - [T11, T28] # Dainichi - Fuminosato (some services terminate here)
+    - [T28, T11] # Fuminosato - Dainichi
+    - [T16, T35] # Miyakojima - Yaominami (some services start/terminate here)
+    - [T35, T16] # Yaominami - Miyakojima
+
+  stations:
+    - id: T11
+      line: Tanimachi
+      name:
+        jp: 大日
+        jp-hiragana: だいにち
+        en: Dainichi
+        zh-TW: 大日
+      transfer:
+        - [Osaka Monorail, 26, center] # Osaka Monorail Main Line, station number 26
+      gate_info:
+        - [main, 1-4] # Combined exits
+      gate_info_detail:
+        main: [イオンモール大日, 大阪モノレール大日駅, 京阪バスロータリー]
+      previous_station: [null, null, null]
+      next_station: [T12, 1.8, 120] # Approx distance/time
+      door_open: left
+
+    - id: T12
+      line: Tanimachi
+      name:
+        jp: 守口
+        jp-hiragana: もりぐち
+        en: Moriguchi
+        zh-TW: 守口
+      transfer: []
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [守口市役所, 京阪守口市駅方面]
+        west: [守口警察署, 守口郵便局]
+      previous_station: [T11, 1.8, 120]
+      next_station: [T13, 1.1, 120]
+      door_open: right
+
+    - id: T13
+      line: Tanimachi
+      name:
+        jp: 太子橋今市
+        jp-hiragana: たいしばしいまいち
+        en: Taishibashi-Imaichi
+        zh-TW: 太子橋今市
+      transfer:
+        - [Imazatosuji, I14, center] # Imazatosuji Line
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-6]
+      gate_info_detail:
+        north: [国道1号線, 今市商店街]
+        south: [旭区役所, 古市小学校]
+      previous_station: [T12, 1.1, 120]
+      next_station: [T14, 1.2, 120]
+      door_open: left
+
+    - id: T14
+      line: Tanimachi
+      name:
+        jp: 千林大宮
+        jp-hiragana: せんばやしおおみや
+        en: Sembayashi-Omiya
+        zh-TW: 千林大宮
+      transfer: []
+      gate_info:
+        - [west, 1-2]
+        - [east, 3-4]
+      gate_info_detail:
+        west: [千林商店街, 旭公園]
+        east: [大宮神社, 旭税務署]
+      previous_station: [T13, 1.2, 120]
+      next_station: [T15, 1.0, 60]
+      door_open: right
+
+    - id: T15
+      line: Tanimachi
+      name:
+        jp: 関目高殿
+        jp-hiragana: せきめたかどの
+        en: Sekime-Takadono
+        zh-TW: 關目高殿
+      transfer: [] # Keihan Sekime is a bit of a walk
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [城東区役所蒲生出張所, 関目自動車学校]
+        south: [高殿南公園, ライフ関目店]
+      previous_station: [T14, 1.0, 60]
+      next_station: [T16, 1.4, 120]
+      door_open: left
+
+    - id: T16
+      line: Tanimachi
+      name:
+        jp: 野江内代
+        jp-hiragana: のえうちんだい
+        en: Noe-Uchindai
+        zh-TW: 野江內代
+      transfer:
+        - [JR, null, north] # JR Osaka Higashi Line (Noe Station)
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [JR野江駅, 都島工業高校, 野江公園]
+      previous_station: [T15, 1.4, 120]
+      next_station: [T17, 1.4, 120]
+      door_open: right
+
+    - id: T17
+      line: Tanimachi
+      name:
+        jp: 都島
+        jp-hiragana: みやこじま
+        en: Miyakojima
+        zh-TW: 都島
+      transfer: []
+      gate_info:
+        - [west, 1-3]
+        - [east, 4-5]
+      gate_info_detail:
+        west: [都島区役所, 大阪市立総合医療センター]
+        east: [都島本通商店街, ベルファ都島ショッピングセンター]
+      previous_station: [T16, 1.4, 120]
+      next_station: [T18, 1.2, 120]
+      door_open: left
+
+    - id: T18
+      line: Tanimachi
+      name:
+        jp: 天神橋筋六丁目
+        jp-hiragana: てんじんばしすじろくちょうめ
+        en: Tenjimbashisuji 6-chome
+        zh-TW: 天神橋筋六丁目
+      transfer:
+        - [Sakaisuji, K11, center]
+        - [Hankyu, null, center] # Hankyu Senri Line (through service with Sakaisuji)
+      gate_info:
+        - [east, 1-6]
+        - [west, 7-12] # Numbering is complex, simplified
+      gate_info_detail:
+        east: [天神橋筋商店街, 大阪くらしの今昔館, キッズプラザ大阪方面]
+        west: [阪急線連絡通路, 国分寺, 長柄国分寺公園]
+      previous_station: [T17, 1.2, 120]
+      next_station: [T19, 1.3, 120]
+      door_open: right
+
+    - id: T19
+      line: Tanimachi
+      name:
+        jp: 中崎町
+        jp-hiragana: なかざきちょう
+        en: Nakazakicho
+        zh-TW: 中崎町
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [中崎町カフェ街, 梅田スカイビル方面]
+        south: [豊崎東公園, 関西大学梅田キャンパス方面]
+      previous_station: [T18, 1.3, 120]
+      next_station: [T20, 0.8, 60]
+      door_open: left
+
+    - id: T20
+      line: Tanimachi
+      name:
+        jp: 東梅田
+        jp-hiragana: ひがしうめだ
+        en: Higashi-Umeda
+        zh-TW: 東梅田
+      transfer:
+        - [Midosuji, M16, west] # Umeda Station
+        - [Yotsubashi, Y11, west] # Nishi-Umeda Station
+        - [JR, null, north] # Osaka Station
+        - [Hankyu, null, north-west] # Osaka-umeda Station
+        - [Hanshin, null, south-west] # Osaka-umeda Station
+      gate_info:
+        - [north, 1-4] # Whity Umeda connections
+        - [south, 5-9] # Whity Umeda connections
+      gate_info_detail:
+        north: [Whityうめだ, 泉の広場, 阪急東通商店街, JR大阪駅方面]
+        south: [Whityうめだ, 大阪駅前第4ビル, ディアモール大阪方面, 御堂筋線・四つ橋線連絡]
+      previous_station: [T19, 0.8, 120]
+      next_station: [T21, 1.3, 120]
+      door_open: right
+
+    - id: T21
+      line: Tanimachi
+      name:
+        jp: 南森町
+        jp-hiragana: みなみもりまち
+        en: Minami-morimachi
+        zh-TW: 南森町
+      transfer:
+        - [Sakaisuji, K13, center]
+        - [JR, null, north] # JR Tozai Line (Osakatemmangu Station)
+      gate_info:
+        - [east, 1-3]
+        - [west, 4-7]
+      gate_info_detail:
+        east: [大阪天満宮, 天神橋筋商店街, JR東西線大阪天満宮駅]
+        west: [堺筋線連絡, 堀川戎神社, アメリカ総領事館]
+      previous_station: [T20, 1.3, 120]
+      next_station: [T22, 1.6, 120]
+      door_open: left
+
+    - id: T22
+      line: Tanimachi
+      name:
+        jp: 天満橋
+        jp-hiragana: てんまばし
+        en: Temmabashi
+        zh-TW: 天滿橋
+      transfer:
+        - [Keihan, null, north] # Keihan Main Line, Nakanoshima Line
+      gate_info:
+        - [north, 1-4] # Keihan related
+        - [south, 5-6]
+      gate_info_detail:
+        north: [京阪天満橋駅, OMMビル, 八軒家浜船着場]
+        south: [大阪府庁別館, ドーンセンター]
+      previous_station: [T21, 1.6, 120]
+      next_station: [T23, 0.9, 60]
+      door_open: right
+
+    - id: T23
+      line: Tanimachi
+      name:
+        jp: 谷町四丁目
+        jp-hiragana: たにまちよんちょうめ
+        en: Tanimachi 4-chome
+        zh-TW: 谷町四丁目
+      transfer:
+        - [Chuo, C18, center]
+      gate_info:
+        - [north-west, 1A,1B,2,3,4]
+        - [south-east, 5,6,7,8,9,10,11]
+      gate_info_detail:
+        north-west: [大阪城大手門, 大阪歴史博物館, NHK大阪放送局, 大阪府庁本館]
+        south-east: [中央線連絡, 難波宮跡公園, 国立病院機構大阪医療センター]
+      previous_station: [T22, 0.9, 60]
+      next_station: [T24, 1.0, 120]
+      door_open: left
+
+    - id: T24
+      line: Tanimachi
+      name:
+        jp: 谷町六丁目
+        jp-hiragana: たにまちろくちょうめ
+        en: Tanimachi 6-chome
+        zh-TW: 谷町六丁目
+      transfer:
+        - [Nagahori Tsurumi-ryokuchi, N18, center]
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [空堀商店街, 長堀鶴見緑地線連絡]
+        south: [中央区役所, 高津宮]
+      previous_station: [T23, 1.0, 120]
+      next_station: [T25, 1.0, 120]
+      door_open: right
+
+    - id: T25
+      line: Tanimachi
+      name:
+        jp: 谷町九丁目
+        jp-hiragana: たにまちきゅうちょうめ
+        en: Tanimachi 9-chome
+        zh-TW: 谷町九丁目
+      transfer:
+        - [Sennichimae, S18, center]
+        - [Kintetsu, null, east] # Kintetsu Osaka Line, Nara Line, Namba Line (Osaka-Uehommachi Station)
+      gate_info:
+        - [north-west, 1-4]
+        - [south-east, 5-8]
+      gate_info_detail:
+        north-west: [千日前線連絡, 生國魂神社]
+        south-east: [近鉄大阪上本町駅, 上本町YUFURA, シェラトン都ホテル大阪]
+      previous_station: [T24, 1.0, 120]
+      next_station: [T26, 0.8, 60]
+      door_open: left
+
+    - id: T26
+      line: Tanimachi
+      name:
+        jp: 四天王寺前夕陽ヶ丘
+        jp-hiragana: してんのうじまえゆうひがおか
+        en: Shitennoji-mae Yuhigaoka
+        zh-TW: 四天王寺前夕陽丘
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [四天王寺, 四天王寺中学校・高等学校]
+        south: [大阪星光学院, 夕陽丘ストリート]
+      previous_station: [T25, 0.8, 60]
+      next_station: [T27, 1.1, 120]
+      door_open: right
+
+    - id: T27
+      line: Tanimachi
+      name:
+        jp: 天王寺
+        jp-hiragana: てんのうじ
+        en: Tennoji
+        zh-TW: 天王寺
+      transfer:
+        - [Midosuji, M23, west]
+        - [JR, null, center] # JR Osaka Loop Line, Hanwa Line, Yamatoji Line
+        - [Kintetsu, null, east] # Kintetsu Minami Osaka Line (Osaka-Abenobashi Station)
+        - [Hankai, null, south] # Hankai Uemachi Line (Tennoji-ekimae Station)
+      gate_info:
+        - [north, 1-10] # Connects to Midosuji Line, JR central concourse
+        - [south, 11-16] # Connects to Abeno area, Kintetsu
+      gate_info_detail:
+        north: [JR天王寺駅(中央口・公園口), 天王寺公園, 大阪市立美術館, 御堂筋線連絡]
+        south: [あべのハルカス, 近鉄百貨店阿倍野橋本店, Hoop, and, あべのキューズモール, 阪堺線上町線天王寺駅前駅]
+      previous_station: [T26, 1.1, 120]
+      next_station: [T28, 0.6, 60]
+      door_open: left
+
+    - id: T28
+      line: Tanimachi
+      name:
+        jp: 阿倍野
+        jp-hiragana: あべの
+        en: Abeno
+        zh-TW: 阿倍野
+      transfer:
+        - [Hankai, null, west] # Hankai Uemachi Line (Abeno Station)
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-7]
+      gate_info_detail:
+        north: [あべのキューズモール, あべのベルタ]
+        south: [阿倍野区役所, 阪堺電車上町線阿倍野駅]
+      previous_station: [T27, 0.6, 60]
+      next_station: [T29, 1.3, 120]
+      door_open: right
+
+    - id: T29
+      line: Tanimachi
+      name:
+        jp: 文の里
+        jp-hiragana: ふみのさと
+        en: Fuminosato
+        zh-TW: 文之里
+      transfer: [] # Midosuji Showacho is very close but separate station
+      gate_info:
+        - [west, 1-3]
+        - [east, 4-7]
+      gate_info_detail:
+        west: [明浄学院高等学校, 桃ヶ池公園方面]
+        east: [阿倍野区民センター, 昭和町駅(御堂筋線)方面]
+      previous_station: [T28, 1.3, 120]
+      next_station: [T30, 1.1, 120]
+      door_open: left
+
+    - id: T30
+      line: Tanimachi
+      name:
+        jp: 田辺
+        jp-hiragana: たなべ
+        en: Tanabe
+        zh-TW: 田邊
+      transfer: []
+      gate_info:
+        - [main, 1-4]
+      gate_info_detail:
+        main: [東住吉区役所田辺出張所, 長池公園, 山阪神社]
+      previous_station: [T29, 1.1, 120]
+      next_station: [T31, 1.0, 60]
+      door_open: right
+
+    - id: T31
+      line: Tanimachi
+      name:
+        jp: 駒川中野
+        jp-hiragana: こまがわなかの
+        en: Komagawa-Nakano
+        zh-TW: 駒川中野
+      transfer:
+        - [Kintetsu, null, south] # Kintetsu Minami Osaka Line (Harinakano Station)
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [駒川商店街, 東住吉区役所]
+        south: [近鉄南大阪線針中野駅, 中野中学校]
+      previous_station: [T30, 1.0, 60]
+      next_station: [T32, 1.7, 120]
+      door_open: left
+
+    - id: T32
+      line: Tanimachi
+      name:
+        jp: 平野
+        jp-hiragana: ひらの
+        en: Hirano
+        zh-TW: 平野
+      transfer: [] # JR Hirano is quite far
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-7]
+      gate_info_detail:
+        north: [平野区役所, イオンタウン平野]
+        south: [国道25号線, 平野公園]
+      previous_station: [T31, 1.7, 120]
+      next_station: [T33, 1.2, 120]
+      door_open: right
+
+    - id: T33
+      line: Tanimachi
+      name:
+        jp: 喜連瓜破
+        jp-hiragana: きれうりわり
+        en: Kire-Uriwari
+        zh-TW: 喜連瓜破
+      transfer:
+        - [Imazato Liner, null, center] # Bus Rapid Transit
+      gate_info:
+        - [west, 1-2]
+        - [east, 3-5]
+      gate_info_detail:
+        west: [イオン喜連瓜破駅前店, 瓜破霊園]
+        east: [喜連東中央公園, 大阪市設瓜破斎場]
+      previous_station: [T32, 1.2, 120]
+      next_station: [T34, 1.4, 120]
+      door_open: left
+
+    - id: T34
+      line: Tanimachi
+      name:
+        jp: 出戸
+        jp-hiragana: でと
+        en: Deto
+        zh-TW: 出戶
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-6]
+      gate_info_detail:
+        north: [出戸バスターミナル, 長吉総合病院]
+        south: [イオン長吉店, 長吉出戸公園]
+      previous_station: [T33, 1.4, 120]
+      next_station: [T35, 1.4, 120]
+      door_open: right
+
+    - id: T35
+      line: Tanimachi
+      name:
+        jp: 長原
+        jp-hiragana: ながはら
+        en: Nagahara
+        zh-TW: 長原
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [長原古墳群, 大和川]
+        south: [長吉長原郵便局, 八尾市立長原小学校方面]
+      previous_station: [T34, 1.4, 120]
+      next_station: [T36, 1.3, 120] # Station ID for Yaominami should be T36
+      door_open: left
+
+    - id: T36 # Corrected ID for Yaominami
+      line: Tanimachi
+      name:
+        jp: 八尾南
+        jp-hiragana: やおみなみ
+        en: Yaominami
+        zh-TW: 八尾南
+      transfer: []
+      gate_info:
+        - [main, 1-3]
+      gate_info_detail:
+        main: [八尾南駅前ロータリー, 大阪市高速電気軌道八尾車庫, 八尾空港]
+      previous_station: [T35, 1.3, 120] # Previous was Nagahara T35, with its next_station T36
+      next_station: [null, null, null]
+      door_open: right

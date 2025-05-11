@@ -219,7 +219,7 @@ class SceneTransferList(QWidget):
         single_layout.addStretch(1)
 
         # 檢查字母以及數字站號
-        station_prefix, station_number = get_station_prefix_number(entry.code)
+        station_prefix, station_number = get_station_prefix_number(f"{entry.code}")
         station_color = LINE_COLOR_MAP[entry.name]
 
         line_widget = TransferLineWidget(

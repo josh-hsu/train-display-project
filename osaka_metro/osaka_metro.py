@@ -20,14 +20,19 @@ ARROW_WIDGET_HEIGHT = 40
 
 if (os.name == "posix"):
     ICON_PATH = "osaka_metro/transfer_icons/"
-    MIDOSUJI_LINE_INFO = "osaka_metro/midosuji_line.yaml"
+    LINE_INFO_FILE_FOLDER = "osaka_metro/"
     FONT_NAME = "Noto Sans JP"
     DOOR_PATH = "osaka_metro/doors/"
 else:
     ICON_PATH = "osaka_metro\\transfer_icons\\"
-    MIDOSUJI_LINE_INFO = "osaka_metro\\midosuji_line.yaml"
+    LINE_INFO_FILE_FOLDER = "osaka_metro\\"
     FONT_NAME = "Noto Sans JP SemiBold"
     DOOR_PATH = "osaka_metro\\doors\\"
+
+LINE_INFO_FILE_PATH_MAP = {
+    "midosuji" : "midosuji_line.yaml",
+    "tanimachi" : "tanimachi_line.yaml"
+}
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站
 STATION_STATE_ARRIVED = 1          # 車在車站
@@ -100,6 +105,7 @@ TRANSFER_MAP = {
     "JR": "JR線",
     "Kita-Osaka Kyuko": "北大阪急行線",
     "Imazato Liner": "今里ライナー線",
+    "Osaka Monorail": "",
 }
 
 LINE_COLOR_MAP = {
@@ -120,7 +126,8 @@ LINE_COLOR_MAP = {
   "Hankai": "#000000",
   "JR": "#000000",
   "Kita-Osaka Kyuko": "#000000",
-  "Imazato Liner": "#000000"
+  "Imazato Liner": "#000000",
+  "Osaka Monorail": "#000000"
 }
 
 GATE_NAME_MAP = {
