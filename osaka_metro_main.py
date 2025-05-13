@@ -27,6 +27,7 @@ class OsakaMetroTrainDisplay(QWidget):
             self.line_select = "Midosuji"
             self.line_file = f"{LINE_INFO_FILE_FOLDER}{LINE_INFO_FILE_PATH_MAP[self.line_select]}"
         self.line_color = "#e5171f"
+        self.scene_anim_duration = 0
         
         self.setFixedSize(960, 512)
         self.setStyleSheet("background-color: #ffffff;")
@@ -250,12 +251,12 @@ class OsakaMetroTrainDisplay(QWidget):
 
         # 創建動畫
         anim_out = QPropertyAnimation(current_widget, b"pos")
-        anim_out.setDuration(500)
+        anim_out.setDuration(self.scene_anim_duration)
         anim_out.setStartValue(QPoint(0, 0))
         anim_out.setEndValue(QPoint(-w, 0))
 
         anim_in = QPropertyAnimation(next_widget, b"pos")
-        anim_in.setDuration(500)
+        anim_in.setDuration(self.scene_anim_duration)
         anim_in.setStartValue(QPoint(w, 0))
         anim_in.setEndValue(QPoint(0, 0))
 
