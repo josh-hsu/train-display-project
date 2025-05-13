@@ -370,9 +370,16 @@ class SceneStationList(QWidget):
             self.progress_index = 11 - (5 - current_index) * 2
         self.init_progress_bar(self.second_layout)
         
+        # 清除舊資料
+        for min_label in self.min:
+            min_label.setText("")
+
         # 計算實際分鐘
+        counting_index = current_index
+        if current_index == 6:
+            counting_index = 5
         travel_minute = [0, 0, 0, 0, 0, 0]
-        for i in range(current_index + 1):
+        for i in range(counting_index + 2):
             j = seven_stations_num[i]
             station_id = index_to_station_id(self.line_info.id_prefix, j)
             station = self.line_info.get_station(station_id)
@@ -394,20 +401,25 @@ class SceneStationList(QWidget):
             #print(f"station_id: {station_id}, station: {station}, transfer: {transfer}")
             if station:
                 self.sta[i * 2].setText(format_train_progress_station_name(station.name["jp"]))
-                self.min[i * 2].setText(f"{travel_minute[i]/60:.0f}")
                 if i * 2 < self.progress_index:
+                    self.min[i * 2].setText(f"{travel_minute[i]/60:.0f}")
                     self.progress[i * 2].setText(station_id)
                 else:
                     self.progress[i * 2 - 1].setText(station_id)
+                    self.min[i * 2].setText(f"")
                 #self.progress[i * 2].setText(station_id)
                 self.transfer_info_view[i].setData(transfer.get_station_list(), [TRANSFER_MAP[name] for name in transfer.get_station_list()])
             else:
                 self.sta[i*2].setText("???")
                 
         # 更新最右邊的站名
+        if current_index == 6:
+            self.min[11].setText("分")
+        else:
+            self.min[current_index * 2 + 1].setText("分")
+
         station_id = index_to_station_id(self.line_info.id_prefix, seven_stations_num[6])
         station = self.line_info.get_station(station_id)
-        self.min[11].setText("分")
         if station:
             self.sta[12].setText(format_train_progress_station_name(station.name["jp"]))
             self.progress[-1].setText(station_id)

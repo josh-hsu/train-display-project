@@ -158,6 +158,7 @@ class OsakaMetroTrainDisplay(QWidget):
         
         self.label_station_number = QLabel("M19")
         self.label_station_number.setFont(font_station_number)
+        self.label_station_number.setStyleSheet(f"color: #FFFFFF")
         self.label_station_number.setFixedSize(620, 50)
         self.label_station_number.setAlignment(Qt.AlignCenter)
 

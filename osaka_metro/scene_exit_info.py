@@ -314,9 +314,20 @@ class GateInfoWidget(QWidget):
     def on_scene_present(self):
         self.train_view.animate()
 
+    def clean_all(self):
+        left_panel = self.gate_info.exit_left
+        left_panel.set_exit_header("", "")
+        left_panel.set_exit_info(["", "", ""])
+        right_panel = self.gate_info.exit_right
+        right_panel.set_exit_header("", "")
+        right_panel.set_exit_info(["", "", ""])
+
+
     def update_scene(self):
         exit_info = self.station.gate_info
         exit_info_detail = self.station.gate_info_detail
+
+        self.clean_all()
         
         for gate_item in exit_info:
             gate_name = gate_item[0]
@@ -328,7 +339,7 @@ class GateInfoWidget(QWidget):
                 left_panel = self.gate_info.exit_left
                 left_panel.set_exit_header(GATE_NAME_MAP[gate_name], gate_exit)
                 left_panel.set_exit_info(gate_detail)
-            elif gate_name == "south":
+            elif gate_name == "south" or gate_name == "east":
                 right_panel = self.gate_info.exit_right
                 right_panel.set_exit_header(GATE_NAME_MAP[gate_name], gate_exit)
                 right_panel.set_exit_info(gate_detail)
