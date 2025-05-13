@@ -25,14 +25,18 @@ line:
         jp-hiragana: えさか
         en: Esaka
         zh-TW: 江坂
+      # transfer [Line_name, transfer_station_num (null if it's not osaka metro), gate_location]
       transfer:
         - [Kita-Osaka Kyuko, null, center]
+      # gate info of this station [gate_name, exit_number (1-5) for multiple exits]
       gate_info:
         - [north, 1]
         - [south, 2]
+      # exit info for each gate
       gate_info_detail:
         north: [江坂公園, 吹田市役所]
         south: [江坂駅前バス停, カリーノ江坂]
+      # station traveling info [station_id, distance between in km, estimation time in second]
       previous_station: [M10, 1.5, 180]
       next_station: [M12, 2.0, 150]
       door_open: left
