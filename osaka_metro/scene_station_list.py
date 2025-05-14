@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtGui import QPainter, QColor, QPainterPath
 from PyQt5.QtGui import QBrush, QPolygon
-from vertical_label import VerticalText
+from train_textview_libs import VerticalText
 import os
 
 from osaka_metro.osaka_metro import *

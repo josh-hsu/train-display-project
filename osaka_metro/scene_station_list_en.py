@@ -7,7 +7,7 @@ from PyQt5.QtGui import QBrush, QPolygon
 
 import os
 from osaka_metro.osaka_metro import *
-from rotated_label import RotatedLabel
+from train_textview_libs import RotatedLabel
 from train_textview_libs import *
 from line_info import *
 

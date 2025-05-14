@@ -1,9 +1,7 @@
+from PyQt5.QtCore import QTimer, QPropertyAnimation, QPoint, QParallelAnimationGroup, QEasingCurve, Qt
+from PyQt5.QtGui import QFont, QFontMetrics, QTransform, QPainter
+from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QPushButton, QComboBox, QHBoxLayout, QSpinBox
 from PyQt5.QtWidgets import QWidget, QStackedLayout, QLabel, QGraphicsOpacityEffect
-from PyQt5.QtCore import QTimer, QPropertyAnimation, QPoint, QParallelAnimationGroup, QRect, QEasingCurve, Qt
-from PyQt5.QtGui import QFont, QFontMetrics
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QComboBox, QHBoxLayout, QSpinBox, QLabel
-from PyQt5.QtGui import QFont
-from PyQt5.QtCore import Qt
 import sys
 
 class StretchTextLabel(QLabel):
@@ -74,7 +72,6 @@ class StretchTextLabel(QLabel):
         """當控件大小改變時調整文字"""
         super().resizeEvent(event)
         self.adjustTextDisplay()
-
 
 class AnimatedTextView_T(QWidget):
     """
@@ -424,6 +421,57 @@ class AnimatedTextView_T(QWidget):
             current_label.adjustTextDisplay()
             self.stack_layout.setCurrentWidget(current_label)
 
+class VerticalText(QWidget):
+    def __init__(self, text='', parent=None, font=QFont("Noto Sans JP", 40, QFont.Bold)):
+        super().__init__(parent)
+        self.layout = QVBoxLayout()
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(self.layout)
+        self.user_font = font
+        self.labels = []
+        self.setText(text)  # 呼叫下面的 setText
+
+    def setText(self, text):
+        # 先清掉舊的 label
+        while self.layout.count():
+            child = self.layout.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+
+        # 逐字產生新的 label
+        self.labels = []
+        for char in text:
+            label = QLabel(char)
+            label.setFont(self.user_font)
+            label.setAlignment(Qt.AlignCenter)
+            label.setStyleSheet("font-size: 24px;")  # 這裡可以改字體大小
+            self.labels.append(label)
+            self.layout.addWidget(label)
+
+    def setStyleSheet(self, styleSheet):
+        super().setStyleSheet(styleSheet)
+        for label in self.labels:
+            label.setStyleSheet(styleSheet)
+
+class RotatedLabel(QLabel):
+    def __init__(self, text, parent=None):
+        super().__init__(text, parent)
+        self.setFont(QFont("Arial", 14))
+        self.setMinimumSize(150, 100)  # 調整大小方便顯示旋轉後的文字
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+        
+        # 將支點設在 QLabel 左下角
+        transform = QTransform()
+        transform.translate(0, self.height())  # 移動到左下角
+        transform.rotate(-45)  # 向上旋轉 45 度（逆時針）
+
+        painter.setTransform(transform)
+        painter.drawText(0, 0, self.text())
+
 class DemoWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -541,13 +589,15 @@ if __name__ == "__main__":
     window.show()
     sys.exit(app.exec_())
     
-### implement note
-#        self.textview_destination = AnimatedTextView2()
-#        self.textview_destination.setFixedSize(220, 60)
-#        self.textview_destination.setTexts(["新大阪 ゆき", "しんおおさか　ゆき", "開往 新大阪", "For Shin-Osaka"])
-#        self.textview_destination.setMinimumHeight(60)
-#        self.textview_destination.setStyleSheet(f"background-color: {MIDOSUJI_BACKGROUND_COLOR}; color: {GREY_COLOR};border: 2px solid #ccc;")
-#        #self.textview_destination.setStyleSheet("background-color: #f0f0f0; color: #333; border: 2px solid #ccc; border-radius: 5px;")
-#        self.textview_destination.setFont(font_large)
-#        self.textview_destination.setAlignment(Qt.AlignRight)
-###
+    app = QApplication(sys.argv)
+    w = VerticalText("心斎橋")
+    w.show()
+
+    # 測試 2 秒後改字
+    from PyQt5.QtCore import QTimer
+    def change_text():
+        w.setText("梅田")
+    QTimer.singleShot(2000, change_text)
+
+    sys.exit(app.exec_())
+    
