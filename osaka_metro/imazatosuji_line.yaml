@@ -1,0 +1,220 @@
+---
+line:
+  id: Imazatosuji
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: I
+  name:
+    jp: 今里筋線
+    jp-hiragana: いまざとすじせん
+    en: Imazatosuji Line
+    zh-TW: 今里筋線
+  operator: Osaka Metro
+  directions:
+    - [I11, I21]
+    - [I21, I11]
+
+  stations:
+    - id: I11
+      line: Imazatosuji
+      name:
+        jp: 井高野
+        jp-hiragana: いたかの
+        en: Itakano
+        zh-TW: 井高野
+      transfer: []
+      gate_info:
+        - [east, 1]
+        - [west, 2]
+      gate_info_detail:
+        east: [大阪経済大学井高野グラウンド, 井高野公園]
+        west: [北江口中央公園, 大阪市立井高野中学校]
+      previous_station: [null, null, null]
+      next_station: [I12, 0.9, 100]
+      door_open: left
+
+    - id: I12
+      line: Imazatosuji
+      name:
+        jp: 瑞光四丁目
+        jp-hiragana: ずいこうよんちょうめ
+        en: Zuiko Yonchome
+        zh-TW: 瑞光四丁目
+      transfer: []
+      gate_info:
+        - [north, 1]
+        - [south, 2]
+      gate_info_detail:
+        north: [大阪経済大学, 瑞光寺]
+        south: [東淀川瑞光郵便局, 大隅神社]
+      previous_station: [I11, 0.9, 100]
+      next_station: [I13, 0.8, 90]
+      door_open: right
+
+    - id: I13
+      line: Imazatosuji
+      name:
+        jp: だいどう豊里
+        jp-hiragana: だいどうとよさと
+        en: Daido-Toyosato
+        zh-TW: 大桐豐里
+      transfer: []
+      gate_info:
+        - [east, 1]
+        - [west, 2]
+      gate_info_detail:
+        east: [豊里大橋, 淀川河川公園]
+        west: [東淀川区役所大桐出張所, 大宮神社]
+      previous_station: [I12, 0.8, 90]
+      next_station: [I14, 1.2, 130]
+      door_open: left
+
+    - id: I14
+      line: Imazatosuji
+      name:
+        jp: 太子橋今市
+        jp-hiragana: たいしばしいまいち
+        en: Taishibashi-Imaichi
+        zh-TW: 太子橋今市
+      transfer:
+        - [Tanimachi, T13, center]
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-6]
+      gate_info_detail:
+        north: [旭区役所, 城北公園通]
+        south: [谷町線連絡, 今市商店街]
+      previous_station: [I13, 1.2, 130]
+      next_station: [I15, 0.8, 90]
+      door_open: right
+
+    - id: I15
+      line: Imazatosuji
+      name:
+        jp: 清水
+        jp-hiragana: しみず
+        en: Shimizu
+        zh-TW: 清水
+      transfer: []
+      gate_info:
+        - [east, 1]
+        - [west, 2]
+      gate_info_detail:
+        east: [旭清水郵便局, 千林商店街方面]
+        west: [大阪市立清水小学校, 豊里大橋方面]
+      previous_station: [I14, 0.8, 90]
+      next_station: [I16, 1.1, 120]
+      door_open: left
+
+    - id: I16
+      line: Imazatosuji
+      name:
+        jp: 新森古市
+        jp-hiragana: しんもりふるいち
+        en: Shimmori-Furuichi
+        zh-TW: 新森古市
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [旭区民センター, 新森中央公園]
+        south: [大阪市立新森小路小学校, 関西医科大学総合医療センター方面]
+      previous_station: [I15, 1.1, 120]
+      next_station: [I17, 1.0, 110]
+      door_open: right
+
+    - id: I17
+      line: Imazatosuji
+      name:
+        jp: 関目成育
+        jp-hiragana: せきめせいいく
+        en: Sekime-Seiiku
+        zh-TW: 關目成育
+      transfer:
+        - [Keihan, null, west] # Keihan Main Line (Sekime Station)
+        # Tanimachi Line (Sekime-Takadono T15) is a bit of a walk, often not listed as direct.
+      gate_info:
+        - [east, 1]
+        - [west, 2-3]
+      gate_info_detail:
+        east: [城東区役所関目出張所, 関目東小学校]
+        west: [京阪関目駅, 関目商店街]
+      previous_station: [I16, 1.0, 110]
+      next_station: [I18, 1.4, 150]
+      door_open: left
+
+    - id: I18
+      line: Imazatosuji
+      name:
+        jp: 蒲生四丁目
+        jp-hiragana: がもうよんちょうめ
+        en: Gamo Yonchome
+        zh-TW: 蒲生四丁目
+      transfer:
+        - [Nagahori Tsurumi-ryokuchi, N23, center]
+      gate_info:
+        - [north, 1-3] # Shared/adjacent gates
+        - [south, 4-7]
+      gate_info_detail:
+        north: [城東区役所, 蒲生公園]
+        south: [長堀鶴見緑地線連絡, 城東商店街]
+      previous_station: [I17, 1.4, 150]
+      next_station: [I19, 0.9, 100]
+      door_open: right
+
+    - id: I19
+      line: Imazatosuji
+      name:
+        jp: 鴫野
+        jp-hiragana: しぎの
+        en: Shigino
+        zh-TW: 鴫野
+      transfer:
+        - [JR, null, north] # JR Gakkentoshi Line, Osaka Higashi Line
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [JR鴫野駅 (東口), 鴫野東公園]
+        west: [JR鴫野駅 (西口), 城東中央病院]
+      previous_station: [I18, 0.9, 100]
+      next_station: [I20, 1.3, 140]
+      door_open: left
+
+    - id: I20
+      line: Imazatosuji
+      name:
+        jp: 緑橋
+        jp-hiragana: みどりばし
+        en: Midoribashi
+        zh-TW: 綠橋
+      transfer:
+        - [Chuo, C20, center]
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-6]
+      gate_info_detail:
+        north: [東成区役所, 東成図書館]
+        south: [中央線連絡, 緑橋南公園]
+      previous_station: [I19, 1.3, 140]
+      next_station: [I21, 1.2, 130]
+      door_open: right
+
+    - id: I21
+      line: Imazatosuji
+      name:
+        jp: 今里
+        jp-hiragana: いまざと
+        en: Imazato
+        zh-TW: 今里
+      transfer:
+        - [Sennichimae, S20, center]
+      gate_info:
+        - [east, 1-4]
+        - [west, 5-8]
+      gate_info_detail:
+        east: [千日前線連絡 (東改札), 東成区民センター]
+        west: [千日前線連絡 (西改札), 今里新道商店街]
+      previous_station: [I20, 1.2, 130]
+      next_station: [null, null, null]
+      door_open: left

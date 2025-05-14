@@ -1,0 +1,177 @@
+---
+line:
+  id: New Tram
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: P
+  name:
+    jp: ニュートラム
+    jp-hiragana: にゅーとらむ
+    en: New Tram
+    zh-TW: 新電車
+  operator: Osaka Metro
+  directions:
+    - [P9, P18]
+    - [P18, P9]
+
+  stations:
+    - id: P9
+      line: New Tram
+      name:
+        jp: コスモスクエア
+        jp-hiragana: こすもすくえあ
+        en: Cosmosquare
+        zh-TW: 宇宙廣場
+      transfer:
+        - [Chuo, C10, center] # Transfer to Chuo Line
+      gate_info:
+        - [main, 1-4]
+      gate_info_detail:
+        main: [中央線連絡, インテックス大阪, 大阪府咲洲庁舎 (コスモタワー), ATC (アジア太平洋トレードセンター)]
+      previous_station: [null, null, null]
+      next_station: [P10, 0.7, 90]
+      door_open: right # Assuming doors for P09->P10 boarding
+
+    - id: P10
+      line: New Tram
+      name:
+        jp: トレードセンター前
+        jp-hiragana: トレードセンターまえ
+        en: Trade Center-mae
+        zh-TW: 貿易中心前
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [ATC (アジア太平洋トレードセンター), 大阪港国際フェリーターミナル方面, シーサイドコスモ]
+      previous_station: [P9, 0.7, 90]
+      next_station: [P11, 0.6, 80]
+      door_open: left
+
+    - id: P11
+      line: New Tram
+      name:
+        jp: 中ふ頭
+        jp-hiragana: なかふとう
+        en: Nakafuto
+        zh-TW: 中埠頭
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [インテックス大阪 (西ゲート), ハイアットリージェンシー大阪, 大阪市水上消防署]
+      previous_station: [P10, 0.6, 80]
+      next_station: [P12, 0.5, 70]
+      door_open: right
+
+    - id: P12
+      line: New Tram
+      name:
+        jp: ポートタウン西
+        jp-hiragana: ポートタウンにし
+        en: Port Town-nishi
+        zh-TW: 港城西
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [南港中央公園, 南港ポートタウンショッピングセンター, 南港西公園]
+      previous_station: [P11, 0.5, 70]
+      next_station: [P13, 0.5, 70]
+      door_open: left
+
+    - id: P13
+      line: New Tram
+      name:
+        jp: ポートタウン東
+        jp-hiragana: ポートタウンひがし
+        en: Port Town-higashi
+        zh-TW: 港城東
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [大阪市立南港光小学校・南港緑中学校, 南港東公園, 南港ポートタウンサービスセンター]
+      previous_station: [P12, 0.5, 70]
+      next_station: [P14, 0.8, 100]
+      door_open: right
+
+    - id: P14
+      line: New Tram
+      name:
+        jp: フェリーターミナル
+        jp-hiragana: フェリーターミナル
+        en: Ferry Terminal
+        zh-TW: 渡輪碼頭
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [大阪南港フェリーターミナル (名門大洋フェリー, オレンジフェリーなど), 南港かもめ大橋]
+      previous_station: [P13, 0.8, 100]
+      next_station: [P15, 1.0, 120]
+      door_open: left
+
+    - id: P15
+      line: New Tram
+      name:
+        jp: 南港東
+        jp-hiragana: なんこうひがし
+        en: Nanko-higashi
+        zh-TW: 南港東
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [南港東公園, 大阪市立南港南中学校, 南港大橋]
+      previous_station: [P14, 1.0, 120]
+      next_station: [P16, 0.7, 90]
+      door_open: right
+
+    - id: P16
+      line: New Tram
+      name:
+        jp: 南港口
+        jp-hiragana: なんこうぐち
+        en: Nanko-guchi
+        zh-TW: 南港口
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [南港大橋, 住之江公園方面, 阪神高速4号湾岸線南港中出入口]
+      previous_station: [P15, 0.7, 90]
+      next_station: [P17, 0.6, 80]
+      door_open: left
+
+    - id: P17
+      line: New Tram
+      name:
+        jp: 平林
+        jp-hiragana: ひらばやし
+        en: Hirabayashi
+        zh-TW: 平林
+      transfer: []
+      gate_info:
+        - [main, 1-2]
+      gate_info_detail:
+        main: [住之江木材コンビナート, 新木津川大橋, 大阪市立平林小学校]
+      previous_station: [P16, 0.6, 80]
+      next_station: [P18, 0.9, 110]
+      door_open: right
+
+    - id: P18
+      line: New Tram
+      name:
+        jp: 住之江公園
+        jp-hiragana: すみのえこうえん
+        en: Suminoekoen
+        zh-TW: 住之江公園
+      transfer:
+        - [Yotsubashi, Y21, east] # Transfer to Yotsubashi Line
+      gate_info:
+        - [main, 1-4] # Shared/adjacent to Yotsubashi exits
+      gate_info_detail:
+        main: [四つ橋線連絡, 住之江公園, 住之江競艇場, オスカードリーム]
+      previous_station: [P17, 0.9, 110]
+      next_station: [null, null, null]
+      door_open: left

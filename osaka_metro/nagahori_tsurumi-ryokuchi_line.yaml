@@ -1,0 +1,324 @@
+---
+line:
+  id: Nagahori Tsurumi-ryokuchi
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: N
+  name:
+    jp: 長堀鶴見緑地線
+    jp-hiragana: ながほりつるみりょくちせん
+    en: Nagahori Tsurumi-ryokuchi Line
+    zh-TW: 長堀鶴見綠地線
+  operator: Osaka Metro
+  directions:
+    - [N11, N27]
+    - [N27, N11]
+
+  stations:
+    - id: N11
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 大正
+        jp-hiragana: たいしょう
+        en: Taisho
+        zh-TW: 大正
+      transfer:
+        - [JR, null, north] # JR Osaka Loop Line
+      gate_info:
+        - [main, 1-4] # Simplified gate info
+      gate_info_detail:
+        main: [JR大正駅, 大正橋, 木津川]
+      previous_station: [null, null, null]
+      next_station: [N12, 0.6, 80]
+      door_open: left
+
+    - id: N12
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: ドーム前千代崎
+        jp-hiragana: ドームまえちよざき
+        en: Dome-mae Chiyozaki
+        zh-TW: 巨蛋前千代崎
+      transfer:
+        - [Hanshin, null, west] # Hanshin Namba Line (Dome-mae Station)
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [京セラドーム大阪 (Kyocera Dome Osaka), フォレオ大阪ドームシティ]
+        west: [阪神なんば線ドーム前駅, 千代崎]
+      previous_station: [N11, 0.6, 80]
+      next_station: [N13, 0.8, 90]
+      door_open: right
+
+    - id: N13
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 西長堀
+        jp-hiragana: にしながほり
+        en: Nishi-Nagahori
+        zh-TW: 西長堀
+      transfer:
+        - [Sennichimae, S14, center]
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-6]
+      gate_info_detail:
+        north: [大阪市立中央図書館, 西区役所]
+        south: [千日前線連絡, 長堀通]
+      previous_station: [N12, 0.8, 90]
+      next_station: [N14, 0.5, 70]
+      door_open: left
+
+    - id: N14
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 西大橋
+        jp-hiragana: にしおおはし
+        en: Nishiohashi
+        zh-TW: 西大橋
+      transfer:
+        - [Yotsubashi, Y14, north-east] # Transfer to Yotsubashi Line (Yotsubashi Station)
+      gate_info:
+        - [main, 1-4]
+      gate_info_detail:
+        main: [オリックス劇場, アメリカ村方面, 四ツ橋駅方面]
+      previous_station: [N13, 0.5, 70]
+      next_station: [N15, 0.6, 80]
+      door_open: right
+
+    - id: N15
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 心斎橋
+        jp-hiragana: しんさいばし
+        en: Shinsaibashi
+        zh-TW: 心齋橋
+      transfer:
+        - [Midosuji, M19, west] # Midosuji Line access
+        - [Yotsubashi, Y14, west] # Yotsubashi Line access (Yotsubashi station is connected)
+      gate_info:
+        - [north, 1-2] # These are exits closer to N line platforms
+        - [south, 3-4]
+      gate_info_detail:
+        north: [クリスタ長堀, 大丸心斎橋店北館]
+        south: [御堂筋線・四つ橋線連絡, 大丸心斎橋店本館]
+      previous_station: [N14, 0.6, 80]
+      next_station: [N16, 0.7, 90]
+      door_open: left
+
+    - id: N16
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 長堀橋
+        jp-hiragana: ながほりばし
+        en: Nagahoribashi
+        zh-TW: 長堀橋
+      transfer:
+        - [Sakaisuji, K16, center]
+      gate_info:
+        - [north, 1-4]
+        - [south, 5-7]
+      gate_info_detail:
+        north: [クリスタ長堀, 東急ハンズ心斎橋店]
+        south: [堺筋線連絡, 南警察署]
+      previous_station: [N15, 0.7, 90]
+      next_station: [N17, 0.6, 80]
+      door_open: right
+
+    - id: N17
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 松屋町
+        jp-hiragana: まつやまち
+        en: Matsuyamachi
+        zh-TW: 松屋町
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [松屋町筋商店街 (人形・玩具), 空堀商店街方面]
+        south: [阪神高速1号環状線, 末吉橋]
+      previous_station: [N16, 0.6, 80]
+      next_station: [N18, 0.6, 80]
+      door_open: left
+
+    - id: N18
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 谷町六丁目
+        jp-hiragana: たにまちろくちょうめ
+        en: Tanimachi Rokuchome
+        zh-TW: 谷町六丁目
+      transfer:
+        - [Tanimachi, T24, center]
+      gate_info:
+        - [east, 1-3]
+        - [west, 4-6]
+      gate_info_detail:
+        east: [空堀商店街, 高津宮]
+        west: [谷町線連絡, 大阪府谷町警察署]
+      previous_station: [N17, 0.6, 80]
+      next_station: [N19, 0.8, 90]
+      door_open: right
+
+    - id: N19
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 玉造
+        jp-hiragana: たまつくり
+        en: Tamatsukuri
+        zh-TW: 玉造
+      transfer:
+        - [JR, null, north] # JR Osaka Loop Line
+      gate_info:
+        - [main, 1-6]
+      gate_info_detail:
+        main: [JR玉造駅, 玉造稲荷神社, 三光神社]
+      previous_station: [N18, 0.8, 90]
+      next_station: [N20, 1.0, 120]
+      door_open: left
+
+    - id: N20
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 森ノ宮
+        jp-hiragana: もりのみや
+        en: Morinomiya
+        zh-TW: 森之宮
+      transfer:
+        - [Chuo, C19, center]
+        - [JR, null, west] # JR Osaka Loop Line
+      gate_info:
+        - [east, 1-3]
+        - [west, 4-7]
+      gate_info_detail:
+        east: [大阪城公園, もりのみやキューズモールBASE]
+        west: [JR森ノ宮駅, 中央線連絡, 大阪府赤十字血液センター]
+      previous_station: [N19, 1.0, 120]
+      next_station: [N21, 1.0, 120]
+      door_open: right
+
+    - id: N21
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 大阪ビジネスパーク
+        jp-hiragana: おおさかビジネスパーク
+        en: Osaka Business Park
+        zh-TW: 大阪商業園區
+      transfer:
+        # - [JR Tozai, null, south] # JR Osakajo-kitazume is nearby, but not a direct concourse transfer usually.
+      gate_info:
+        - [main, 1-4]
+      gate_info_detail:
+        main: [ツイン21, 松下IMPビル, 讀賣テレビ放送]
+      previous_station: [N20, 1.0, 120]
+      next_station: [N22, 0.8, 90]
+      door_open: left
+
+    - id: N22
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 京橋
+        jp-hiragana: きょうばし
+        en: Kyobashi
+        zh-TW: 京橋
+      transfer:
+        - [JR, null, north] # JR Osaka Loop, Katamachi, Tozai Lines
+        - [Keihan, null, north-west] # Keihan Main Line
+      gate_info:
+        - [east, 1-3]
+        - [west, 4-6]
+      gate_info_detail:
+        east: [KiKi京橋, 京阪モール方面]
+        west: [JR京橋駅, 京阪電車京橋駅, 大阪ビジネスパーク方面]
+      previous_station: [N21, 0.8, 90]
+      next_station: [N23, 1.5, 180]
+      door_open: right
+
+    - id: N23
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 蒲生四丁目
+        jp-hiragana: がもうよんちょうめ
+        en: Gamo Yonchome
+        zh-TW: 蒲生四丁目
+      transfer:
+        - [Imazatosuji, I18, center]
+      gate_info:
+        - [north, 1-3]
+        - [south, 4-7]
+      gate_info_detail:
+        north: [城東区役所, 蒲生公園]
+        south: [今里筋線連絡, 城東商店街]
+      previous_station: [N22, 1.5, 180]
+      next_station: [N24, 1.2, 150]
+      door_open: left
+
+    - id: N24
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 今福鶴見
+        jp-hiragana: いまふくつるみ
+        en: Imafuku-Tsurumi
+        zh-TW: 今福鶴見
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [イオンモール鶴見緑地, 鶴見緑地公園方面]
+        south: [イズミヤ今福店, 城東警察署]
+      previous_station: [N23, 1.2, 150]
+      next_station: [N25, 1.0, 120]
+      door_open: right
+
+    - id: N25
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 横堤
+        jp-hiragana: よこづつみ
+        en: Yokozutsumi
+        zh-TW: 横堤
+      transfer: []
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [鶴見区役所, 鶴見図書館]
+        west: [イオンモール鶴見緑地方面, 横堤バスターミナル]
+      previous_station: [N24, 1.0, 120]
+      next_station: [N26, 0.9, 100]
+      door_open: left
+
+    - id: N26
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 鶴見緑地
+        jp-hiragana: つるみりょくち
+        en: Tsurumi-ryokuchi
+        zh-TW: 鶴見綠地
+      transfer: []
+      gate_info:
+        - [main, 1-5]
+      gate_info_detail:
+        main: [花博記念公園鶴見緑地, 咲くやこの花館, いのちの塔]
+      previous_station: [N25, 0.9, 100]
+      next_station: [N27, 1.7, 190]
+      door_open: right
+
+    - id: N27
+      line: Nagahori Tsurumi-ryokuchi
+      name:
+        jp: 門真南
+        jp-hiragana: かどまみなみ
+        en: Kadoma-minami
+        zh-TW: 門真南
+      transfer: []
+      gate_info:
+        - [main, 1-4]
+      gate_info_detail:
+        main: [東和薬品RACTABドーム (大阪府立門真スポーツセンター), ららぽーと門真, コストコ門真倉庫店]
+      previous_station: [N26, 1.7, 190]
+      next_station: [null, null, null]
+      door_open: left

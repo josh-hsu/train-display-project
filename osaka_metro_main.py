@@ -292,7 +292,7 @@ class OsakaMetroTrainDisplay(QWidget):
         self.destination_texts = []
 
         self.destination_texts.append(line_info.name['jp'])
-        self.destination_texts.append(line_info.name['jp-hinagana'])
+        self.destination_texts.append(line_info.name['jp-hiragana'])
         self.destination_texts.append(line_info.name['en'])
         self.destination_texts.append(line_info.name['zh-TW'])
 

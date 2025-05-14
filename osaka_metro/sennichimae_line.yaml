@@ -1,0 +1,289 @@
+---
+line:
+  id: Sennichimae
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: S
+  name:
+    jp: 千日前線
+    jp-hiragana: せんにちまえせん
+    en: Sennichimae Line
+    zh-TW: 千日前線
+  operator: Osaka Metro
+  directions:
+    - [S11, S24]
+    - [S24, S11]
+
+  stations:
+    - id: S11
+      line: Sennichimae
+      name:
+        jp: 野田阪神
+        jp-hiragana: のだはんしん
+        en: Nodahanshin
+        zh-TW: 野田阪神
+      transfer:
+        - [Hanshin, null, north] # Hanshin Main Line (Noda Station)
+        - [JR, null, north] # JR Tozai Line (Ebie Station)
+        # Yotsubashi Line Nodahanshin is listed as Y11 Nishi-Umeda (a few stops away), this is the terminus for Sennichimae.
+        # This is the terminus, not a transfer point for other Osaka Metro lines directly at this station besides being itself.
+      gate_info:
+        - [north_Hanshin_JR, 1-4]
+        - [south_local, 5-8]
+      gate_info_detail:
+        north_Hanshin_JR: [阪神電車野田駅, JR東西線海老江駅, イオンスタイル野田阪神]
+        south_local: [福島区役所, 野田阪神ウイステ, 野田本通商店街]
+      previous_station: [null, null, null]
+      next_station: [S12, 0.6, 70]
+      door_open: left
+
+    - id: S12
+      line: Sennichimae
+      name:
+        jp: 玉川
+        jp-hiragana: たまがわ
+        en: Tamagawa
+        zh-TW: 玉川
+      transfer:
+        - [JR, null, north] # JR Osaka Loop Line (Noda Station)
+      gate_info:
+        - [JR_Noda_transfer, 1-3]
+        - [local_south, 4-6]
+      gate_info_detail:
+        JR_Noda_transfer: [JR野田駅 (大阪環状線), 大阪市中央卸売市場本場方面]
+        local_south: [玉川コミュニティセンター, 野田緑道]
+      previous_station: [S11, 0.6, 70]
+      next_station: [S13, 1.3, 140]
+      door_open: right
+
+    - id: S13
+      line: Sennichimae
+      name:
+        jp: 阿波座
+        jp-hiragana: あわざ
+        en: Awaza
+        zh-TW: 阿波座
+      transfer:
+        - [Chuo, C15, center]
+      gate_info:
+        - [Chuo_transfer_east, 1-5] # Some exits are shared or close for Chuo and Sennichimae
+        - [west_local, 6-10]
+      gate_info_detail:
+        Chuo_transfer_east: [中央線連絡, 大阪国際会議場方面, 江戸堀センタービル]
+        west_local: [日本生命病院, 大阪市西区役所, 阿波座センタービル]
+      previous_station: [S12, 1.3, 140]
+      next_station: [S14, 0.8, 90]
+      door_open: left
+
+    - id: S14
+      line: Sennichimae
+      name:
+        jp: 西長堀
+        jp-hiragana: にしながほり
+        en: Nishi-Nagahori
+        zh-TW: 西長堀
+      transfer:
+        - [Nagahori Tsurumi-ryokuchi, N13, center]
+      gate_info:
+        - [Nagahori_transfer_north, 1-3]
+        - [south_local, 4-7]
+      gate_info_detail:
+        Nagahori_transfer_north: [長堀鶴見緑地線連絡, 大阪市立中央図書館, 西区役所]
+        south_local: [長堀通, 南堀江方面]
+      previous_station: [S13, 0.8, 90]
+      next_station: [S15, 0.6, 70]
+      door_open: right
+
+    - id: S15
+      line: Sennichimae
+      name:
+        jp: 桜川
+        jp-hiragana: さくらがわ
+        en: Sakuragawa
+        zh-TW: 櫻川
+      transfer:
+        - [Hanshin, null, north] # Hanshin Namba Line
+        # - [Nankai Shiomibashi, null, south] # Nankai Koya Line (Shiomibashi Branch) - minor transfer, often not highlighted
+      gate_info:
+        - [Hanshin_transfer_north, 1-3]
+        - [south_local, 4-7]
+      gate_info_detail:
+        Hanshin_transfer_north: [阪神なんば線桜川駅, なんばHatch方面]
+        south_local: [浪速区役所桜川出張所, 汐見橋方面]
+      previous_station: [S14, 0.6, 70]
+      next_station: [S16, 0.8, 90]
+      door_open: left
+
+    - id: S16
+      line: Sennichimae
+      name:
+        jp: なんば
+        jp-hiragana: なんば
+        en: Namba
+        zh-TW: 難波
+      transfer:
+        - [Midosuji, M20, west]
+        - [Yotsubashi, Y15, west]
+        - [JR, null, west] # JR Namba (OCAT)
+        - [Hanshin, null, north] # Osaka Namba (Hanshin/Kintetsu)
+        - [Kintetsu, null, north] # Osaka Namba (Hanshin/Kintetsu)
+        - [Nankai, null, south] # Nankai Namba
+      gate_info: # Sennichimae gates are often towards the east/center of the Namba complex
+        - [east_Kintetsu_Hanshin_Midosuji, 1-10, 14-25] # Wide range due to complex station
+        - [west_Yotsubashi_JR, 11-13, 26-32]
+      gate_info_detail:
+        east_Kintetsu_Hanshin_Midosuji: [近鉄・阪神大阪難波駅, 御堂筋線連絡, なんばウォーク, 日本橋方面, 高島屋]
+        west_Yotsubashi_JR: [四つ橋線連絡, JR難波駅 (OCAT), 湊町リバープレイス]
+      previous_station: [S15, 0.8, 90]
+      next_station: [S17, 0.7, 80]
+      door_open: right
+
+    - id: S17
+      line: Sennichimae
+      name:
+        jp: 日本橋
+        jp-hiragana: にっぽんばし
+        en: Nippombashi
+        zh-TW: 日本橋
+      transfer:
+        - [Sakaisuji, K17, center]
+        - [Kintetsu, null, north] # Kintetsu Namba Line (Kintetsu Nippombashi Station)
+      gate_info:
+        - [north_Kintetsu_Sakaisuji, 1-6, 10]
+        - [south_Kuromon, 5, 7-9] # Some overlap
+      gate_info_detail:
+        north_Kintetsu_Sakaisuji: [近鉄日本橋駅, 堺筋線連絡, 国立文楽劇場, なんばウォーク]
+        south_Kuromon: [黒門市場, でんでんタウン]
+      previous_station: [S16, 0.7, 80]
+      next_station: [S18, 1.0, 120]
+      door_open: left
+
+    - id: S18
+      line: Sennichimae
+      name:
+        jp: 谷町九丁目
+        jp-hiragana: たにまちきゅうちょうめ
+        en: Tanimachi Kyuchome
+        zh-TW: 谷町九丁目
+      transfer:
+        - [Tanimachi, T25, center]
+        - [Kintetsu, null, east] # Kintetsu Osaka Line, Nara Line, Namba Line (Osaka-Uehommachi Station)
+      gate_info:
+        - [Tanimachi_Kintetsu_transfer_east, 1-7]
+        - [west_local, 8-12]
+      gate_info_detail:
+        Tanimachi_Kintetsu_transfer_east: [谷町線連絡, 近鉄大阪上本町駅, 上本町YUFURA, シェラトン都ホテル大阪]
+        west_local: [生國魂神社, 千日前通]
+      previous_station: [S17, 1.0, 120]
+      next_station: [S19, 0.8, 90]
+      door_open: right
+
+    - id: S19
+      line: Sennichimae
+      name:
+        jp: 鶴橋
+        jp-hiragana: つるはし
+        en: Tsuruhashi
+        zh-TW: 鶴橋
+      transfer:
+        - [JR, null, north] # JR Osaka Loop Line
+        - [Kintetsu, null, east] # Kintetsu Osaka Line, Nara Line
+      gate_info:
+        - [JR_Kintetsu_transfer_main, 1-6]
+        - [west_local, 7-8]
+      gate_info_detail:
+        JR_Kintetsu_transfer_main: [JR鶴橋駅, 近鉄鶴橋駅, 鶴橋商店街 (コリアタウン)]
+        west_local: [東成区役所鶴橋出張所, 桃谷公園]
+      previous_station: [S18, 0.8, 90]
+      next_station: [S20, 1.0, 120]
+      door_open: left
+
+    - id: S20
+      line: Sennichimae
+      name:
+        jp: 今里
+        jp-hiragana: いまざと
+        en: Imazato
+        zh-TW: 今里
+      transfer:
+        - [Imazatosuji, I21, center]
+      gate_info:
+        - [Imazatosuji_transfer_east, 1-4]
+        - [west_local, 5-8]
+      gate_info_detail:
+        Imazatosuji_transfer_east: [今里筋線連絡, 東成区民センター, 今里ロータリー]
+        west_local: [今里新道商店街, 東成郵便局]
+      previous_station: [S19, 1.0, 120]
+      next_station: [S21, 1.1, 130]
+      door_open: right
+
+    - id: S21
+      line: Sennichimae
+      name:
+        jp: 新深江
+        jp-hiragana: しんふかえ
+        en: Shin-Fukae
+        zh-TW: 新深江
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [神路銀座商店街, 東成しんふかえばし郵便局]
+        south: [深江稲荷神社, ライフ新深江店]
+      previous_station: [S20, 1.1, 130]
+      next_station: [S22, 0.9, 100]
+      door_open: left
+
+    - id: S22
+      line: Sennichimae
+      name:
+        jp: 小路
+        jp-hiragana: しょうじ
+        en: Shoji
+        zh-TW: 小路
+      transfer: []
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [生野区役所小路出張所, 小路小学校]
+        west: [巽公園方面, 大阪市立小路中学校]
+      previous_station: [S21, 0.9, 100]
+      next_station: [S23, 0.8, 90]
+      door_open: right
+
+    - id: S23
+      line: Sennichimae
+      name:
+        jp: 北巽
+        jp-hiragana: きたたつみ
+        en: Kita-Tatsumi
+        zh-TW: 北巽
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-5]
+      gate_info_detail:
+        north: [生野区役所, 生野図書館, 北巽バスターミナル]
+        south: [巽東緑地, ライフ北巽駅前店]
+      previous_station: [S22, 0.8, 90]
+      next_station: [S24, 1.0, 120]
+      door_open: left
+
+    - id: S24
+      line: Sennichimae
+      name:
+        jp: 南巽
+        jp-hiragana: みなみたつみ
+        en: Minami-Tatsumi
+        zh-TW: 南巽
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [生野工業高等学校, 巽南公園]
+        south: [南巽駅前バスターミナル, 大阪市立巽中学校]
+      previous_station: [S23, 1.0, 120]
+      next_station: [null, null, null]
+      door_open: right

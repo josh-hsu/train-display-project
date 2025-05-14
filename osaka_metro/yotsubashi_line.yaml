@@ -1,0 +1,231 @@
+---
+line:
+  id: Yotsubashi
+  lang: [jp, jp-hiragana, en, zh-TW]
+  id_prefix: Y
+  name:
+    jp: 四つ橋線
+    jp-hiragana: よつばしせん
+    en: Yotsubashi Line
+    zh-TW: 四橋線
+  operator: Osaka Metro
+  directions:
+    - [Y11, Y21]
+    - [Y21, Y11]
+
+  stations:
+    - id: Y11
+      line: Yotsubashi
+      name:
+        jp: 西梅田
+        jp-hiragana: にしうめだ
+        en: Nishi-Umeda
+        zh-TW: 西梅田
+      transfer:
+        - [Midosuji, M16, east] # To Umeda Station (Midosuji)
+        - [Tanimachi, T20, east] # To Higashi-Umeda Station (Tanimachi)
+        - [JR, null, north] # To JR Osaka Station
+        - [Hanshin, null, south] # To Hanshin Osaka-Umeda Station
+      gate_info:
+        - [north, 1-4]
+        - [south, 5-10]
+      gate_info_detail:
+        north: [JR北新地駅, 堂島アバンザ, 四ツ橋筋]
+        south: [阪神大阪梅田駅, ヒルトンプラザ大阪, ドージマ地下センター]
+      previous_station: [null, null, null]
+      next_station: [Y12, 0.9, 100]
+      door_open: left
+
+    - id: Y12
+      line: Yotsubashi
+      name:
+        jp: 肥後橋
+        jp-hiragana: ひごばし
+        en: Higobashi
+        zh-TW: 肥後橋
+      transfer:
+        - [Keihan Nakanoshima, null, north] # Keihan Nakanoshima Line (Watanabebashi Station)
+      gate_info:
+        - [north, 1-4]
+        - [south, 5-10]
+      gate_info_detail:
+        north: [京阪渡辺橋駅, フェスティバルホール, 中之島フェスティバルタワー]
+        south: [江戸堀センタービル, 大同生命大阪本社ビル, 土佐堀川]
+      previous_station: [Y11, 0.9, 100]
+      next_station: [Y13, 0.7, 90]
+      door_open: right
+
+    - id: Y13
+      line: Yotsubashi
+      name:
+        jp: 本町
+        jp-hiragana: ほんまち
+        en: Hommachi
+        zh-TW: 本町
+      transfer:
+        - [Midosuji, M18, east]
+        - [Chuo, C16, east]
+      gate_info:
+        - [north-west, 21-24] # Yotsubashi line has its own gate numbers in Hommachi
+        - [south-west, 25-28]
+      gate_info_detail:
+        north-west: [オリックス本町ビル, 大阪科学技術館方面]
+        south-west: [中央線連絡, 御堂筋線連絡, 船場センタービル]
+      previous_station: [Y12, 0.7, 90]
+      next_station: [Y14, 0.9, 100]
+      door_open: left
+
+    - id: Y14
+      line: Yotsubashi
+      name:
+        jp: 四ツ橋
+        jp-hiragana: よつばし
+        en: Yotsubashi
+        zh-TW: 四橋
+      transfer:
+        - [Midosuji, M19, east] # To Shinsaibashi Station (Midosuji)
+        - [Nagahori Tsurumi-ryokuchi, N15, east] # To Shinsaibashi Station (N Line)
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-6]
+      gate_info_detail:
+        north: [クリスタ長堀, 心斎橋駅方面, アメリカ村]
+        south: [堀江, 大阪スクールオブミュージック専門学校]
+      previous_station: [Y13, 0.9, 100]
+      next_station: [Y15, 0.6, 80]
+      door_open: right
+
+    - id: Y15
+      line: Yotsubashi
+      name:
+        jp: なんば
+        jp-hiragana: なんば
+        en: Namba
+        zh-TW: 難波
+      transfer:
+        - [Midosuji, M20, east]
+        - [Sennichimae, S16, east]
+        - [JR, null, north] # JR Namba Station (OCAT)
+        - [Hanshin, null, east] # Osaka Namba Station (Hanshin/Kintetsu)
+        - [Kintetsu, null, east] # Osaka Namba Station (Hanshin/Kintetsu)
+        - [Nankai, null, south-east] # Nankai Namba Station
+      gate_info:
+        - [north, 26-27] # Yotsubashi line specific gates at Namba
+        - [south, 28-32]
+      gate_info_detail:
+        north: [JR難波駅 (OCAT), 湊町リバープレイス]
+        south: [なんばHatch, 四ツ橋筋, 御堂筋線・千日前線連絡]
+      previous_station: [Y14, 0.6, 80]
+      next_station: [Y16, 1.0, 120]
+      door_open: left
+
+    - id: Y16
+      line: Yotsubashi
+      name:
+        jp: 大国町
+        jp-hiragana: だいこくちょう
+        en: Daikokucho
+        zh-TW: 大國町
+      transfer:
+        - [Midosuji, M21, center] # Cross-platform interchange
+      gate_info:
+        - [north, 1-2] # Shared gates with Midosuji
+        - [south, 3-6]
+      gate_info_detail:
+        north: [浪速区役所, 木津卸売市場, 浪速図書館]
+        south: [今宮戎神社, 敷津松之宮]
+      previous_station: [Y15, 1.0, 120]
+      next_station: [Y17, 1.3, 140]
+      door_open: right # Midosuji opens left for southbound, Yotsubashi right for southbound here
+
+    - id: Y17
+      line: Yotsubashi
+      name:
+        jp: 花園町
+        jp-hiragana: はなぞのちょう
+        en: Hanazonocho
+        zh-TW: 花園町
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [花園本通商店街, 鶴見橋商店街]
+        south: [南海萩ノ茶屋駅方面, 西成区役所]
+      previous_station: [Y16, 1.3, 140]
+      next_station: [Y18, 0.8, 90]
+      door_open: left
+
+    - id: Y18
+      line: Yotsubashi
+      name:
+        jp: 岸里
+        jp-hiragana: きしのさと
+        en: Kishinosato
+        zh-TW: 岸里
+      transfer:
+        - [Nankai, null, east] # Nankai Main Line/Koya Line (Tengachaya Station is closer but Kishinosato-Tamade exists) - Note: Tengachaya is a better transfer from Sakaisuji Line. This transfer is to Nankai Kishinosato-Tamade station.
+      gate_info:
+        - [east, 1-2]
+        - [west, 3-4]
+      gate_info_detail:
+        east: [南海電鉄岸里玉出駅, 天下茶屋公園]
+        west: [西成税務署, 大阪フィルハーモニー会館]
+      previous_station: [Y17, 0.8, 90]
+      next_station: [Y19, 1.0, 120]
+      door_open: right
+
+    - id: Y19
+      line: Yotsubashi
+      name:
+        jp: 玉出
+        jp-hiragana: たまで
+        en: Tamade
+        zh-TW: 玉出
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [スーパー玉出, 生根神社]
+        south: [住之江警察署玉出交番, 南海電鉄岸里玉出駅方面]
+      previous_station: [Y18, 1.0, 120]
+      next_station: [Y20, 1.5, 180]
+      door_open: left
+
+    - id: Y20
+      line: Yotsubashi
+      name:
+        jp: 北加賀屋
+        jp-hiragana: きたかがや
+        en: Kitakagaya
+        zh-TW: 北加賀屋
+      transfer: []
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [クリエイティブセンター大阪, 加賀屋商店街]
+        south: [住之江区役所, 住之江図書館]
+      previous_station: [Y19, 1.5, 180]
+      next_station: [Y21, 1.1, 130]
+      door_open: right
+
+    - id: Y21
+      line: Yotsubashi
+      name:
+        jp: 住之江公園
+        jp-hiragana: すみのえこうえん
+        en: Suminoekoen
+        zh-TW: 住之江公園
+      transfer:
+        - [Nanko Port Town, P18, west] # New Tram
+      gate_info:
+        - [north, 1-2]
+        - [south, 3-4]
+      gate_info_detail:
+        north: [住之江公園, 住之江競艇場]
+        south: [オスカードリーム, ニュートラム連絡]
+      previous_station: [Y20, 1.1, 130]
+      next_station: [null, null, null]
+      door_open: left

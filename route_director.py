@@ -123,6 +123,7 @@ class RouteDirector(QObject):
             to_station = full_path[i + 1]
             
             # Get travel time between these stations
+            print(f"from: {from_station} next: {to_station}")
             travel_time = line_info.get_station(from_station).next_station[2]  # Time in seconds to next station
             
             # Calculate state transition times

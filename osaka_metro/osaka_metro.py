@@ -34,6 +34,12 @@ LINE_INFO_FILE_PATH_MAP = {
     "Midosuji" : "midosuji_line.yaml",
     "Tanimachi" : "tanimachi_line.yaml",
     "Chuo" : "chuo_line.yaml",
+    "Yotsubashi" : "yotsubashi_line.yaml",
+    "Nagahori Tsurumi-ryokuchi" : "nagahori_tsurumi-ryokuchi_line.yaml",
+    "Imazatosuji" : "imazatosuji_line.yaml",
+    "Sakaisuji" : "sakaisuji_line.yaml",
+    "Sennichimae" : "sennichimae_line.yaml",
+    "New Tram" : "new-tram_line.yaml"
 }
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站
@@ -79,7 +85,10 @@ ICON_MAP = {
     "Kintetsu": "line_other.png",
     "Nankai": "line_other.png",
     "Hankyu": "line_other.png",
+    "Hankyu Senri" : "line_other.png",
+    "Hankyu Kyoto" : "line_other.png",
     "Keihan": "line_other.png",
+    "Keihan Nakanoshima" : "line_other.png",
     "Hanshin": "line_other.png",
     "Hankai": "line_other.png",
     "JR": "line_other.png",
@@ -100,7 +109,10 @@ TRANSFER_MAP = {
     "Kintetsu": "近鉄線",
     "Nankai": "南海線",
     "Hankyu": "阪急線",
+    "Hankyu Senri" : "阪急線",
+    "Hankyu Kyoto" : "阪急線",
     "Keihan": "京阪線",
+    "Keihan Nakanoshima" : "京阪線",
     "Hanshin": "阪神線",
     "Hankai": "阪堺線",
     "JR": "JR線",
