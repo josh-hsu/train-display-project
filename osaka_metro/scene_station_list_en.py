@@ -7,9 +7,8 @@ from PyQt5.QtGui import QBrush, QPolygon
 
 import os
 from osaka_metro.osaka_metro import *
-from train_textview_libs import RotatedLabel
-from train_textview_libs import *
-from line_info import *
+from train_common.train_textview_libs import RotatedLabel, StretchTextLabel
+from train_common.line_info import *
 
 class SideArrow(QWidget):
     def __init__(self, line_color, parent=None):

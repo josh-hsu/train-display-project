@@ -4,12 +4,12 @@ from PyQt5.QtCore import Qt, QPoint, QTimer
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtGui import QPainter, QColor, QPainterPath
 from PyQt5.QtGui import QBrush, QPolygon
-from train_textview_libs import VerticalText
+
 import os
 
-from osaka_metro.osaka_metro import *
-from train_textview_libs import *
-from line_info import *
+from .osaka_metro import *
+from train_common.train_textview_libs import VerticalText, StretchTextLabel
+from train_common.line_info import *
 
 class SideArrow(QWidget):
     def __init__(self, line_color, parent=None):

@@ -5,7 +5,7 @@ from PyQt5.QtGui import QFont, QPainter, QColor, QPen
 from PyQt5.QtCore import Qt, QSize
 
 from osaka_metro.osaka_metro import *
-from line_info import *
+from train_common.line_info import *
 
 class CircleIconLabel(QLabel):
     """Custom QLabel that displays a circular background with text centered"""

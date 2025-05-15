@@ -7,9 +7,9 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
 
 from osaka_metro.osaka_metro import *
-from line_info import LineInfo
+from train_common.line_info import LineInfo
 from osaka_metro_main import OsakaMetroTrainDisplay
-from route_director import RouteDirector
+from train_common.route_director import RouteDirector
 
 class TrainDisplay(QWidget):
     def __init__(self):

@@ -1,6 +1,7 @@
 from PyQt5.QtCore import QObject, pyqtSignal, QThread, QTimer
 import time
-from line_info import *
+
+from train_common.line_info import *
 
 ###
 ### RouteDirector

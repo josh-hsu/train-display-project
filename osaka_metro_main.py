@@ -7,12 +7,11 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
 from PyQt5.QtCore import Qt, QTimer, pyqtSignal
 
-from scene_manager import SceneManager
+from train_common.scene_manager import SceneManager
+from train_common.line_info import *
+from train_common.route_director import RouteDirector
+from train_common.train_textview_libs import *
 from osaka_metro.osaka_metro import *
-from line_info import *
-from route_director import RouteDirector
-
-from train_textview_libs import *
 
 class OsakaMetroTrainDisplay(QWidget):
     operation_route_callback = pyqtSignal(object)

@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtGui import QPainter, QPen, QColor, QFont
 from PyQt5.QtCore import Qt, QPropertyAnimation, QRect
 
-from line_info import *
+from train_common.line_info import *
 from osaka_metro.osaka_metro import *
 
 # 單一車廂
