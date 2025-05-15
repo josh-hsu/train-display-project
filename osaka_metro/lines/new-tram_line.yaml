@@ -12,6 +12,7 @@ line:
   directions:
     - [P9, P18]
     - [P18, P9]
+  main_color: "#00b2e5"
 
   stations:
     - id: P9

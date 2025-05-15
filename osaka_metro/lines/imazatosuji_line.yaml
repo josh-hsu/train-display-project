@@ -12,6 +12,7 @@ line:
   directions:
     - [I11, I21]
     - [I21, I11]
+  main_color: "#f8b500"
 
   stations:
     - id: I11

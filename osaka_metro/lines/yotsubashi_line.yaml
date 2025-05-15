@@ -12,6 +12,7 @@ line:
   directions:
     - [Y11, Y21]
     - [Y21, Y11]
+  main_color: "#0078ba"
 
   stations:
     - id: Y11

@@ -21,12 +21,12 @@ ARROW_WIDGET_HEIGHT = 40
 
 if (os.name == "posix"):
     ICON_PATH = "osaka_metro/transfer_icons/"
-    LINE_INFO_FILE_FOLDER = "osaka_metro/"
+    LINE_INFO_FILE_FOLDER = "osaka_metro/lines/"
     FONT_NAME = "Noto Sans JP"
     DOOR_PATH = "osaka_metro/doors/"
 else:
     ICON_PATH = "osaka_metro\\transfer_icons\\"
-    LINE_INFO_FILE_FOLDER = "osaka_metro\\"
+    LINE_INFO_FILE_FOLDER = "osaka_metro\\lines\\"
     FONT_NAME = "Noto Sans JP SemiBold"
     DOOR_PATH = "osaka_metro\\doors\\"
 

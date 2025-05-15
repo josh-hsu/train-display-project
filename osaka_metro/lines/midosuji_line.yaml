@@ -16,6 +16,7 @@ line:
     - [M22, M13]
     - [M27, M11]
     - [M30, M11]
+  main_color: "#e5171f"
 
   stations:
     - id: M11

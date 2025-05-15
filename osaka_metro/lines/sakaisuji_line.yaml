@@ -12,6 +12,7 @@ line:
   directions:
     - [K11, K20]
     - [K20, K11]
+  main_color: "#804000"
 
   stations:
     - id: K11

@@ -12,6 +12,7 @@ line:
   directions:
     - [N11, N27]
     - [N27, N11]
+  main_color: "#a9cc51"
 
   stations:
     - id: N11

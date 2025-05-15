@@ -16,6 +16,7 @@ line:
     - [T28, T11] # Fuminosato - Dainichi
     - [T16, T35] # Miyakojima - Yaominami (some services start/terminate here)
     - [T35, T16] # Yaominami - Miyakojima
+  main_color: "#8f76d6"
 
   stations:
     - id: T11

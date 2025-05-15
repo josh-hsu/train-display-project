@@ -1,5 +1,4 @@
 import yaml, re
-from osaka_metro.osaka_metro import LINE_COLOR_MAP
 
 STATION_STATE_APPROACH = 0         # 車即將到達下一站
 STATION_STATE_ARRIVED = 1          # 車在車站
@@ -132,7 +131,7 @@ class LineInfo:
         self.operator = line_data.get("operator")
         self.directions = line_data.get("directions", [])
         self.route = 0
-        self.main_color = LINE_COLOR_MAP[self.id]
+        self.main_color = line_data.get("main_color", "#000000")
 
         self.stations = []
         self.station_map = {}
