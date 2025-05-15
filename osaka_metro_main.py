@@ -4,13 +4,15 @@ from PyQt5.QtWidgets import (
     QStackedWidget
 )
 from PyQt5.QtGui import QFont
-from PyQt5.QtCore import QPoint, QPropertyAnimation, QParallelAnimationGroup
-from PyQt5.QtCore import Qt, QTimer, pyqtSignal
+from PyQt5.QtCore import ( 
+    QPoint, QPropertyAnimation, QParallelAnimationGroup,
+    Qt, QTimer, pyqtSignal
+)
 
-from train_common.scene_manager import SceneManager
 from train_common.line_info import *
 from train_common.route_director import RouteDirector
 from train_common.train_textview_libs import *
+from osaka_metro.osaka_scene_manager import SceneManager
 from osaka_metro.osaka_metro import *
 
 class OsakaMetroTrainDisplay(QWidget):
